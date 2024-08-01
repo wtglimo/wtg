@@ -2,6 +2,7 @@ function calculateQuote() {
     const name = document.getElementById('name').value || "Customer";
     const vehicleType = document.getElementById('vehicle').value;
     const hours = parseInt(document.getElementById('hours').value);
+    const includeAlcohol = document.getElementById('include-alcohol').checked;
 
     let baseRate = 0;
     let minHours = 4;
@@ -9,6 +10,7 @@ function calculateQuote() {
     let additionalHourRate = 300;
     let stcPercentage = 10;
     let gratuityPercentage = 15;
+    let securityGuardFee = 0;
     let vehicleName = "";
     let paxNumber = 0;
     let displayBaseRate = '';
@@ -126,13 +128,21 @@ function calculateQuote() {
         return;
     }
 
+    // Calculate security guard fee if alcohol is included and the vehicle has more than 15 passengers
+    if (includeAlcohol && paxNumber > 15) {
+        securityGuardFee = 250; // Base fee for 4 hours
+        if (hours > 4) {
+            securityGuardFee += (hours - 4) * 35; // Additional fee for extra hours
+        }
+    }
+
     const additionalHours = hours > minHours ? hours - minHours : 0;
     const additionalCost = additionalHours * additionalHourRate;
     const totalBaseRate = baseRate; // Base rate covers the minimum hours
 
     const stc = (totalBaseRate * stcPercentage) / 100;
     const gratuity = (totalBaseRate * gratuityPercentage) / 100;
-    const total = totalBaseRate + stc + gratuity + gasFee + additionalCost; // Adding additional hours cost to the total
+    const total = totalBaseRate + stc + gratuity + gasFee + additionalCost + securityGuardFee; // Adding additional hours cost and security guard fee to the total
 
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = `
@@ -149,17 +159,14 @@ function calculateQuote() {
                 <p class="paragraph-padding"><strong>Vehicle Details:</strong> ${paxNumber} Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats${hasRearBalcony ? ', Rear Balcony' : ''}, Ice & Water.</p>
                 <p><strong>Quote Includes:</strong> Unlimited stops & mileage, gratuity, all fees, fuel and service charges.</p>
                 <div class="quote-info">
-                    <p><strong>Quote: ${hours} Hour Package</strong></p>
+                    <p class="quote-heading"><strong>Quote: ${hours} Hour Package</strong></p>
                     <p>Base Rate: ${displayBaseRate} upto ${minHours} hours</p>
                     ${additionalHours > 0 ? `<p>Additional Hours: ${additionalHours} hour(s) @ $${additionalHourRate.toLocaleString()}/hour</p>` : ''}
                     <p>STC: ${stcPercentage}%</p>
                     <p>Gratuity: ${gratuityPercentage}%</p>
                     <p>Gas Fee: $${gasFee.toFixed(2)}</p>
+                    ${securityGuardFee > 0 ? `<p>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</p>` : ''}
                     <p class="total"><strong>Total: $${total.toLocaleString()}</strong></p>
-                </div>
-                <div class="paragraph-padding alcohol-policy">
-                    <p><strong>Alcohol Policy </strong><span id="security-guard">(Security Guard Needed For Chicago Trips Only)</span></p>
-                    <p>For vehicles over 15 passengers, a security guard is needed if there is alcohol on board. Security guard charge is an <strong>additional $250.00 (4hr required minimum).</strong> Each additional hour is $35.00</p>
                 </div>
                 <p class="paragraph-padding"><strong>Availability:</strong> The requested vehicle is available at the time of this quote. Act Fast. The quote is good for 14 days.</p>
                 <p><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>

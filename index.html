@@ -94,6 +94,16 @@
         <label for="hours">Number of Hours:</label>
         <input type="number" id="hours" min="4" value="4">
     </div>
+
+    <div class="form-group">
+      <label for="include-alcohol-switch" class="switch-label">Include BYOB (Alcohol)</label>
+      <label class="switch">
+        <input type="checkbox" id="include-alcohol">
+        <span class="slider"></span>
+      </label>
+    </div>
+    
+
     <button onclick="calculateQuote()">Get Quote</button>
 
     <div class="result" id="result"></div>
