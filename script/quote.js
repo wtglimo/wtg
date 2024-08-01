@@ -10,10 +10,9 @@ function calculateQuote() {
     let stcPercentage = 10;
     let gratuityPercentage = 15;
     let vehicleName = "";
+    let paxNumber = 0;
     let displayBaseRate = '';
     let imageUrl = '';
-    let videoThumbnail = '';
-    let videoUrl = '';
     let vehicleLink = '';
     let hasRearBalcony = false;
 
@@ -21,19 +20,19 @@ function calculateQuote() {
         case 'trolley_midnight_36':
             baseRate = 1795;
             gasFee = 250;
-            vehicleName = "Trolley Midnight 36 Pax";
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            vehicleName = "Trolley Midnight";
+            paxNumber = 36;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyMidnight-main.png";
-            videoThumbnail = "https://img.youtube.com/vi/Eh7lsDRmXrM/0.jpg";
-            videoUrl = "https://www.youtube.com/watch?v=Eh7lsDRmXrM";
             vehicleLink = "https://wtglimo.com/Naperville-trolley-bus-rental.php";
             hasRearBalcony = true;
             break;
         case 'trolley_fusion_30':
             baseRate = 1695;
             gasFee = 175;
-            vehicleName = "Trolley Fusion 30 Pax";
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            vehicleName = "Trolley Fusion";
+            paxNumber = 30;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFusion-main.png";
             vehicleLink = "https://wtglimo.com/Chicago-trolley-bus-rental.php";
             hasRearBalcony = true;
@@ -41,30 +40,29 @@ function calculateQuote() {
         case 'trolley_bliss_30':
             baseRate = 1695;
             gasFee = 175;
-            vehicleName = "Trolley Bliss 30 Pax";
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            vehicleName = "Trolley Bliss";
+            paxNumber = 30;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyBliss-main.png";
-            videoThumbnail = "https://img.youtube.com/vi/Eh7lsDRmXrM/0.jpg";
-            videoUrl = "https://www.youtube.com/watch?v=Eh7lsDRmXrM";
             vehicleLink = "https://wtglimo.com/white-wedding-trolleys-Chicago.php";
             hasRearBalcony = true;
             break;
         case 'trolley_classic_30':
             baseRate = 1695;
             gasFee = 175;
-            vehicleName = "Trolley Classic 30 Pax";
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            vehicleName = "Trolley Classic";
+            paxNumber = 30;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyClassic-main.png";
             vehicleLink = "https://wtglimo.com/Chicago-wedding-trolley-bus-rental.php";
             break;
         case 'trolley_festive_24':
             baseRate = 1495;
             gasFee = 125;
-            vehicleName = "Trolley Festive 24 Pax";
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            vehicleName = "Trolley Festive";
+            paxNumber = 24;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFestive-main.png";
-            videoThumbnail = "https://img.youtube.com/vi/0yIzkD9YpFg/0.jpg";
-            videoUrl = "https://www.youtube.com/watch?v=0yIzkD9YpFg";
             vehicleLink = "https://wtglimo.com/Chicago-trolley-rental.php";
             hasRearBalcony = true;
             break;
@@ -72,52 +70,49 @@ function calculateQuote() {
             baseRate = 1795;
             minHours = 5;
             gasFee = 250;
-            vehicleName = "Party Bus - Dove 40 Pax";
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            vehicleName = "Party Bus - Dove";
+            paxNumber = 40;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBus-Dove-main.jpg";
-            videoThumbnail = "https://img.youtube.com/vi/k9SZ9-sPp6U/0.jpg";
-            videoUrl = "https://www.youtube.com/watch?v=k9SZ9-sPp6U";
             vehicleLink = "https://wtglimo.com/chicago-party-bus-rental.php";
             break;
         case 'partybus_snowwhite_40':
             baseRate = 1795;
             minHours = 5;
             gasFee = 250;
-            vehicleName = "Party Bus - Snow White 40 Pax";
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            vehicleName = "Party Bus - Snow White";
+            paxNumber = 40;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/snowWhite-main.png";
-            videoThumbnail = "https://img.youtube.com/vi/Gm9ke7D-Tlg/0.jpg";
-            videoUrl = "https://www.youtube.com/watch?v=Gm9ke7D-Tlg";
             vehicleLink = "https://wtglimo.com/naperville-party-bus-rental.php";
             break;
         case 'partybus_nightrider_30':
             baseRate = 350 * minHours;
             gasFee = 125;
             additionalHourRate = 300;
-            vehicleName = "Party Bus - Night Rider 30 Pax";
-            displayBaseRate = `$350/hr`;
+            vehicleName = "Party Bus - Night Rider";
+            paxNumber = 30;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/nightRider-main.png";
-            videoThumbnail = "https://img.youtube.com/vi/_AkcW5SWvcw/0.jpg";
-            videoUrl = "https://www.youtube.com/watch?v=_AkcW5SWvcw";
             vehicleLink = "https://wtglimo.com/libertyville-party-bus-rental.php";
             break;
         case 'partybus_eagle_25':
             baseRate = 350 * minHours;
             gasFee = 125;
             additionalHourRate = 300;
-            vehicleName = "Party Bus - Eagle 25 Pax";
-            displayBaseRate = `$350/hr`;
+            vehicleName = "Party Bus - Eagle";
+            paxNumber = 25;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/eagle-main.png";
-            videoThumbnail = "https://img.youtube.com/vi/_AkcW5SWvcw/0.jpg";
-            videoUrl = "https://www.youtube.com/watch?v=_AkcW5SWvcw";
             vehicleLink = "https://wtglimo.com/Palatine-party-bus-rental.php";
             break;
         case 'partybus_whitehawk_20':
             baseRate = 295 * minHours;
             gasFee = 120;
             additionalHourRate = 250;
-            vehicleName = "Party Bus - White Hawk 20 Pax";
-            displayBaseRate = `$295/hr`;
+            vehicleName = "Party Bus - White Hawk";
+            paxNumber = 20;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/whiteHawk-main.png";
             vehicleLink = "https://wtglimo.com/Arlington-Heights-Party-Bus-Rental.php";
             break;
@@ -143,22 +138,27 @@ function calculateQuote() {
     resultDiv.innerHTML = `
         <div id="quote-content">
             <p class="intro-para">Hi ${name}, Great Choice. ${vehicleName} is available at the time of this quote.</p>
-            <div class="vehicle-name-link"><h2 class="vehicle-name">${vehicleName}</h2>
-            <p><a href="${vehicleLink}" target="_blank">(View this Vehicle)</a></p></div>
+            <h2 class="vehicle-name">${vehicleName}</h2>
+            <div class="image-container">
+                <img src="${imageUrl}" alt="${vehicleName}" />
+            </div>
+            <div class="vehicle-name-link">
+                <p><a href="${vehicleLink}" target="_blank">(View this Vehicle)</a></p>
+            </div>
             <div class="details">
-                <p class="paragraph-padding"><strong>Vehicle Details:</strong> Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats${hasRearBalcony ? ', Rear Balcony' : ''}, Ice & Water.</p>
+                <p class="paragraph-padding"><strong>Vehicle Details:</strong> ${paxNumber} Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats${hasRearBalcony ? ', Rear Balcony' : ''}, Ice & Water.</p>
                 <p><strong>Quote Includes:</strong> Unlimited stops & mileage, gratuity, all fees, fuel and service charges.</p>
                 <div class="quote-info">
                     <p><strong>Quote: ${hours} Hour Package</strong></p>
                     <p>Base Rate: ${displayBaseRate} upto ${minHours} hours</p>
-                    ${additionalHours > 0 ? `<p>Additional Hours: ${additionalHours} hour(s) @ $${additionalHourRate}/hour</p>` : ''}
+                    ${additionalHours > 0 ? `<p>Additional Hours: ${additionalHours} hour(s) @ $${additionalHourRate.toLocaleString()}/hour</p>` : ''}
                     <p>STC: ${stcPercentage}%</p>
                     <p>Gratuity: ${gratuityPercentage}%</p>
                     <p>Gas Fee: $${gasFee.toFixed(2)}</p>
-                    <p class="total"><strong>Total: $${total.toFixed(2)}</strong></p>
+                    <p class="total"><strong>Total: $${total.toLocaleString()}</strong></p>
                 </div>
-                <div class="paragraph-padding">
-                    <p><strong>Alcohol Policy </strong><span id="security-guard">(Security Guard Needed For Chicago Trips Only)</span><p>
+                <div class="paragraph-padding alcohol-policy">
+                    <p><strong>Alcohol Policy </strong><span id="security-guard">(Security Guard Needed For Chicago Trips Only)</span></p>
                     <p>For vehicles over 15 passengers, a security guard is needed if there is alcohol on board. Security guard charge is an <strong>additional $250.00 (4hr required minimum).</strong> Each additional hour is $35.00</p>
                 </div>
                 <p class="paragraph-padding"><strong>Availability:</strong> The requested vehicle is available at the time of this quote. Act Fast. The quote is good for 14 days.</p>
@@ -167,16 +167,6 @@ function calculateQuote() {
             <div class="reserve-btn">
                 <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>
             </div>
-            <div class="image-container">
-                <img src="${imageUrl}" alt="${vehicleName}" />
-            </div>
-            ${videoThumbnail ? `
-            <div class="video-container">
-                <a href="${videoUrl}" target="_blank">
-                    <img src="${videoThumbnail}" alt="Watch ${vehicleName} video" />
-                    <div class="play-button"></div>
-                </a>
-            </div>` : ''}
         </div>
     `;
 }

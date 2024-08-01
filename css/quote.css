@@ -75,7 +75,7 @@ button:hover {
 .vehicle-name {
     font-size: 24px;
     font-weight: bold;
-    color: green;
+    color: black;
     margin: 0;
 }
 
@@ -159,6 +159,7 @@ button:hover {
     height: auto;
     object-fit: cover; /* Ensure the image/video fits within the given dimensions */
 }
+
 .copy-btn {
     text-align: center;
     margin-top: 10px; /* Smaller margin for more compact design */
@@ -176,4 +177,8 @@ button:hover {
 
 .copy-btn button:hover {
     background-color: #0056b3;
+}
+
+.alcohol-policy{
+    padding-top: 10px;
 }
