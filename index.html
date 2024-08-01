@@ -57,8 +57,8 @@
   </nav><!-- end #primary.navbar -->
 
 
-<div class="quote-container">
-    <h1>Get a Quote</h1>
+  <div class="quote-container">
+    <h1>Quote Generator</h1>
     <div class="form-group">
         <label for="name">Customer Name:</label>
         <input type="text" id="name" placeholder="Enter your name">
@@ -97,6 +97,9 @@
     <button onclick="calculateQuote()">Get Quote</button>
 
     <div class="result" id="result"></div>
+    <div class="copy-btn">
+        <button onclick="copyToClipboard()">Copy Quote</button>
+    </div>
 </div>
 
 <script src="script/navbar.js"></script>

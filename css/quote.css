@@ -4,6 +4,7 @@ body {
     margin: 20px;
     background-color: #f2f2f2;
     color: #333;
+    font-size: 14px;
 }
 
 .quote-container {
@@ -19,10 +20,12 @@ body {
 .quote-container h1 {
     text-align: center;
     color: #333;
+    margin-bottom: 20px;
 }
 
 .quote-container p {
     margin: 0;
+    line-height: 1.6;
 }
 
 .form-group {
@@ -61,17 +64,47 @@ button:hover {
 
 .result {
     margin-top: 20px;
+    font-size: 14px;
+}
+
+.intro-para {
+    padding-bottom: 20px;
+    font-size: 16px;
 }
 
 .vehicle-name {
     font-size: 24px;
     font-weight: bold;
     color: green;
+    margin: 0;
+}
+
+.vehicle-name-link {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.vehicle-name-link p {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #0073e6;
 }
 
 .details {
-    margin-top: 10px;
+    margin-top: 20px;
     line-height: 1.6;
+}
+
+.paragraph-padding {
+    padding-bottom: 20px;
+}
+
+#security-guard {
+    font-size: 12px;
+    font-style: italic;
 }
 
 .quote-info {
@@ -80,6 +113,11 @@ button:hover {
     border-radius: 8px;
     margin-top: 20px;
     border: 1px solid #eee;
+    font-size: 14px;
+}
+
+.quote-info p {
+    margin-bottom: 10px;
 }
 
 .total {
@@ -120,4 +158,22 @@ button:hover {
     width: 100%;
     height: auto;
     object-fit: cover; /* Ensure the image/video fits within the given dimensions */
+}
+.copy-btn {
+    text-align: center;
+    margin-top: 10px; /* Smaller margin for more compact design */
+}
+
+.copy-btn button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px; /* Smaller padding for a smaller button */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px; /* Smaller font size for the button text */
+}
+
+.copy-btn button:hover {
+    background-color: #0056b3;
 }
