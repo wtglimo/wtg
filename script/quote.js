@@ -174,6 +174,7 @@ function calculateQuote() {
             <div class="reserve-btn">
                 <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>
             </div>
+            <hr>
         </div>
     `;
 }
