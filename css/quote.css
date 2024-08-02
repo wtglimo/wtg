@@ -252,3 +252,35 @@ button:hover {
 
 
 
+.intro-para {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.8;
+    font-family: 'Arial', sans-serif;
+    text-align: left;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 15px;
+}
+.total {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 0 !important;
+}
+
+.all-inclusive {
+    font-size: 14px;
+    color: green;
+    margin-left: 5px;
+}
+
+.quote-expiry {
+    font-size: 14px;
+    color: #888;
+    font-style: italic;
+
+}

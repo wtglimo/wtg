@@ -311,7 +311,10 @@ function calculateQuote() {
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = `
         <div id="quote-content">
-            <p class="intro-para">Hi ${name}, Great Choice. ${vehicleName} is available at the time of this quote.</p>
+            <p class="intro-para">
+    Hello <strong>${name}</strong>,<br><br>
+    Thank you for choosing <strong>WAYTOGO</strong>. We're excited to inform you that the vehicle is <strong>available for your requested date</strong>. Please review the quote below and make your reservation online.
+</p>
             <h2 class="vehicle-name">${vehicleName}</h2>
             <div class="image-container">
                 <img src="${imageUrl}" alt="${vehicleName}" />
@@ -330,9 +333,9 @@ function calculateQuote() {
                     <p>Gratuity: ${gratuityPercentage}%</p>
                     <p>Gas Fee: $${gasFee.toFixed(2)}</p>
                     ${securityGuardFee > 0 ? `<p>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</p>` : ''}
-                    <p class="total"><strong>Total: $${total.toLocaleString()}</strong></p>
+                    <p class="total"><strong>Total: $${total.toFixed(2)}<span class="all-inclusive"> All Inclusive</span></strong></p>
+                    <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
                 </div>
-                <p class="paragraph-padding"><strong>Availability:</strong> The requested vehicle is available at the time of this quote. Act Fast. The quote is good for 14 days.</p>
                 <p><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
             </div>
             <div class="reserve-btn">
@@ -342,7 +345,6 @@ function calculateQuote() {
         </div>
     `;
 }
-
 function copyToClipboard() {
     const quoteContent = document.getElementById('quote-content');
     const range = document.createRange();
