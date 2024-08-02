@@ -312,28 +312,30 @@ function calculateQuote() {
     resultDiv.innerHTML = `
         <div id="quote-content">
             <p class="intro-para">
-    Hello <strong>${name}</strong>,<br><br>
-    Thank you for choosing <strong>WAYTOGO</strong>. We're excited to inform you that the vehicle is <strong>available for your requested date</strong>. Please review the quote below and make your reservation online.
-</p>
+                Hello <strong>${name}</strong>,<br><br>
+                Thank you for choosing <strong>WAYTOGO</strong>. We're excited to inform you that the vehicle is <strong>available for the requested date</strong>. Please review the quote below and make your reservation online.
+            </p>
             <h2 class="vehicle-name">${vehicleName}</h2>
             <div class="image-container">
                 <img src="${imageUrl}" alt="${vehicleName}" />
             </div>
             <div class="vehicle-name-link">
-                <p><a href="${vehicleLink}" target="_blank">(View this Vehicle)</a></p>
+                <p><a href="${vehicleLink}" target="_blank">(View More Pictures)</a></p>
             </div>
             <div class="details">
                 <p class="paragraph-padding"><strong>Vehicle Details:</strong> ${paxNumber} Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled,${hasRestroom ? ' Restroom,' : ''} Comfortable Perimeter Seats${hasRearBalcony ? ', Rear Balcony' : ''}, Ice & Water.</p>
                 <p><strong>Quote Includes:</strong> Unlimited stops & mileage, gratuity, all fees, fuel and service charges.</p>
                 <div class="quote-info">
                     <p class="quote-heading"><strong>Quote: ${hours} Hour Package</strong></p>
-                    <p>Base Rate: ${displayBaseRate} upto ${minHours} hours</p>
-                    ${additionalHours > 0 ? `<p>Additional Hours: ${additionalHours} hour(s) @ $${additionalHourRate.toLocaleString()}/hour</p>` : ''}
-                    <p>STC: ${stcPercentage}%</p>
-                    <p>Gratuity: ${gratuityPercentage}%</p>
-                    <p>Gas Fee: $${gasFee.toFixed(2)}</p>
-                    ${securityGuardFee > 0 ? `<p>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</p>` : ''}
-                    <p class="total"><strong>Total: $${total.toFixed(2)}<span class="all-inclusive"> All Inclusive</span></strong></p>
+                    <p>Base Rate: ${displayBaseRate} up to ${minHours} hours</p>
+                    <ul>
+                        ${additionalHours > 0 ? `<li>Additional Hours: ${additionalHours} hour(s) @ $${additionalHourRate.toLocaleString()}/hour</li>` : ''}
+                        <li>STC: ${stcPercentage}%</li>
+                        <li>Gratuity: ${gratuityPercentage}%</li>
+                        <li>Gas Fee: $${gasFee.toFixed(2)}</li>
+                        ${securityGuardFee > 0 ? `<li>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</li>` : ''}
+                    </ul>
+                    <p class="total"><strong>Total: $${total.toLocaleString(undefined, {minimumFractionDigits: 2})}<span class="all-inclusive"> All Inclusive</span></strong></p>
                     <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
                 </div>
                 <p><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
@@ -345,6 +347,7 @@ function calculateQuote() {
         </div>
     `;
 }
+
 function copyToClipboard() {
     const quoteContent = document.getElementById('quote-content');
     const range = document.createRange();
