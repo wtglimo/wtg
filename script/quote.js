@@ -17,6 +17,8 @@ function calculateQuote() {
     let imageUrl = '';
     let vehicleLink = '';
     let hasRearBalcony = false;
+    let hasRestroom = false;
+
 
     switch (vehicleType) {
         case 'trolley_midnight_36':
@@ -118,6 +120,168 @@ function calculateQuote() {
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/whiteHawk-main.png";
             vehicleLink = "https://wtglimo.com/Arlington-Heights-Party-Bus-Rental.php";
             break;
+        case 'pink_hummer_h2':
+            baseRate = 295 * minHours;
+            gasFee = 120;
+            additionalHourRate = 250;
+            vehicleName = "Pink Hummer H2";
+            paxNumber = 18;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkHummer-main.png";
+            vehicleLink = "https://wtglimo.com/hummer_pink_panther.php";
+            break;
+        case 'pink_chrysler_300':
+            baseRate = 295 * minHours;
+            gasFee = 120;
+            additionalHourRate = 250;
+            vehicleName = "Pink Chrysler 300";
+            paxNumber = 10;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkChrysler-main.png";
+            vehicleLink = "https://wtglimo.com/pink-limo-rental-Chicago.php";
+            break;
+        case 'christmas_trolley':
+            baseRate = 1495;
+            gasFee = 150;
+            vehicleName = "Christmas Trolley";
+            paxNumber = "24-36";
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/christmasTrolleyMain.png";
+            vehicleLink = "https://wtglimo.com/Christmas-trolley-tours-Chicago.php";
+            hasRearBalcony = true;
+            break;
+        case 'ford_transit_limo':
+            baseRate = 295 * minHours;
+            gasFee = 120;
+            additionalHourRate = 250;
+            vehicleName = "Ford Transit Limo";
+            paxNumber = 15;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/tranitBlack-main.png";
+            vehicleLink = "https://wtglimo.com/limo-van.php";
+            break;
+        case 'sprinter_shuttle_van':
+            baseRate = 250 * minHours;
+            gasFee = 100;
+            additionalHourRate = 200;
+            vehicleName = "Sprinter Shuttle Van";
+            paxNumber = 14;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/sprinter-main.png";
+            vehicleLink = "https://wtglimo.com/sprinter_shuttle_van.php";
+            break;
+        case 'hummer_h2_stretch_limo':
+            baseRate = 350 * minHours;
+            gasFee = 150;
+            additionalHourRate = 300;
+            vehicleName = "Hummer H2 Stretch Limo";
+            paxNumber = 20;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/hummerWhite-main.png";
+            vehicleLink = "https://wtglimo.com/suv_stretch_limousine_hummer_galaxy.php";
+            break;
+        case 'chrysler_300_limo':
+            baseRate = 250 * minHours;
+            gasFee = 100;
+            additionalHourRate = 200;
+            vehicleName = "Chrysler 300 Limo";
+            paxNumber = 10;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/chrysler300-main.png";
+            vehicleLink = "https://wtglimo.com/sedan_stretch_limo_chrysler_300_limo.php";
+            break;
+        case 'lincoln_mkt_limo':
+            baseRate = 250 * minHours;
+            gasFee = 100;
+            additionalHourRate = 200;
+            vehicleName = "Lincoln MKT Limo";
+            paxNumber = 10;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKT-main.png";
+            vehicleLink = "https://wtglimo.com/sedan_stretch_limo_lincoln_MKT_limo.php";
+            break;
+        case 'lincoln_navigator':
+            baseRate = 200 * minHours;
+            gasFee = 80;
+            additionalHourRate = 150;
+            vehicleName = "Lincoln Navigator";
+            paxNumber = 7;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/navigator-main.png";
+            vehicleLink = "https://wtglimo.com/lincoln-navigator-limo.php";
+            break;
+        case 'cadillac_escalade':
+            baseRate = 250 * minHours;
+            gasFee = 100;
+            additionalHourRate = 200;
+            vehicleName = "Cadillac Escalade";
+            paxNumber = 7;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/cadillac-main.png";
+            vehicleLink = "https://wtglimo.com/cadillac-escalade-limo.php";
+            break;
+        case 'chevrolet_suburban':
+            baseRate = 200 * minHours;
+            gasFee = 80;
+            additionalHourRate = 150;
+            vehicleName = "Chevrolet Suburban";
+            paxNumber = 7;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/suburban-main.png";
+            vehicleLink = "https://wtglimo.com/suv-limo-rental.php";
+            break;
+        case 'lincoln_mkz':
+            baseRate = 150 * minHours;
+            gasFee = 50;
+            additionalHourRate = 100;
+            vehicleName = "Lincoln MKZ";
+            paxNumber = 4;
+            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKZ-main.png";
+            vehicleLink = "https://wtglimo.com/limo-car-service.php";
+            break;
+        case 'coach_bus_super':
+            baseRate = 1200;
+            minHours = 4;
+            gasFee = 500;
+            vehicleName = "Coach Bus - Super";
+            hasRestroom = true;
+            paxNumber = 50;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/superCoach-main.png";
+            vehicleLink = "https://wtglimo.com/chicago-Super-Coach-Bus.php";
+            break;
+        case 'coach_bus_rentals':
+            baseRate = 1000;
+            minHours = 4;
+            gasFee = 400;
+            vehicleName = "Coach Bus - Everywhere";
+            hasRestroom = true;
+            paxNumber = 56;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/coachBusEverywhere-main.png";
+            vehicleLink = "https://wtglimo.com/chicago_coach_bus.php";
+            break;
+        case 'coach_bus_corporate':
+            baseRate = 1500;
+            minHours = 4;
+            gasFee = 600;
+            vehicleName = "Coach Bus - Corporate";
+            paxNumber = 42;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/exrcutiveBus-main.png";
+            vehicleLink = "https://wtglimo.com/executive_shuttle_bus.php";
+            break;
+        case 'coach_bus_crystal':
+            baseRate = 1300;
+            minHours = 4;
+            gasFee = 500;
+            vehicleName = "Coach Bus - Crystal";
+            paxNumber = 25;
+            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBusCrystal-main.png";
+            vehicleLink = "https://wtglimo.com/executive_bus_crystal.php";
+            break;
         default:
             alert("Invalid vehicle type selected.");
             return;
@@ -156,7 +320,7 @@ function calculateQuote() {
                 <p><a href="${vehicleLink}" target="_blank">(View this Vehicle)</a></p>
             </div>
             <div class="details">
-                <p class="paragraph-padding"><strong>Vehicle Details:</strong> ${paxNumber} Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats${hasRearBalcony ? ', Rear Balcony' : ''}, Ice & Water.</p>
+                <p class="paragraph-padding"><strong>Vehicle Details:</strong> ${paxNumber} Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled,${hasRestroom ? ' Restroom,' : ''} Comfortable Perimeter Seats${hasRearBalcony ? ', Rear Balcony' : ''}, Ice & Water.</p>
                 <p><strong>Quote Includes:</strong> Unlimited stops & mileage, gratuity, all fees, fuel and service charges.</p>
                 <div class="quote-info">
                     <p class="quote-heading"><strong>Quote: ${hours} Hour Package</strong></p>
