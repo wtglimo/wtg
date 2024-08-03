@@ -144,16 +144,6 @@ function calculateQuote() {
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBus-Dove-main.jpg";
             vehicleLink = "https://wtglimo.com/chicago-party-bus-rental.php";
             break;
-        case 'partybus_snowwhite_40':
-            baseRate = 1795;
-            minHours = 5;
-            gasFee = 250;
-            vehicleName = "Party Bus - Snow White";
-            paxNumber = 40;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
-            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/snowWhite-main.png";
-            vehicleLink = "https://wtglimo.com/naperville-party-bus-rental.php";
-            break;
         case 'partybus_nightrider_30':
             baseRate = 350 * minHours;
             gasFee = 125;
@@ -319,7 +309,7 @@ function calculateQuote() {
             baseRate = 1000;
             minHours = 4;
             gasFee = 400;
-            vehicleName = "Coach Bus - Everywhere";
+            vehicleName = "Motor Coach - Everywhere";
             hasRestroom = true;
             paxNumber = 56;
             displayBaseRate = `$${baseRate.toLocaleString()}`;
