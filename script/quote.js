@@ -404,7 +404,7 @@ function calculateQuote() {
         <div id="quote-content">
             <p class="intro-para">
                 Hello <strong>${name}</strong>,<br><br>
-                Thank you for choosing <strong>WAYTOGO & Charter Buses</strong>. We're excited to inform you that the<strong> requested vehicle is available.</strong> Please review the quote below and make your reservation online.
+                Thank you for choosing <strong>WAYTOGO Trolley & Charter Buses</strong>. We're excited to inform you that the<strong> requested vehicle is available.</strong> Please review the quote below and make your reservation online.
             </p>
             <h2 class="vehicle-name">${vehicleName}</h2>
             <div class="image-container">
