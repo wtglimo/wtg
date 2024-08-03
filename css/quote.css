@@ -1,35 +1,55 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 0;
+    padding: 10px;
     background-color: #f2f2f2;
     color: #333;
     font-size: 14px;
 }
+p{
+    margin: 0;
+}
 
-.quote-container {
+.quote-generator {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media (max-width: 991px) {
+    .quote-generator {
+        flex-direction: column;
+        justify-content: center;
+    }   
+}
+
+.quote-container, .result-section {
     max-width: 600px;
-    margin: auto;
-    padding: 20px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-.quote-container h1 {
+.quote-container {
+    flex: 2;
+    margin-right: 10px; /* Reduced gap between sections */
+}
+
+.result-section {
+    flex: 1;
+}
+
+.quote-container h1, .result-section h1 {
     text-align: center;
     color: #333;
-    margin-bottom: 20px;
-}
-
-.quote-container p {
-    margin: 0;
-    line-height: 1.6;
+    margin-bottom: 15px; /* Reduced bottom margin */
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Reduced bottom margin */
 }
 
 .form-group label {
@@ -40,7 +60,7 @@ body {
 
 .form-group input, .form-group select {
     width: 100%;
-    padding: 10px;
+    padding: 8px; /* Reduced padding */
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
@@ -62,18 +82,17 @@ button:hover {
     background-color: darkgreen;
 }
 
-.result {
-    margin-top: 20px;
-    font-size: 14px;
+.result, .intro-para, .quote-info, .copy-btn {
+    margin-top: 15px; /* Reduced top margin */
 }
 
 .intro-para {
-    padding-bottom: 20px;
-    font-size: 16px;
+    padding-bottom: 15px;
+    font-size: 14px;
 }
 
 .vehicle-name {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: black;
     margin: 0;
@@ -93,53 +112,48 @@ button:hover {
     color: #0073e6;
 }
 
-.details {
-    margin-top: 20px;
-    line-height: 1.6;
+.details, .quote-info {
+    margin-top: 15px; /* Reduced top margin */
+    line-height: 1.5;
 }
 
 .paragraph-padding {
-    padding-bottom: 20px;
+    padding-bottom: 15px; /* Reduced padding */
 }
 
-#security-guard {
-    font-size: 12px;
-    font-style: italic;
+.paragraph-reserve{
+    padding-top: 15px;
 }
 
 .quote-info {
     background-color: #f9f9f9;
-    padding: 15px;
+    padding: 10px; /* Reduced padding */
     border-radius: 8px;
-    margin-top: 20px;
     border: 1px solid #eee;
     font-size: 14px;
 }
 
-.quote-heading{
-    font-size: 20px;
-}
-
-.quote-info p {
-    margin-bottom: 10px;
+.quote-heading {
+    font-size: 18px;
 }
 
 .total {
     font-weight: bold;
     font-size: 18px;
+    margin-top: 10px; /* Reduced top margin */
 }
 
 .reserve-btn {
     display: block;
     text-align: left;
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px; /* Reduced bottom margin */
 }
 
 .reserve-btn a {
     background-color: green;
     color: white;
-    padding: 10px 20px;
+    padding: 8px 15px; /* Reduced padding */
     text-decoration: none;
     border-radius: 5px;
     font-size: 16px;
@@ -151,43 +165,38 @@ button:hover {
 
 .image-container, .video-container {
     text-align: left;
-    margin-top: 20px;
+    margin-top: 15px; /* Reduced top margin */
 }
 
 .image-container img,
 .video-container img {
     max-width: 100%;
-    max-height: 200px; /* Consistent height for both images and videos */
+    max-height: 200px;
     border-radius: 8px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     height: auto;
-    object-fit: cover; /* Ensure the image/video fits within the given dimensions */
+    object-fit: cover;
 }
 
 .copy-btn {
     text-align: center;
-    margin-top: 10px; /* Smaller margin for more compact design */
+    margin-top: 10px;
 }
 
 .copy-btn button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 5px 10px; /* Smaller padding for a smaller button */
+    padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px; /* Smaller font size for the button text */
+    font-size: 14px;
 }
 
 .copy-btn button:hover {
     background-color: #0056b3;
 }
-
-.alcohol-policy{
-    padding-top: 10px;
-}
-
 
 /* Smaller Switch Styles */
 .switch {
@@ -195,15 +204,15 @@ button:hover {
     display: inline-block;
     width: 40px;
     height: 20px;
-  }
+}
   
-  .switch input {
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
+}
   
-  .slider {
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -213,9 +222,9 @@ button:hover {
     background-color: #ccc;
     transition: 0.4s;
     border-radius: 20px;
-  }
+}
   
-  .slider:before {
+.slider:before {
     position: absolute;
     content: "";
     height: 16px;
@@ -225,66 +234,65 @@ button:hover {
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
-  }
+}
   
-  input:checked + .slider {
+input:checked + .slider {
     background-color: #2196F3;
-  }
+}
   
-  input:checked + .slider:before {
+input:checked + .slider:before {
     transform: translateX(20px);
-  }
+}
   
-  .switch-label {
+.switch-label {
     margin-right: 10px;
     font-weight: bold;
     font-size: 16px;
-  }
-  
+}
 
-  hr {
+hr {
     border: 0;
     border-top: 1px solid #ccc;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    
-}
-
-
-
-.intro-para {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 20px;
-    line-height: 1.8;
-    font-family: 'Arial', sans-serif;
-    text-align: left;
-    padding: 10px 0;
-    border-radius: 5px;
-    padding: 15px;
-}
-.total {
-    font-weight: bold;
-    font-size: 18px;
-    margin-top: 15px;
-    margin-bottom: 0 !important;
-}
-
-.all-inclusive {
-    font-size: 14px;
-    color: green;
-    margin-left: 5px;
+    margin: 10px 0; /* Reduced margin */
 }
 
 .quote-expiry {
     font-size: 14px;
     color: #888;
     font-style: italic;
-
 }
 
-
-
-.form-group input, .form-group select{
+.form-group input, .form-group select {
     width: auto;
+}
+
+.byob-text {
+    font-style: italic;
+    font-size: 12px;
+    color: #888;
+}
+
+.quote-and-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px; /* Reduced gap */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.quote-container {
+    flex: 2;
+    max-width: 600px;
+    padding: 15px; /* Reduced padding */
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.result-section {
+    flex: 1;
+    max-width: 500px; /* Reduced max-width */
+    padding: 15px; /* Reduced padding */
+    background-color: #fff;
+    border-radius: 5px;
 }

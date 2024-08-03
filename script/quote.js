@@ -1,19 +1,56 @@
 document.addEventListener('DOMContentLoaded', function() {
     const quoteTypeRadios = document.getElementsByName('quote-type');
+    const additionalHoursCheckbox = document.getElementById('include-additional-hours');
+    const byobCheckbox = document.getElementById('include-byob');
+    
     quoteTypeRadios.forEach(radio => {
         radio.addEventListener('change', function() {
             toggleCustomQuoteFields();
         });
     });
+
+    additionalHoursCheckbox.addEventListener('change', function() {
+        toggleAdditionalHoursFields();
+    });
+
+    byobCheckbox.addEventListener('change', function() {
+        toggleBYOBFields();
+    });
 });
 
 function toggleCustomQuoteFields() {
     const customQuoteFields = document.getElementById('custom-quote-fields');
+    const byobSwitchContainer = document.querySelector('.form-group.byob-switch');
     const quoteType = document.querySelector('input[name="quote-type"]:checked').value;
+
     if (quoteType === 'custom') {
         customQuoteFields.style.display = 'block';
+        byobSwitchContainer.style.display = 'none'; // Hide BYOB switch for custom quote
     } else {
         customQuoteFields.style.display = 'none';
+        byobSwitchContainer.style.display = 'block'; // Show BYOB switch for preset quote
+    }
+}
+
+function toggleAdditionalHoursFields() {
+    const additionalHoursFields = document.getElementById('additional-hours-fields');
+    const additionalHoursCheckbox = document.getElementById('include-additional-hours');
+
+    if (additionalHoursCheckbox.checked) {
+        additionalHoursFields.style.display = 'block';
+    } else {
+        additionalHoursFields.style.display = 'none';
+    }
+}
+
+function toggleBYOBFields() {
+    const byobFields = document.getElementById('byob-fields');
+    const byobCheckbox = document.getElementById('include-byob');
+
+    if (byobCheckbox.checked) {
+        byobFields.style.display = 'block';
+    } else {
+        byobFields.style.display = 'none';
     }
 }
 
@@ -23,6 +60,8 @@ function calculateQuote() {
     const hours = parseInt(document.getElementById('hours').value);
     const includeAlcohol = document.getElementById('include-alcohol').checked;
     const quoteType = document.querySelector('input[name="quote-type"]:checked').value;
+    const includeAdditionalHours = document.getElementById('include-additional-hours').checked;
+    const includeBYOB = document.getElementById('include-byob').checked;
 
     let baseRate = 0;
     let minHours = 4;
@@ -38,6 +77,11 @@ function calculateQuote() {
     let vehicleLink = '';
     let hasRearBalcony = false;
     let hasRestroom = false;
+
+    // Initialize custom additional hours and rate variables
+    let customAdditionalHours = 0;
+    let customRateAdditional = 0;
+    let perHourRate = 0;
 
     // Fetch vehicle data regardless of quote type
     switch (vehicleType) {
@@ -306,23 +350,38 @@ function calculateQuote() {
             alert("Invalid vehicle type selected.");
             return;
     }
-
     let totalAdditionalCost = 0;
+    let totalBYOBCost = 0;
     let totalHours = hours;
+
     if (quoteType === 'custom') {
         minHours = 1; // Set minimum hours to 1 for custom quotes
         baseRate = parseInt(document.getElementById('custom-base-rate').value) || 0;
         gasFee = parseInt(document.getElementById('custom-gas-fee').value) || 0;
-        const customAdditionalHours = parseInt(document.getElementById('custom-additional-hours').value) || 0;
-        const customRateAdditional = parseInt(document.getElementById('custom-rate-additional').value) || 0;
-        totalAdditionalCost = customAdditionalHours * customRateAdditional;
+
+        if (includeAdditionalHours) {
+            customAdditionalHours = parseInt(document.getElementById('custom-additional-hours').value) || 0;
+            customRateAdditional = parseInt(document.getElementById('custom-rate-additional').value) || 0;
+            totalAdditionalCost = customAdditionalHours * customRateAdditional;
+            totalHours += customAdditionalHours; // Add additional hours to total hours
+        }
+
+        if (includeBYOB) {
+            const customBYOBHours = parseInt(document.getElementById('custom-byob-hours').value) || 0;
+            const customRateBYOB = parseInt(document.getElementById('custom-rate-byob').value) || 0;
+            totalBYOBCost = customBYOBHours * customRateBYOB;
+        }
+
         baseRate *= hours; // Multiply base rate by the number of hours
+        perHourRate = baseRate / hours;
         displayBaseRate = `$${baseRate.toLocaleString()}`;
-        totalHours += customAdditionalHours; // Add additional hours to total hours
+    } else {
+        // Add the preset quote specific logic if necessary
+        perHourRate = baseRate / minHours; // Assuming baseRate for preset includes the minimum hours
     }
 
     // Calculate security guard fee if alcohol is included and the vehicle has more than 15 passengers
-    if (includeAlcohol && paxNumber > 15) {
+    if (includeAlcohol && paxNumber > 15 && quoteType !== 'custom') {
         securityGuardFee = 250; // Base fee for 4 hours
         if (totalHours > 4) {
             securityGuardFee += (totalHours - 4) * 35; // Additional fee for extra hours
@@ -338,14 +397,14 @@ function calculateQuote() {
     const totalBaseRate = baseRate; // Base rate covers the specified hours
     const stc = (totalBaseRate * stcPercentage) / 100;
     const gratuity = (totalBaseRate * gratuityPercentage) / 100;
-    const total = totalBaseRate + stc + gratuity + gasFee + securityGuardFee + totalAdditionalCost; // Include additional custom hours cost
+    const total = totalBaseRate + stc + gratuity + gasFee + securityGuardFee + totalAdditionalCost + totalBYOBCost; // Include additional custom hours cost
 
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = `
         <div id="quote-content">
             <p class="intro-para">
                 Hello <strong>${name}</strong>,<br><br>
-                Thank you for choosing <strong>WAYTOGO</strong>. We're excited to inform you that the vehicle is <strong>available for the requested date</strong>. Please review the quote below and make your reservation online.
+                Thank you for choosing <strong>WAYTOGO & Charter Buses</strong>. We're excited to inform you that the<strong> requested vehicle is available.</strong> Please review the quote below and make your reservation online.
             </p>
             <h2 class="vehicle-name">${vehicleName}</h2>
             <div class="image-container">
@@ -359,18 +418,19 @@ function calculateQuote() {
                 <p><strong>Quote Includes:</strong> Unlimited stops & mileage, gratuity, all fees, fuel and service charges.</p>
                 <div class="quote-info">
                     <p class="quote-heading"><strong>Quote: ${totalHours} Hour Package</strong></p>
-                    <p>Base Rate: ${displayBaseRate} up to ${minHours} hours</p>
+                    <p>Base Rate: ${displayBaseRate} <span class="byob-text">(${hours} hrs @ $${perHourRate.toFixed(2)} per hour)</span></p>
                     <ul>
                     <li>STC: ${stcPercentage}%</li>
                     <li>Gratuity: ${gratuityPercentage}%</li>
                     <li>Gas Fee: $${gasFee.toFixed(2)}</li>
                     ${securityGuardFee > 0 ? `<li>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</li>` : ''}
-                    ${totalAdditionalCost > 0 ? `<li>Additional Hours Cost: $${totalAdditionalCost.toLocaleString()}</li>` : ''}
+                    ${totalBYOBCost > 0 ? `<li>BYOB Security Cost: $${totalBYOBCost.toLocaleString()} <span class="byob-text">(Chicago Trips Only)</span></li>` : ''}
+                    ${totalAdditionalCost > 0 ? `<li>Additional Hours Cost: $${totalAdditionalCost.toLocaleString()} <span class="byob-text">(${customAdditionalHours} hrs @ $${customRateAdditional})</span></li>` : ''}
                     </ul>
-                    <p class="total"><strong>Total: $${total.toLocaleString(undefined, {minimumFractionDigits: 2})}<span class="all-inclusive"> All Inclusive</span></strong></p>
+                    <p class="total"><strong>Total: $${total.toLocaleString(undefined, {minimumFractionDigits: 2})}<span class="byob-text"> (All Inclusive)</span></strong></p>
                     <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
                 </div>
-                <p><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
+                <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
             </div>
             <div class="reserve-btn">
                 <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>
@@ -382,11 +442,27 @@ function calculateQuote() {
 
 function copyToClipboard() {
     const quoteContent = document.getElementById('quote-content');
-    const range = document.createRange();
-    range.selectNode(quoteContent);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-    document.execCommand('copy');
-    window.getSelection().removeAllRanges();
-    alert("Quote copied to clipboard!");
+    if (quoteContent) {
+        // Create a range object and set it to the content to be copied
+        const range = document.createRange();
+        range.selectNode(quoteContent);
+
+        // Clear any existing selection and add the new range to the selection
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        // Copy the selected content to the clipboard
+        try {
+            document.execCommand('copy');
+            alert("Quote copied to clipboard!");
+        } catch (err) {
+            alert("Failed to copy the quote. Please try again.");
+        }
+
+        // Remove the selection
+        selection.removeAllRanges();
+    } else {
+        alert("No quote available to copy.");
+    }
 }

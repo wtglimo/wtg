@@ -6,7 +6,6 @@
     <title>Vehicle Rental Quote</title>
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/quote.css">
-    <link rel="stylesheet" href="css/calculator.css">
 </head>
 <body>
 
@@ -57,6 +56,7 @@
 
   </nav><!-- end #primary.navbar -->
 
+  <section class="quote-generator">
 
   <div class="quote-container">
     <h1>Quote Generator</h1>
@@ -127,73 +127,72 @@
   </div>
     <div class="form-group">
         <label for="hours">Number of Hours:</label>
-        <input type="number" id="hours" min="4" value="4">
+        <input type="number" id="hours" min="4" value="4" >
     </div>
 
     <div id="custom-quote-fields" class="form-group" style="display:none;">
       <label for="custom-base-rate">Custom Base Rate:</label>
       <input type="number" id="custom-base-rate" placeholder="Enter base rate">
+      
       <label for="custom-gas-fee">Custom Gas Fee:</label>
       <input type="number" id="custom-gas-fee" placeholder="Enter gas fee">
-      <label for="custom-additional-hours">Additional Hours:</label>
-      <input type="number" id="custom-additional-hours" placeholder="Enter additional hours" min="0">
-      <label for="custom-rate-additional">Rate per Additional Hour:</label>
-      <input type="number" id="custom-rate-additional" placeholder="Enter rate per additional hour">
-  </div>
-  
-
-    <div class="form-group">
+      
+      <label>
+        <input type="checkbox" id="include-additional-hours"> Include Additional Hours
+      </label>
+      
+      <div id="additional-hours-fields" style="display:none;">
+        <label for="custom-additional-hours">Additional Hours:</label>
+        <input type="number" id="custom-additional-hours" placeholder="Enter additional hours">
+        
+        <label for="custom-rate-additional">Rate for Additional Hours:</label>
+        <input type="number" id="custom-rate-additional" placeholder="Enter rate for additional hours">
+      </div>
+    
+      <label>
+        <input type="checkbox" id="include-byob"> Include BYOB
+      </label>
+    
+      <div id="byob-fields" style="display:none;">
+        <label for="custom-byob-hours">BYOB Hours:</label>
+        <input type="number" id="custom-byob-hours" placeholder="Enter BYOB hours">
+        
+        <label for="custom-rate-byob">Rate for BYOB:</label>
+        <input type="number" id="custom-rate-byob" placeholder="Enter BYOB rate">
+      </div>
+    </div>
+    
+    
+    
+    <div class="form-group byob-switch">
       <label for="include-alcohol-switch" class="switch-label">Include BYOB (Alcohol)</label>
       <label class="switch">
         <input type="checkbox" id="include-alcohol">
         <span class="slider"></span>
       </label>
     </div>
+   
+  
     
 
     <button onclick="calculateQuote()">Get Quote</button>
 
-    <div class="result" id="result"></div>
+    <!-- <div class="result" id="result"></div>
     <div class="copy-btn">
         <button onclick="copyToClipboard()">Copy Quote</button>
-    </div>
+    </div> -->
 </div>
 
-<div class="calculator-container">
-  <h2>Calculator</h2>
-  <div class="form-group">
-      <label for="rate-type">Rate Type:</label>
-      <select id="rate-type" onchange="toggleRateType()">
-          <option value="hourly">Base Rate Per Hour</option>
-          <option value="fixed">Base Rate Fixed Amount</option>
-      </select>
-  </div>
-  <div class="form-group">
-      <label for="custom-base-rate">Base Rate ($):</label>
-      <input type="number" id="custom-base-rate" placeholder="Enter base rate">
-  </div>
-  <div class="form-group" id="hours-group">
-      <label for="custom-hours">Number of Hours:</label>
-      <input type="number" id="custom-hours" placeholder="Enter number of hours" min="1">
-  </div>
-  <div class="form-group">
-      <label>STC: 10%</label>
-  </div>
-  <div class="form-group">
-      <label>Gratuity: 15%</label>
-  </div>
-  <div class="form-group">
-      <label for="custom-gas-fee">Gas Fee ($):</label>
-      <input type="number" id="custom-gas-fee" placeholder="Enter gas fee">
-  </div>
-  <div class="form-group">
-      <button onclick="calculateCustomTotal()">Calculate</button>
-  </div>
-  <div class="form-group">
-      <label>Total Cost ($):</label>
-      <input type="text" id="custom-total-cost" readonly>
-  </div>
+<div class="result-section">
+  <div class="result" id="result"></div>
+  <div class="copy-btn">
+    <button onclick="copyToClipboard()">Copy Quote</button>
 </div>
+</div>
+</div>
+
+</section>
+
 
 
 
@@ -201,7 +200,6 @@
 
 <script src="script/navbar.js"></script>
 <script src="script/quote.js"></script>
-<script src="script/calculator.js"></script>
 
 </body>
 </html>
