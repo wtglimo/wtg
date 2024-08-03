@@ -1,8 +1,28 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const quoteTypeRadios = document.getElementsByName('quote-type');
+    quoteTypeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            toggleCustomQuoteFields();
+        });
+    });
+});
+
+function toggleCustomQuoteFields() {
+    const customQuoteFields = document.getElementById('custom-quote-fields');
+    const quoteType = document.querySelector('input[name="quote-type"]:checked').value;
+    if (quoteType === 'custom') {
+        customQuoteFields.style.display = 'block';
+    } else {
+        customQuoteFields.style.display = 'none';
+    }
+}
+
 function calculateQuote() {
     const name = document.getElementById('name').value || "Customer";
     const vehicleType = document.getElementById('vehicle').value;
     const hours = parseInt(document.getElementById('hours').value);
     const includeAlcohol = document.getElementById('include-alcohol').checked;
+    const quoteType = document.querySelector('input[name="quote-type"]:checked').value;
 
     let baseRate = 0;
     let minHours = 4;
@@ -19,7 +39,7 @@ function calculateQuote() {
     let hasRearBalcony = false;
     let hasRestroom = false;
 
-
+    // Fetch vehicle data regardless of quote type
     switch (vehicleType) {
         case 'trolley_midnight_36':
             baseRate = 1795;
@@ -287,26 +307,38 @@ function calculateQuote() {
             return;
     }
 
-    if (hours < minHours) {
-        alert(`Minimum hours for ${vehicleName} is ${minHours}.`);
-        return;
+    let totalAdditionalCost = 0;
+    let totalHours = hours;
+    if (quoteType === 'custom') {
+        minHours = 1; // Set minimum hours to 1 for custom quotes
+        baseRate = parseInt(document.getElementById('custom-base-rate').value) || 0;
+        gasFee = parseInt(document.getElementById('custom-gas-fee').value) || 0;
+        const customAdditionalHours = parseInt(document.getElementById('custom-additional-hours').value) || 0;
+        const customRateAdditional = parseInt(document.getElementById('custom-rate-additional').value) || 0;
+        totalAdditionalCost = customAdditionalHours * customRateAdditional;
+        baseRate *= hours; // Multiply base rate by the number of hours
+        displayBaseRate = `$${baseRate.toLocaleString()}`;
+        totalHours += customAdditionalHours; // Add additional hours to total hours
     }
 
     // Calculate security guard fee if alcohol is included and the vehicle has more than 15 passengers
     if (includeAlcohol && paxNumber > 15) {
         securityGuardFee = 250; // Base fee for 4 hours
-        if (hours > 4) {
-            securityGuardFee += (hours - 4) * 35; // Additional fee for extra hours
+        if (totalHours > 4) {
+            securityGuardFee += (totalHours - 4) * 35; // Additional fee for extra hours
         }
     }
 
-    const additionalHours = hours > minHours ? hours - minHours : 0;
-    const additionalCost = additionalHours * additionalHourRate;
-    const totalBaseRate = baseRate; // Base rate covers the minimum hours
+    if (hours < minHours) {
+        alert(`Minimum hours for ${vehicleName} is ${minHours}.`);
+        return;
+    }
 
+    // Calculate total cost
+    const totalBaseRate = baseRate; // Base rate covers the specified hours
     const stc = (totalBaseRate * stcPercentage) / 100;
     const gratuity = (totalBaseRate * gratuityPercentage) / 100;
-    const total = totalBaseRate + stc + gratuity + gasFee + additionalCost + securityGuardFee; // Adding additional hours cost and security guard fee to the total
+    const total = totalBaseRate + stc + gratuity + gasFee + securityGuardFee + totalAdditionalCost; // Include additional custom hours cost
 
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = `
@@ -326,14 +358,14 @@ function calculateQuote() {
                 <p class="paragraph-padding"><strong>Vehicle Details:</strong> ${paxNumber} Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled,${hasRestroom ? ' Restroom,' : ''} Comfortable Perimeter Seats${hasRearBalcony ? ', Rear Balcony' : ''}, Ice & Water.</p>
                 <p><strong>Quote Includes:</strong> Unlimited stops & mileage, gratuity, all fees, fuel and service charges.</p>
                 <div class="quote-info">
-                    <p class="quote-heading"><strong>Quote: ${hours} Hour Package</strong></p>
+                    <p class="quote-heading"><strong>Quote: ${totalHours} Hour Package</strong></p>
                     <p>Base Rate: ${displayBaseRate} up to ${minHours} hours</p>
                     <ul>
-                        ${additionalHours > 0 ? `<li>Additional Hours: ${additionalHours} hour(s) @ $${additionalHourRate.toLocaleString()}/hour</li>` : ''}
-                        <li>STC: ${stcPercentage}%</li>
-                        <li>Gratuity: ${gratuityPercentage}%</li>
-                        <li>Gas Fee: $${gasFee.toFixed(2)}</li>
-                        ${securityGuardFee > 0 ? `<li>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</li>` : ''}
+                    <li>STC: ${stcPercentage}%</li>
+                    <li>Gratuity: ${gratuityPercentage}%</li>
+                    <li>Gas Fee: $${gasFee.toFixed(2)}</li>
+                    ${securityGuardFee > 0 ? `<li>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</li>` : ''}
+                    ${totalAdditionalCost > 0 ? `<li>Additional Hours Cost: $${totalAdditionalCost.toLocaleString()}</li>` : ''}
                     </ul>
                     <p class="total"><strong>Total: $${total.toLocaleString(undefined, {minimumFractionDigits: 2})}<span class="all-inclusive"> All Inclusive</span></strong></p>
                     <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
@@ -352,9 +384,9 @@ function copyToClipboard() {
     const quoteContent = document.getElementById('quote-content');
     const range = document.createRange();
     range.selectNode(quoteContent);
-    window.getSelection().removeAllRanges(); // Clear any existing selection
-    window.getSelection().addRange(range);   // Select the text within the quoteContent
-    document.execCommand('copy');            // Copy the selected text to the clipboard
-    window.getSelection().removeAllRanges(); // Clear the selection
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
     alert("Quote copied to clipboard!");
 }
