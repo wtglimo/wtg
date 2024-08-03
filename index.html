@@ -137,29 +137,34 @@
       <label for="custom-gas-fee">Gas Fee:</label>
       <input type="number" id="custom-gas-fee" placeholder="gas fee">
       
-      <label>
-        <input type="checkbox" id="include-additional-hours"> Include Additional Hours
-      </label>
-      
-      <div id="additional-hours-fields" style="display:none;">
-        <label for="custom-additional-hours">Additional Hours:</label>
-        <input type="number" id="custom-additional-hours" placeholder="Additional Hours">
-        
-        <label for="custom-rate-additional">Additional Hours Rate:</label>
-        <input type="number" id="custom-rate-additional" placeholder="Additional Hours Rate">
-      </div>
-    
-      <label>
-        <input type="checkbox" id="include-byob"> Include BYOB
-      </label>
-    
-      <div id="byob-fields" style="display:none;">
-        <label for="custom-byob-hours">BYOB Hours:</label>
-        <input type="number" id="custom-byob-hours" placeholder="BYOB hours">
-        
-        <label for="custom-rate-byob">Rate BYOB:</label>
-        <input type="number" id="custom-rate-byob" placeholder="BYOB rate">
-      </div>
+<!-- Additional Hours Toggle -->
+<label for="include-additional-hours-switch" class="switch-label">Include Additional Hours</label>
+<label class="switch">
+  <input type="checkbox" id="include-additional-hours">
+  <span class="slider"></span>
+</label>
+
+<div id="additional-hours-fields" style="display:none;">
+  <label for="custom-additional-hours">Additional Hours:</label>
+  <input type="number" id="custom-additional-hours" placeholder="Additional Hours">
+  <label for="custom-rate-additional">Additional Hours Rate:</label>
+  <input type="number" id="custom-rate-additional" placeholder="Additional Hours Rate">
+</div>
+
+<!-- BYOB Toggle -->
+<label for="include-byob-switch" class="switch-label">Include BYOB</label>
+<label class="switch">
+  <input type="checkbox" id="include-byob">
+  <span class="slider"></span>
+</label>
+
+<div id="byob-fields" style="display:none;">
+  <label for="custom-byob-hours">BYOB Hours:</label>
+  <input type="number" id="custom-byob-hours" placeholder="BYOB hours">
+  <label for="custom-rate-byob">Rate BYOB:</label>
+  <input type="number" id="custom-rate-byob" placeholder="BYOB rate">
+</div>
+
     </div>
     
     
