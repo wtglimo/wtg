@@ -38,6 +38,7 @@ function toggleCustomQuoteFields() {
         customQuoteHoursBYOB.style.display = "none";
         byobSwitchContainer.style.display = "block"; // Show BYOB switch for preset quote
         presetQuoteAlcoholPolicy.style.display = "block"; // Show BYOB switch for preset quote
+        byobSwitchContainer.style.display = "block"; // Show BYOB switch for preset quote
         presetHoursField.style.display = "block"; // Show preset hours for preset quote
     }
 }
@@ -68,6 +69,7 @@ function calculateQuote() {
     const name = document.getElementById("name").value || "Customer";
     const vehicleAvailable = document.getElementById("vehicle-available").checked;
     const includeAlcoholPolicy = document.getElementById("include-alcohol-policy").checked;
+    const includeAlcoholPolicyCustom = document.getElementById("include-alcohol-policy-custom").checked;
     const includeMinHoursPolicy = document.getElementById("include-min-hours-policy").checked;
     const vehicleType = document.getElementById("vehicle").value;
     const hours = parseInt(document.getElementById("hours").value) || 0; // Default to 0 if undefined
@@ -491,6 +493,9 @@ function calculateQuote() {
               </div>
           </div>
           ${includeAlcoholPolicy ? `<div class="minimum-requirements">
+              <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
+            </div>` : ''}
+          ${includeAlcoholPolicyCustom ? `<div class="minimum-requirements">
               <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
             </div>` : ''}
             
