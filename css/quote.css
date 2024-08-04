@@ -124,6 +124,7 @@ button:hover {
 
 .paragraph-reserve {
     padding-top: 15px;
+    font-weight: 100;
 }
 
 .quote-info {
@@ -271,6 +272,7 @@ hr {
     font-style: italic;
     font-size: 12px;
     color: #888;
+    font-weight: 600;
 }
 
 .quote-and-result {
@@ -304,9 +306,9 @@ hr {
 
 
 
-
-
-
+.byob-switch{
+    margin-top: 10px;
+}
 .inline-fields {
     display: flex;
     justify-content: space-between;
@@ -332,4 +334,24 @@ hr {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+}
+
+.quote-datetime {
+    font-size: 14px;
+    color: #888; /* Grey color */
+    margin-bottom: 10px; /* Space between date/time and other content */
+    display: flex;
+    margin-bottom: 0;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+.minimum-requirements{
+    margin-top: 10px;
+    font-weight: 100;
+}
+
+.vehicle-recommeded{
+    font-size: 15px;
+    color: #565656; /* Grey color */
 }

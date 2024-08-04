@@ -69,9 +69,22 @@
       </label>
 
   </div>
+
+  <div class="form-group inline-fields">
+    <div>
+        <label for="date">Date:</label>
+        <input type="date" id="date" placeholder="Date">
+    </div>
+    <div>
+        <label for="time">Time:</label>
+        <input type="time" id="time" placeholder="Time">
+    </div>
+</div>
+
+
     <div class="form-group">
       <label for="name">Customer Name:</label>
-      <input type="text" id="name" placeholder="name">
+      <input type="text" id="name" placeholder="Name">
   </div>
   <div class="form-group vehicle-availability">
     <label for="vehicle-available-switch" class="switch-label">Vehicle Available</label>
@@ -135,6 +148,22 @@
     <label for="preset-hours">Number of Hours:</label>
     <input type="number" id="preset-hours" min="4" value="4">
 </div>
+<div class="form-group min-hours-policy">
+  <label for="include-min-hours-policy-switch" class="switch-label">Include Minimum Hours Policy</label>
+  <label class="switch">
+    <input type="checkbox" id="include-min-hours-policy">
+    <span class="slider"></span>
+  </label>
+</div>
+
+<div class="form-group alcohol-policy">
+  <label for="include-alcohol-policy-switch" class="switch-label">Include Alcohol Policy</label>
+  <label class="switch">
+    <input type="checkbox" id="include-alcohol-policy">
+    <span class="slider"></span>
+  </label>
+</div>
+
 
     <div id="custom-quote-fields" class="form-group" style="display:none;">
       <div class="form-group inline-fields">
@@ -144,12 +173,27 @@
         </div>
         <div>
             <label for="custom-base-rate">Base Rate:</label>
-            <input type="number" id="custom-base-rate" placeholder="base rate">
+            <input type="number" id="custom-base-rate" placeholder="Base Rate">
         </div>
     </div>
 
       <label for="custom-gas-fee">Gas Fee:</label>
-      <input type="number" id="custom-gas-fee" placeholder="gas fee">
+      <input type="number" id="custom-gas-fee" placeholder="Gas Fee">
+
+
+      <!-- BYOB Toggle -->
+<label for="include-byob-switch" class="switch-label byob-switch">Include BYOB</label>
+<label class="switch">
+  <input type="checkbox" id="include-byob">
+  <span class="slider"></span>
+</label>
+
+<div id="byob-fields" style="display:none;">
+  <div class="inline-fields">
+  <input type="number" id="custom-byob-hours" placeholder="BYOB Hours">
+  <input type="number" id="custom-rate-byob" placeholder="BYOB Rate">
+  </div>
+</div>
       
 <!-- Additional Hours Toggle -->
 <label for="include-additional-hours-switch" class="switch-label">Include Additional Hours</label>
@@ -159,25 +203,13 @@
 </label>
 
 <div id="additional-hours-fields" style="display:none;">
-  <div class="input-inline-style">
+  <div class="inline-fields">
   <input type="number" id="custom-additional-hours" placeholder="Additional Hours">
   <input type="number" id="custom-rate-additional" placeholder="Additional Hours Rate">
 </div>
 </div>
 
-<!-- BYOB Toggle -->
-<label for="include-byob-switch" class="switch-label">Include BYOB</label>
-<label class="switch">
-  <input type="checkbox" id="include-byob">
-  <span class="slider"></span>
-</label>
 
-<div id="byob-fields" style="display:none;">
-  <div class="input-inline-style">
-  <input type="number" id="custom-byob-hours" placeholder="BYOB hours">
-  <input type="number" id="custom-rate-byob" placeholder="BYOB rate">
-  </div>
-</div>
 
     </div>
     
