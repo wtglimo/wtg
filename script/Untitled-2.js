@@ -63,39 +63,19 @@ function toggleTripTypeFields() {
         customQuoteFields.style.display = "block";
         customQuoteHoursBYOB.style.display = "block";
         includeMinHoursPolicy.style.display = "block";
-        baseRateField.style.display = "block";
-        hoursField.parentElement.style.display = "block";
+        baseRateField.style.display = "none"; // Hide base rate input for hourly trips
+        hoursField.parentElement.style.display = "block"; // Show hours input for hourly trips
     } else if (tripType === "one-way" || tripType === "two-way") {
-        customQuoteFields.style.display = "block";
-        customQuoteHoursBYOB.style.display = "none";
-        includeMinHoursPolicy.style.display = "none";
-        baseRateField.style.display = "block";
-        hoursField.value = "";
-        hoursField.parentElement.style.display = "none";
+        customQuoteFields.style.display = "block"; // Show custom fields for one-way and two-way trips
+        customQuoteHoursBYOB.style.display = "none"; // Hide BYOB fields
+        includeMinHoursPolicy.style.display = "none"; // Hide min hours policy
+        baseRateField.style.display = "block"; // Show base rate input for one-way and two-way trips
+        hoursField.value = ""; // Clear hours input value
+        hoursField.parentElement.style.display = "none"; // Hide hours input for one-way and two-way trips
     }
 }
 
-function toggleAdditionalHoursFields() {
-    const additionalHoursFields = document.getElementById("additional-hours-fields");
-    const additionalHoursCheckbox = document.getElementById("include-additional-hours");
 
-    if (additionalHoursCheckbox.checked) {
-        additionalHoursFields.style.display = "block";
-    } else {
-        additionalHoursFields.style.display = "none";
-    }
-}
-
-function toggleBYOBFields() {
-    const byobFields = document.getElementById("byob-fields");
-    const byobCheckbox = document.getElementById("include-byob");
-
-    if (byobCheckbox.checked) {
-        byobFields.style.display = "block";
-    } else {
-        byobFields.style.display = "none";
-    }
-}
 
 function calculateQuote() {
     const name = document.getElementById("name").value || "Customer";
@@ -420,7 +400,6 @@ function calculateQuote() {
     let totalAdditionalCost = 0;
     let totalBYOBCost = 0;
     let totalHours = hours;
-
     if (quoteType === "custom") {
         if (tripType === "hourly") {
             if (hours < minHours) {
@@ -428,9 +407,11 @@ function calculateQuote() {
                 return;
             }
     
+            // Get base rate and gas fee for hourly custom quote
             baseRate = parseInt(document.getElementById("custom-base-rate").value) || 0;
             gasFee = parseInt(document.getElementById("custom-gas-fee").value) || 0;
     
+            // Calculate additional hours cost if included
             if (includeAdditionalHours) {
                 customAdditionalHours = parseInt(document.getElementById("custom-additional-hours").value) || 0;
                 customRateAdditional = parseInt(document.getElementById("custom-rate-additional").value) || 0;
@@ -438,19 +419,22 @@ function calculateQuote() {
                 totalHours += customAdditionalHours;
             }
     
+            // Calculate BYOB cost if included
             if (includeBYOB) {
                 const customBYOBHours = parseInt(document.getElementById("custom-byob-hours").value) || 0;
                 const customRateBYOB = parseInt(document.getElementById("custom-rate-byob").value) || 0;
                 totalBYOBCost = customBYOBHours * customRateBYOB;
             }
     
+            // Calculate base rate based on the number of hours
             baseRate *= hours;
             perHourRate = baseRate / hours;
             displayBaseRate = `$${baseRate.toLocaleString()}`;
         } else if (tripType === "one-way" || tripType === "two-way") {
+            // Specific logic for one-way trip calculation
             baseRate = parseInt(document.getElementById("custom-base-rate").value) || 0;
             gasFee = parseInt(document.getElementById("custom-gas-fee").value) || 0;
-            totalAdditionalCost = 0; // No additional hours for one-way or two-way trips
+            totalAdditionalCost = 0; // No additional hours for one-way trip
             displayBaseRate = `$${baseRate.toLocaleString()}`;
             minHours = 0;
         }
@@ -458,12 +442,14 @@ function calculateQuote() {
         // Existing logic for preset quotes...
         // Assuming we have predefined data for preset quotes
     
+        // Example vehicle data structure
         const presetVehicleRates = {
             "trolley_midnight_36": { baseRate: 1800, minHours: 4, gasFee: 250 },
             "trolley_fusion_30": { baseRate: 1600, minHours: 4, gasFee: 175 },
             // Add more vehicles as needed
         };
     
+        // Fetching details for the selected vehicle
         const vehicleDetails = presetVehicleRates[vehicleType];
     
         if (vehicleDetails) {
@@ -476,11 +462,15 @@ function calculateQuote() {
                 return;
             }
     
+            // Calculate total base rate
             baseRate *= hours;
+    
+            // Calculate other costs like STC, gratuity, etc.
             const stc = (baseRate * stcPercentage) / 100;
             const gratuity = (baseRate * gratuityPercentage) / 100;
-            const total = baseRate + stc + gratuity + gasFee + securityGuardFee;
+            const total = baseRate + stc + gratuity + gasFee + securityGuardFee; // Add other fees as necessary
     
+            // Display the calculated quote details
             displayBaseRate = `$${baseRate.toLocaleString()}`;
             perHourRate = baseRate / hours;
         } else {
@@ -488,18 +478,26 @@ function calculateQuote() {
             return;
         }
     }
+    
 
+    // Calculate security guard fee if alcohol is included and the vehicle has more than 15 passengers
     if (includeAlcohol && paxNumber > 15 && quoteType !== "custom") {
         securityGuardFee = 250; // Base fee for 4 hours
         if (totalHours > 4) {
-            securityGuardFee += (totalHours - 4) * 35;
+            securityGuardFee += (totalHours - 4) * 35; // Additional fee for extra hours
         }
     }
 
-    const totalBaseRate = baseRate;
+    if (hours < minHours) {
+        alert(`Minimum hours for ${vehicleName} is ${minHours}.`);
+        return;
+    }
+
+    // Calculate total cost
+    const totalBaseRate = baseRate; // Base rate covers the specified hours
     const stc = (totalBaseRate * stcPercentage) / 100;
     const gratuity = (totalBaseRate * gratuityPercentage) / 100;
-    const total = totalBaseRate + stc + gratuity + gasFee + securityGuardFee + totalAdditionalCost + totalBYOBCost;
+    const total = totalBaseRate + stc + gratuity + gasFee + securityGuardFee + totalAdditionalCost + totalBYOBCost; // Include additional custom hours cost
 
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = `
@@ -534,7 +532,7 @@ function calculateQuote() {
                       <p><small>${formattedDate}</small></p>
                       <p><small>&nbsp;/ ${time}</small></p>
                   </div>
-                  <p class="quote-heading"><strong>Quote: ${
+                <p class="quote-heading"><strong>Quote: ${
                     tripType === "hourly" ? `${totalHours} Hour Package` :
                     tripType === "one-way" ? "One Way Trip" :
                     "Two Ways Trip"
@@ -587,13 +585,16 @@ function calculateQuote() {
 function copyToClipboard() {
   const quoteContent = document.getElementById("quote-content");
   if (quoteContent) {
+    // Create a range object and set it to the content to be copied
     const range = document.createRange();
     range.selectNode(quoteContent);
 
+    // Clear any existing selection and add the new range to the selection
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
 
+    // Copy the selected content to the clipboard
     try {
       document.execCommand("copy");
       alert("Quote copied to clipboard!");
@@ -601,6 +602,7 @@ function copyToClipboard() {
       alert("Failed to copy the quote. Please try again.");
     }
 
+    // Remove the selection
     selection.removeAllRanges();
   } else {
     alert("No quote available to copy.");
