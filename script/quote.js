@@ -423,10 +423,7 @@ function calculateQuote() {
 
     if (quoteType === "custom") {
         if (tripType === "hourly") {
-            if (hours < minHours) {
-                alert(`Minimum hours for ${vehicleName} is ${minHours}.`);
-                return;
-            }
+        
     
             baseRate = parseInt(document.getElementById("custom-base-rate").value) || 0;
             gasFee = parseInt(document.getElementById("custom-gas-fee").value) || 0;
@@ -482,6 +479,7 @@ function calculateQuote() {
             const total = baseRate + stc + gratuity + gasFee + securityGuardFee;
     
             displayBaseRate = `$${baseRate.toLocaleString()}`;
+            
             perHourRate = baseRate / hours;
         } else {
             alert("Invalid vehicle type selected.");
@@ -495,6 +493,8 @@ function calculateQuote() {
             securityGuardFee += (totalHours - 4) * 35;
         }
     }
+
+    displayBaseRate = `$${baseRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     const totalBaseRate = baseRate;
     const stc = (totalBaseRate * stcPercentage) / 100;
@@ -536,8 +536,8 @@ function calculateQuote() {
                   </div>
                   <p class="quote-heading"><strong>Quote: ${
                     tripType === "hourly" ? `${totalHours} Hour Package` :
-                    tripType === "one-way" ? "One Way Trip" :
-                    "Two Ways Trip"
+                    tripType === "one-way" ? "Transfer <span class='byob-text'>(one-way)</span>" :
+                    "Round Trip <span class='byob-text'>(to/from)</span>"
                   } <span class="byob-text">${
                     includeMinHoursPolicy && tripType === "hourly" ? `(Minimum Required)` : ''
                   }</span></strong></p>
