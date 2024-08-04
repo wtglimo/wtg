@@ -42,6 +42,15 @@ p {
 .result-section {
     flex: 1;
 }
+.quote-price {
+    border: 1px solid #e0e0e0; /* Lighter border for a clean look */
+    border-radius: 10px; /* Slightly increased border-radius for a softer edge */
+    background-color: #f9f9f9; /* Very light grey background for subtle distinction */
+    padding: 20px; /* More padding for a spacious layout */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a slight elevation effect */
+    margin-top: 20px;
+}
+
 
 .quote-container h1, .result-section h1 {
     text-align: center;
@@ -349,7 +358,6 @@ hr {
     margin-bottom: 10px; /* Space between date/time and other content */
     display: flex;
     margin-bottom: 0;
-    margin-top: 15px;
     font-weight: 600;
 }
 

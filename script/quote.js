@@ -507,6 +507,9 @@ function calculateQuote() {
                      <p><strong>Minimum Hours Required:</strong> There is a minimum 4-hour requirement for vehicles with 15+ passengers.</p>
                    </div>` : ''}
 
+
+                   <div class="quote-price">
+
      <div class="quote-datetime">
                  <p><small>${formattedDate}</small></p>
           <p><small>&nbsp;/ ${time}</small></p>
@@ -541,6 +544,8 @@ function calculateQuote() {
                         { minimumFractionDigits: 2 }
                       )}<span class="byob-text"> (All Inclusive)</span></strong></p>
                       <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
+                  </div>
+
                   </div>
                   ${includeAlcoholPolicy ? `<div class="minimum-requirements">
                       <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
