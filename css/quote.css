@@ -297,3 +297,39 @@ hr {
     background-color: #fff;
     border-radius: 5px;
 }
+.input-inline-style{
+    display: flex;
+}
+
+
+
+
+
+
+
+.inline-fields {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px; /* Adjust the gap between the fields */
+}
+
+.inline-fields > div {
+    flex: 1; /* Ensure both fields take up equal space */
+    display: flex;
+    flex-direction: column;
+    max-width: 48%; /* Adjust to prevent fields from stretching too much */
+}
+
+.inline-fields label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.inline-fields input {
+    width: 100%; /* Ensure input takes up full width of its container */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}

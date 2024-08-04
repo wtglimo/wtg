@@ -21,16 +21,20 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleCustomQuoteFields() {
     const customQuoteFields = document.getElementById('custom-quote-fields');
     const byobSwitchContainer = document.querySelector('.form-group.byob-switch');
+    const presetHoursField = document.querySelector('.preset-hours');
     const quoteType = document.querySelector('input[name="quote-type"]:checked').value;
 
     if (quoteType === 'custom') {
         customQuoteFields.style.display = 'block';
         byobSwitchContainer.style.display = 'none'; // Hide BYOB switch for custom quote
+        presetHoursField.style.display = 'none'; // Hide preset hours for custom quote
     } else {
         customQuoteFields.style.display = 'none';
         byobSwitchContainer.style.display = 'block'; // Show BYOB switch for preset quote
+        presetHoursField.style.display = 'block'; // Show preset hours for preset quote
     }
 }
+
 
 function toggleAdditionalHoursFields() {
     const additionalHoursFields = document.getElementById('additional-hours-fields');
@@ -56,12 +60,21 @@ function toggleBYOBFields() {
 
 function calculateQuote() {
     const name = document.getElementById('name').value || "Customer";
+    const vehicleAvailable = document.getElementById('vehicle-available').checked;
     const vehicleType = document.getElementById('vehicle').value;
     const hours = parseInt(document.getElementById('hours').value);
     const includeAlcohol = document.getElementById('include-alcohol').checked;
     const quoteType = document.querySelector('input[name="quote-type"]:checked').value;
     const includeAdditionalHours = document.getElementById('include-additional-hours').checked;
     const includeBYOB = document.getElementById('include-byob').checked;
+
+
+    let availabilityMessage = '';
+    if (vehicleAvailable) {
+        availabilityMessage = "We're excited to inform you that the <strong>requested vehicle is available.</strong>";
+    } else {
+        availabilityMessage = "The requested vehicle is currently unavailable. However, we do have a similar vehicle that can meet your expectations.";
+    }
 
     let baseRate = 0;
     let minHours = 4;
@@ -392,11 +405,11 @@ function calculateQuote() {
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = `
         <div id="quote-content">
-            <p class="intro-para">
+<p class="intro-para">
                 Hello <strong>${name}</strong>,<br><br>
-                Thank you for choosing <strong>WAYTOGO Trolley & Charter Buses</strong>. We're excited to inform you that the<strong> requested vehicle is available.</strong> Please review the quote below and make your reservation online.
+                Thank you for choosing <strong>WAYTOGO Trolley & Charter Bus</strong>. ${availabilityMessage} Please review the quote below and make your reservation online.
             </p>
-            <h2 class="vehicle-name">${vehicleName}</h2>
+                        <h2 class="vehicle-name">${vehicleName}</h2>
             <div class="image-container">
                 <img src="${imageUrl}" alt="${vehicleName}" />
             </div>
