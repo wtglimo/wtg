@@ -11,7 +11,10 @@ body {
 p {
     margin: 0;
 }
-
+.trip-type{
+    display: flex;
+    gap: 20px;
+}
 .quote-generator {
     display: flex;
     flex-direction: row;
@@ -137,8 +140,7 @@ button:hover {
 }
 
 .quote-type{
-    display: flex;
-    gap: 10px;
+   display: none;
 }
 
 .quote-info {
