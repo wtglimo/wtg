@@ -447,6 +447,13 @@ function calculateQuote() {
         } else if (tripType === "one-way" || tripType === "two-way") {
             baseRate = parseInt(document.getElementById("custom-base-rate").value) || 0;
             gasFee = parseInt(document.getElementById("custom-gas-fee").value) || 0;
+            
+            twoWaysDisplayRate = baseRate;
+            if (tripType === "two-way") {
+                
+                baseRate *= 2; // Double the base rate for two-way trips
+            }
+
             totalAdditionalCost = 0; // No additional hours for one-way or two-way trips
             displayBaseRate = `$${baseRate.toLocaleString()}`;
             minHours = 0;
@@ -494,6 +501,8 @@ function calculateQuote() {
         }
     }
 
+  
+    twoWaysDisplayRate = `$${twoWaysDisplayRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     displayBaseRate = `$${baseRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     const totalBaseRate = baseRate;
@@ -542,7 +551,8 @@ function calculateQuote() {
                     includeMinHoursPolicy && tripType === "hourly" ? `(Minimum Required)` : ''
                   }</span></strong></p>
                   <p>Base Rate: ${displayBaseRate} ${
-                    tripType === "hourly" ? `<span class="byob-text">(${hours} hrs @ $${perHourRate.toFixed(2)} per hour)</span>` : ''
+                    tripType === "hourly" ? `<span class="byob-text">(${hours} hrs @ $${perHourRate.toFixed(2)} per hour)</span>` :
+                    tripType === "two-way" ? `<span class='byob-text'>(${twoWaysDisplayRate} each way)</span>` : ''
                   }</p>
                   <ul>
                       <li>STC: ${stcPercentage}%</li>
