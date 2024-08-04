@@ -127,6 +127,11 @@ button:hover {
     font-weight: 100;
 }
 
+.quote-type{
+    display: flex;
+    gap: 10px;
+}
+
 .quote-info {
     background-color: #f9f9f9;
     padding: 10px;
@@ -262,6 +267,7 @@ hr {
     font-size: 14px;
     color: #888;
     font-style: italic;
+    font-weight: 100;
 }
 
 .form-group input, .form-group select {
@@ -272,7 +278,7 @@ hr {
     font-style: italic;
     font-size: 12px;
     color: #888;
-    font-weight: 600;
+    font-weight: 100;
 }
 
 .quote-and-result {
@@ -337,7 +343,7 @@ hr {
 }
 
 .quote-datetime {
-    font-size: 14px;
+    font-size: 16px;
     color: #888; /* Grey color */
     margin-bottom: 10px; /* Space between date/time and other content */
     display: flex;
@@ -354,4 +360,5 @@ hr {
 .vehicle-recommeded{
     font-size: 15px;
     color: #565656; /* Grey color */
+    font-weight: 100;
 }

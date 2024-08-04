@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    toggleCustomQuoteFields();
   const quoteTypeRadios = document.getElementsByName("quote-type");
   const additionalHoursCheckbox = document.getElementById(
     "include-additional-hours"
@@ -81,7 +82,16 @@ function calculateQuote() {
     ).checked;
     const includeBYOB = document.getElementById("include-byob").checked;
   
-    const date = document.getElementById("date").value || "Not specified";
+    const dateInput = document.getElementById("date").value || "Not specified";
+    let formattedDate = "Not specified";
+    if (dateInput !== "Not specified") {
+      const date = new Date(dateInput);
+      const month = (date.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-based
+      const day = date.getDate().toString().padStart(2, '0');
+      const year = date.getFullYear();
+      formattedDate = `${month}/${day}/${year}`;
+    }
+  
     let time = document.getElementById("time").value || "Not specified";
   
     // Convert 24-hour time to 12-hour format
@@ -92,7 +102,7 @@ function calculateQuote() {
       hour = hour % 12 || 12; // Convert hour to 12-hour format
       time = `${hour}:${minute} ${ampm}`;
     }
-  
+
     let availabilityMessage = "";
     if (vehicleAvailable) {
       availabilityMessage =
@@ -498,8 +508,8 @@ function calculateQuote() {
                    </div>` : ''}
 
      <div class="quote-datetime">
-                  <p><small>${date}</small></p>
-                  <p><small>&nbsp;/ ${time}</small></p>
+                 <p><small>${formattedDate}</small></p>
+          <p><small>&nbsp;/ ${time}</small></p>
               </div>
                       <p class="quote-heading"><strong>Quote: ${totalHours} Hour Package <span class="byob-text">${includeMinHoursPolicy ? `(Minimum Required)` : ''}</span></p>
 
