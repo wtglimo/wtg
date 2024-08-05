@@ -4,56 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WTG QUOTE GENERATOR</title>
-    <link rel="stylesheet" href="css/navbar.css">
+
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/quote.css">
 </head>
 <body>
-
-<nav id="primary" class="navbar">
-    <!-- Open/Close Navigation Icons -->
-    <span class="slider-icon">
-      <a href="#">
-        <svg id="open" class="open-slider active" width="30" height="30">
-          <path d="M0,5 30,5" stroke="#000" stroke-width="4"></path>
-          <path d="M0,14 30,14" stroke="#000" stroke-width="4"></path>
-          <path d="M0,23 30,23" stroke="#000" stroke-width="4"></path>
-        </svg>
-        <svg id="close" class="close-slider" width="30" height="30">
-          <line x1="4" y1="4" x2="24" y2="24" stroke="#fff" stroke-width="5"></line>
-          <line x1="4" y1="24" x2="24" y2="4" stroke="#fff" stroke-width="5"></line>
-        </svg>
-      </a>
-    </span>
-
-    <!-- Slide-Out Navigation -->
-    <div id="nav-screen" class="">
-      <ul class="top-level">
-        <li class="top-level nav-item">
-          Menu Item &rarr;
-          <div class="second-pane">
-            <ul class="second-level sub-menu">
-              <li class="second-level nav-item">
-                Menu Item &rarr;
-                <div class="third-pane">
-                  <ul class="third-level sub-sub-menu">
-                    <li class="third-level nav-item">
-                      Menu Item
-                    </li>
-                    <a href="email.html"><li class="third-level nav-item">Email</li></a>
-                    <li class="third-level nav-item">Third Item</li>
-                  </ul>
-                </div>
-              </li>
-              <li class="second-level nav-item">Second Item</li>
-              <li class="second-level nav-item">Third Item</li>
-            </ul>
-          </div>
-          <a href="follow-up.html"><li class="top-level nav-item">Follow Up</li></a>
-          <a href="index.html"><li class="top-level nav-item">Quote</li></a>
-      </ul>
-    </div>
-  </nav><!-- end #primary.navbar -->
-
+  <div class="container"> 
+    <sidebar></sidebar>
+    <main class="content">
+  
   <section class="quote-generator">
     <div class="quote-container">
       <h1>Quote Generator</h1>
@@ -252,8 +212,9 @@
       </div>
     </div>
   </section>
-
-  <script src="script/navbar.js"></script>
+</main>
+</div>
+  <script src="script/loadSidebar.js"></script>
   <script src="script/quote.js"></script>
 </body>
 </html>
