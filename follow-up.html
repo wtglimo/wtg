@@ -6,187 +6,58 @@
   <title>Follow Up Generator</title>
   <link rel="stylesheet" href="css/navigation.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    body {
-      font-family: Helvetica, Arial, sans-serif;
-      background-color: #f5f5f5;
-    }
-
-    h1, h2 {
-      color: #333;
-      text-align: center;
-      margin-top: 0;
-    }
-
-    label, select, input {
-      font-size: 16px;
-      margin: 10px 0;
-      display: block;
-      width: 100%;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    select, input[type="text"], input[type="number"] {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    input[type="submit"] {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      border-radius: 4px;
-      margin-top: 20px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #45a049;
-    }
-
-    #output {
-    font-size: 16px;
-    white-space: pre-wrap;
-    margin-top: 20px;
-    padding: 20px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-    .highlight {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .book-now {
-      display: inline-block;
-      padding: 10px 20px;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: center;
-      color: white;
-      background-color: #007BFF;
-      border-radius: 4px;
-      text-decoration: none;
-      margin-top: 20px;
-      display: block;
-      max-width: 200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .book-now:hover {
-      background-color: #0056b3;
-    }
-  </style>
-  <script>
-    function generateMessage() {
-      const name = document.getElementById('name').value;
-      const vehicleSelect = document.getElementById('vehicle');
-      const vehicle = vehicleSelect.options[vehicleSelect.selectedIndex].text;
-      const price = document.getElementById('price').value;
-
-      const vehicleLinks = {
-        "Christmas Trolley": "https://wtglimo.com/Christmas-trolley-tours-Chicago.php",
-        "50 Pax Coach Bus - Super Coach": "https://wtglimo.com/chicago-Super-Coach-Bus.php",
-        "56 Pax Motor Coach - Everywhere": "https://wtglimo.com/chicago_coach_bus.php",
-        "42 Pax Coach Bus - Corporate": "https://wtglimo.com/executive_shuttle_bus.php",
-        "27 Pax Coach Bus - Crystal": "https://wtglimo.com/executive_bus_crystal.php",
-        "36 Pax Trolley - Mid Night": "https://wtglimo.com/Naperville-trolley-bus-rental.php",
-        "30 Pax Trolley - Fusion": "https://wtglimo.com/Chicago-trolley-bus-rental.php",
-        "30 Pax Trolley - Bliss": "https://wtglimo.com/white-wedding-trolleys-Chicago.php",
-        "30 Pax Trolley - Classic": "https://wtglimo.com/Chicago-wedding-trolley-bus-rental.php",
-        "24 Pax Trolley - Festive": "https://wtglimo.com/Chicago-trolley-rental.php",
-        "40 Pax Party Bus - Dove": "https://wtglimo.com/chicago-party-bus-rental.php",
-        "40 Pax Party Bus - Snow White": "https://wtglimo.com/naperville-party-bus-rental.php",
-        "30 Pax Party Bus - Night Rider": "https://wtglimo.com/libertyville-party-bus-rental.php",
-        "25 Pax Party Bus - Eagle": "https://wtglimo.com/Palatine-party-bus-rental.php",
-        "20 Pax Party Bus - White Hawk": "https://wtglimo.com/Arlington-Heights-Party-Bus-Rental.php",
-        "20 Pax Hummer Limo - Galaxy": "https://wtglimo.com/suv_stretch_limousine_hummer_galaxy.php",
-        "18 Pax Hummer Limo - Pink Hummer": "https://wtglimo.com/hummer_pink_panther.php",
-        "15 Pax Ford Transit Black": "https://wtglimo.com/limo-van.php",
-        "15 Pax Ford Transit Silver": "https://wtglimo.com/sprinter-van-limo.php",
-        "14 Pax Sprinter - Sprinter Shuttle Van": "https://wtglimo.com/sprinter_shuttle_van.php",
-        "10 Pax Stretch - Sedan Limo": "https://wtglimo.com/sedan_stretch_limo_chrysler_300_limo.php",
-        "10 Pax Pink Limo Chrysler - Cherry On Top": "https://wtglimo.com/pink-limo-rental-Chicago.php",
-        "8 Pax Stretch - Lincoln Town limo": "https://wtglimo.com/sedan_stretch_limo_Lincoln_Town_Stretch_tuxedo.php",
-        "6 Pax SUV - Luxury SUV": "https://wtglimo.com/lincoln-navigator-limo.php",
-        "3 Pax Sedan - Luxury Sedan": "https://wtglimo.com/limo-car-service.php"
-      };
-
-      const reserveLink = "https://wtglimo.com/reservation-limo.php";
-      const link = vehicleLinks[vehicle] || "#";
-
-      const message = `Hi ${name},\n\nI'm reaching out to see if you're still interested in the <a href="${link}" class="highlight" target="_blank">${vehicle}</a> or have any questions. The quote of <span class="highlight">$${price}</span> is expiring soon, and the vehicle is still available.\n\nSecure your booking now by clicking <a href="${reserveLink}" class="book-now" target="_blank">RESERVE NOW</a>`;
-
-      document.getElementById('output').innerHTML = message;
-    }
-  </script>
+  <link rel="stylesheet" href="css/followUp.css">
 </head>
 <body>
   <div class="container"> 
     <sidebar></sidebar>
     <main class="content">
-  
+      <h1>Follow Up Generator</h1>
+      <form onsubmit="generateMessage(); return false;">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br><br>
 
-  <h1>Follow Up Generator</h1>
-  <form onsubmit="generateMessage(); return false;">
-    <label for="name">Name:</label>
-    <input type="text" id="name" required><br><br>
+        <label for="vehicle">Vehicle:</label>
+        <select id="vehicle" required>
+          <option value="0">-- Select Vehicle --</option>
+          <option value="trolley_midnight_36">36 Pax Trolley - Mid Night</option>
+          <option value="trolley_fusion_30">30 Pax Trolley - Fusion</option>
+          <option value="trolley_bliss_30">30 Pax Trolley - Bliss</option>
+          <option value="trolley_classic_30">30 Pax Trolley - Classic</option>
+          <option value="trolley_festive_24">24 Pax Trolley - Festive</option>
+          <option value="partybus_dove_40">40 Pax Party Bus - Dove</option>
+          <option value="partybus_nightrider_30">30 Pax Party Bus - Night Rider</option>
+          <option value="partybus_eagle_25">25 Pax Party Bus - Eagle</option>
+          <option value="partybus_whitehawk_20">20 Pax Party Bus - White Hawk</option>
+          <option value="pink_hummer_h2">Pink Hummer H2</option>
+          <option value="pink_chrysler_300">Pink Chrysler 300</option>
+          <option value="christmas_trolley">Christmas Trolley</option>
+          <option value="ford_transit_limo">Ford Transit Limo</option>
+          <option value="sprinter_shuttle_van">Sprinter Shuttle Van</option>
+          <option value="hummer_h2_stretch_limo">Hummer H2 Stretch Limo</option>
+          <option value="chrysler_300_limo">Chrysler 300 Limo</option>
+          <option value="lincoln_mkt_limo">Lincoln MKT Limo</option>
+          <option value="lincoln_navigator">Lincoln Navigator</option>
+          <option value="cadillac_escalade">Cadillac Escalade</option>
+          <option value="chevrolet_suburban">Chevrolet Suburban</option>
+          <option value="lincoln_mkz">Lincoln MKZ</option>
+          <option value="coach_bus_super">Coach Bus - Super</option>
+          <option value="coach_bus_rentals">Coach Bus - Rentals</option>
+          <option value="coach_bus_corporate">Coach Bus - Corporate</option>
+          <option value="coach_bus_crystal">Coach Bus - Crystal</option>
+        </select><br><br>
 
-    <label for="vehicle">Vehicle:</label>
-    <select id="vehicle" required>
-      <option value="0">-- Select Vehicle --</option>
-      <option>Christmas Trolley</option>
-      <option>50 Pax Coach Bus - Super Coach</option>
-      <option>56 Pax Coach Bus - Enigma</option>
-      <option>42 Pax Coach Bus - Corporate</option>
-      <option>27 Pax Coach Bus - Crystal</option>
-      <option>36 Pax Trolley - Mid Night</option>
-      <option>30 Pax Trolley - Fusion</option>
-      <option>30 Pax Trolley - Bliss</option>
-      <option>30 Pax Trolley - Classic</option>
-      <option>24 Pax Trolley - Festive</option>
-      <option>40 Pax Party Bus - Dove</option>
-      <option>40 Pax Party Bus - Snow White</option>
-      <option>30 Pax Party Bus - Executive</option>
-      <option>30 Pax Party Bus - Night Rider</option>
-      <option>25 Pax Party Bus - Eagle</option>
-      <option>20 Pax Party Bus - White Hawk</option>
-      <option>20 Pax Hummer Limo - Galaxy</option>
-      <option>18 Pax Hummer Limo - Pink Hummer</option>
-      <option>15 Pax Ford Transit Black</option>
-      <option>15 Pax Ford Transit Silver</option>
-      <option>14 Pax Sprinter - Sprinter Shuttle Van</option>
-      <option>10 Pax Stretch - Sedan Stretch Limo</option>
-      <option>10 Pax Pink Limo Chrysler - Cherry On Top</option>
-      <option>8 Pax Stretch - Lincoln Town limo</option>
-      <option>6 Pax SUV - Luxury SUV</option>
-      <option>3 Pax Sedan - Luxury Sedan</option>
-    </select><br><br>
+        <label for="price">Price:</label>
+        <input type="number" step="0.01" id="price" required><br><br>
 
-    <label for="price">Price:</label>
-    <input type="number" step="0.01" id="price" required><br><br>
+        <input type="submit" value="Generate Message">
+      </form>
 
-    <input type="submit" value="Generate Message">
-  </form>
-
-  <h2>Generated Message:</h2>
-  <pre id="output"></pre>
-
-
-  </main>
+      <h2>Generated Message:</h2>
+      <pre id="output"></pre>
+    </main>
   </div>
   <script src="script/loadSidebar.js"></script>
+  <script src="script/followUp.js"></script>
 </body>
 </html>

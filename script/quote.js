@@ -104,7 +104,7 @@ function calculateQuote() {
     const includeAlcoholPolicyCustom = document.getElementById("include-alcohol-policy-custom").checked;
     const includeMinHoursPolicy = document.getElementById("include-min-hours-policy").checked;
     const vehicleType = document.getElementById("vehicle").value;
-    const hours = parseInt(document.getElementById("hours").value) || 0; // Default to 0 if undefined
+    const hours = parseFloat(document.getElementById("hours").value) || 0; // Default to 0 if undefined
     const includeAlcohol = document.getElementById("include-alcohol").checked;
     const quoteType = document.querySelector('input[name="quote-type"]:checked').value;
     const includeAdditionalHours = document.getElementById("include-additional-hours").checked;
@@ -114,7 +114,7 @@ function calculateQuote() {
     const dateInput = document.getElementById("date").value || "Not specified";
     let formattedDate = "Not specified";
     if (dateInput !== "Not specified") {
-        const date = new Date(dateInput);
+        const date = new Date(dateInput + "T12:00:00"); // Set time to midday to avoid timezone issues
         const month = (date.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-based
         const day = date.getDate().toString().padStart(2, '0');
         const year = date.getFullYear();
@@ -417,51 +417,46 @@ function calculateQuote() {
             return;
     }
 
+
     let totalAdditionalCost = 0;
     let totalBYOBCost = 0;
     let totalHours = hours;
 
     if (quoteType === "custom") {
         if (tripType === "hourly") {
-        
-    
-            baseRate = parseInt(document.getElementById("custom-base-rate").value) || 0;
-            gasFee = parseInt(document.getElementById("custom-gas-fee").value) || 0;
-    
+            baseRate = parseFloat(document.getElementById("custom-base-rate").value) || 0;
+            gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
+
             if (includeAdditionalHours) {
-                customAdditionalHours = parseInt(document.getElementById("custom-additional-hours").value) || 0;
-                customRateAdditional = parseInt(document.getElementById("custom-rate-additional").value) || 0;
+                customAdditionalHours = parseFloat(document.getElementById("custom-additional-hours").value) || 0;
+                customRateAdditional = parseFloat(document.getElementById("custom-rate-additional").value) || 0;
                 totalAdditionalCost = customAdditionalHours * customRateAdditional;
                 totalHours += customAdditionalHours;
             }
-    
+
             if (includeBYOB) {
-                const customBYOBHours = parseInt(document.getElementById("custom-byob-hours").value) || 0;
-                const customRateBYOB = parseInt(document.getElementById("custom-rate-byob").value) || 0;
+                const customBYOBHours = parseFloat(document.getElementById("custom-byob-hours").value) || 0;
+                const customRateBYOB = parseFloat(document.getElementById("custom-rate-byob").value) || 0;
                 totalBYOBCost = customBYOBHours * customRateBYOB;
             }
-    
+
             baseRate *= hours;
             perHourRate = baseRate / hours;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${baseRate.toFixed(2)}`;
         } else if (tripType === "one-way" || tripType === "two-way") {
-            baseRate = parseInt(document.getElementById("custom-base-rate").value) || 0;
-            gasFee = parseInt(document.getElementById("custom-gas-fee").value) || 0;
+            baseRate = parseFloat(document.getElementById("custom-base-rate").value) || 0;
+            gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
             
             twoWaysDisplayRate = baseRate;
             if (tripType === "two-way") {
-                
                 baseRate *= 2; // Double the base rate for two-way trips
             }
 
             totalAdditionalCost = 0; // No additional hours for one-way or two-way trips
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${baseRate.toFixed(2)}`;
             minHours = 0;
         }
     } else {
-        // Existing logic for preset quotes...
-        // Assuming we have predefined data for preset quotes
-    
         const presetVehicleRates = {
             "trolley_midnight_36": { baseRate: 1800, minHours: 4, gasFee: 250 },
             "trolley_fusion_30": { baseRate: 1600, minHours: 4, gasFee: 175 },
@@ -501,10 +496,6 @@ function calculateQuote() {
         }
     }
 
-  
-    twoWaysDisplayRate = `$${twoWaysDisplayRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    displayBaseRate = `$${baseRate.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-
     const totalBaseRate = baseRate;
     const stc = (totalBaseRate * stcPercentage) / 100;
     const gratuity = (totalBaseRate * gratuityPercentage) / 100;
@@ -517,7 +508,7 @@ function calculateQuote() {
             Hello <strong>${name}</strong>,<br><br>
             Thank you for choosing <strong>WAYTOGO Trolley & Charter Bus</strong>. ${availabilityMessage} Please review the quote below and make your reservation online.
           </p>
-          <h2 class="vehicle-name">${vehicleName} <span class="vehicle-recommeded"> ${
+          <h2 class="vehicle-name">${vehicleName} <span class="byob-text">(${paxNumber} Passengers)</span><span class="vehicle-recommeded"> ${
               !vehicleAvailable ? "(Recommended Vehicle)" : ""
           }</span></h2>
           <div class="image-container">
@@ -551,30 +542,30 @@ function calculateQuote() {
                     includeMinHoursPolicy && tripType === "hourly" ? `(Minimum Required)` : ''
                   }</span></strong></p>
                   <p>Base Rate: ${displayBaseRate} ${
-                    tripType === "hourly" ? `<span class="byob-text">(${hours} hrs @ $${perHourRate.toFixed(2)} per hour)</span>` :
-                    tripType === "two-way" ? `<span class='byob-text'>(${twoWaysDisplayRate} each way)</span>` : ''
+                    tripType === "hourly" ? `<span class="byob-text">(${hours.toFixed(2)} hrs @ $${perHourRate.toFixed(2)} per hour)</span>` :
+                    tripType === "two-way" ? `<span class='byob-text'>(${twoWaysDisplayRate.toFixed(2)} each way)</span>` : ''
                   }</p>
                   <ul>
-                      <li>STC: ${stcPercentage}%</li>
-                      <li>Gratuity: ${gratuityPercentage}%</li>
+                      <li>STC: ${stcPercentage.toFixed(2)}%</li>
+                      <li>Gratuity: ${gratuityPercentage.toFixed(2)}%</li>
                       <li>Gas Fee: $${gasFee.toFixed(2)}</li>
                       ${
                         securityGuardFee > 0
-                          ? `<li>BYOB Security Guard Fee: $${securityGuardFee.toLocaleString()}</li>`
+                          ? `<li>BYOB Security Guard Fee: $${securityGuardFee.toFixed(2)}</li>`
                           : ""
                       }
                       ${
                         totalBYOBCost > 0
-                          ? `<li>BYOB Security Cost: $${totalBYOBCost.toLocaleString()} <span class="byob-text">(Chicago Trips Only)</span></li>`
+                          ? `<li>BYOB Security Cost: $${totalBYOBCost.toFixed(2)} <span class="byob-text">(Chicago Trips Only)</span></li>`
                           : ""
                       }
                       ${
                         totalAdditionalCost > 0
-                          ? `<li>Additional Hours Cost: $${totalAdditionalCost.toLocaleString()} <span class="byob-text">(${customAdditionalHours} hrs @ $${customRateAdditional})</span></li>`
+                          ? `<li>Additional Hours Cost: $${totalAdditionalCost.toFixed(2)} <span class="byob-text">(${customAdditionalHours.toFixed(2)} hrs @ $${customRateAdditional.toFixed(2)})</span></li>`
                           : ""
                       }
                   </ul>
-                  <p class="total"><strong>Total: $${total.toLocaleString(undefined, { minimumFractionDigits: 2 })}<span class="byob-text"> (All Inclusive)</span></strong></p>
+                  <p class="total"><strong>Total: $${total.toFixed(2)}<span class="byob-text"> (All Inclusive)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
               </div>
           </div>
@@ -593,6 +584,8 @@ function calculateQuote() {
         </div>
     `;
 }
+
+
 
 function copyToClipboard() {
   const quoteContent = document.getElementById("quote-content");
