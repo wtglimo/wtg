@@ -2,7 +2,10 @@ function generateMessage() {
   const name = document.getElementById('name').value;
   const vehicleSelect = document.getElementById('vehicle');
   const vehicleKey = vehicleSelect.options[vehicleSelect.selectedIndex].value;
-  const price = document.getElementById('price').value;
+  const price = parseFloat(document.getElementById('price').value).toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 
   const vehicles = {
     "trolley_midnight_36": {
@@ -140,7 +143,7 @@ function generateMessage() {
     <p class="btm-mrg">I'm reaching out to see if you're still interested in the <a href="${vehicleInfo.vehicleLink}" class="highlight vehicleName" target="_blank">${vehicleInfo.vehicleName}</a> or have any questions.</p>
     <p><img src="${vehicleInfo.imageUrl}" alt="${vehicleKey}" style="max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); width: 100%; height: auto; object-fit: cover;"></p>
     <p><a href="${vehicleInfo.vehicleLink}" class="highlight btm-mrg-xl" target="_blank">View More</a></p>
-    <p class="btm-mrg-xxl">The quote of <span class="highlight">$${price}</span> is expiring soon, and the vehicle is still available.</p><br>
+    <p class="btm-mrg-xxl">The quote of <span class="highlight">$${price}</span> is expiring in 14 days, and the vehicle is still available.</p><br>
     <p class="btm-mrg-xl">Secure your booking now by clicking</p>
     <p><a href="${reserveLink}" class="book-now" target="_blank">RESERVE NOW</a></p>
     <hr>
