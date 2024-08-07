@@ -2,31 +2,44 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleCustomQuoteFields();
     toggleTripTypeFields();
 
+    const formElements = document.querySelectorAll("#date, #time, #name, #vehicle-available, #vehicle, #preset-hours, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #custom-base-rate, #custom-gas-fee, #include-additional-hours, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob");
+
+    formElements.forEach(element => {
+        element.addEventListener("input", calculateQuote);
+    });
+
     const quoteTypeRadios = document.getElementsByName("quote-type");
     const tripTypeRadios = document.getElementsByName("trip-type");
-    const additionalHoursCheckbox = document.getElementById("include-additional-hours");
-    const byobCheckbox = document.getElementById("include-byob");
 
     quoteTypeRadios.forEach((radio) => {
         radio.addEventListener("change", function () {
             toggleCustomQuoteFields();
+            calculateQuote();
         });
     });
 
     tripTypeRadios.forEach((radio) => {
         radio.addEventListener("change", function () {
             toggleTripTypeFields();
+            calculateQuote();
         });
     });
 
-    additionalHoursCheckbox.addEventListener("change", function () {
+    document.getElementById("include-additional-hours").addEventListener("change", function () {
         toggleAdditionalHoursFields();
+        calculateQuote();
     });
 
-    byobCheckbox.addEventListener("change", function () {
+    document.getElementById("include-byob").addEventListener("change", function () {
         toggleBYOBFields();
+        calculateQuote();
     });
+
+    document.getElementById("include-alcohol-policy").addEventListener("change", calculateQuote);
+    document.getElementById("include-alcohol-policy-custom").addEventListener("change", calculateQuote);
 });
+
+
 
 function toggleCustomQuoteFields() {
     const customQuoteFields = document.getElementById("custom-quote-fields");
