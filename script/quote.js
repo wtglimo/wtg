@@ -37,11 +37,188 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("include-alcohol-policy").addEventListener("change", calculateQuote);
     document.getElementById("include-alcohol-policy-custom").addEventListener("change", calculateQuote);
+    document.getElementById("vehicle").addEventListener("change", updateRates);
+    document.getElementById("date").addEventListener("change", updateRates);
+    document.getElementById("time").addEventListener("change", updateRates);
+    updateRates(); // Initial call to set rates on page load
 });
+
+function updateRates() {
+    const vehicleType = document.getElementById("vehicle").value;
+    const dateInput = document.getElementById("date").value;
+    const timeInput = document.getElementById("time").value;
+
+    if (!dateInput || !timeInput) {
+        document.getElementById("selected-day").textContent = "Please select a date and time";
+        document.getElementById("min-rate").textContent = "";
+        document.getElementById("max-rate").textContent = "";
+        return;
+    }
+
+    // Correctly parse date input without time zone interference
+    const date = new Date(dateInput + 'T12:00:00'); // Setting time to noon to avoid any timezone issues
+    const dayOfWeek = date.getUTCDay(); // 0: Sunday, 1: Monday, ..., 6: Saturday
+    const time = new Date(`1970-01-01T${timeInput}:00Z`).getUTCHours(); // Get hour in UTC to determine time of day
+
+    const rates = {
+        "trolley_midnight_36": {
+            weekday: { day: { min: 2175, max: 2393.75 }, night: { min: 2275, max: 2493.75 } },
+            friday: { day: { min: 2375, max: 2593.75 }, night: { min: 2475, max: 2693.75 } },
+            saturday: { day: { min: 2375, max: 2593.75 }, night: { min: 2475, max: 2693.75 } }
+        },
+        "trolley_fusion_30": {
+            weekday: { day: { min: 2050, max: 2250 }, night: { min: 2150, max: 2350 } },
+            friday: { day: { min: 2250, max: 2450 }, night: { min: 2350, max: 2550 } },
+            saturday: { day: { min: 2250, max: 2450 }, night: { min: 2350, max: 2550 } }
+        },
+        "trolley_bliss_30": {
+            weekday: { day: { min: 2050, max: 2250 }, night: { min: 2150, max: 2350 } },
+            friday: { day: { min: 2250, max: 2450 }, night: { min: 2350, max: 2550 } },
+            saturday: { day: { min: 2250, max: 2450 }, night: { min: 2350, max: 2550 } }
+        },
+        "trolley_classic_30": {
+            weekday: { day: { min: 2050, max: 2250 }, night: { min: 2150, max: 2350 } },
+            friday: { day: { min: 2250, max: 2450 }, night: { min: 2350, max: 2550 } },
+            saturday: { day: { min: 2250, max: 2450 }, night: { min: 2350, max: 2550 } }
+        },
+        "trolley_festive_24": {
+            weekday: { day: { min: 1700, max: 1900 }, night: { min: 1800, max: 2000 } },
+            friday: { day: { min: 1900, max: 2100 }, night: { min: 2000, max: 2200 } },
+            saturday: { day: { min: 1900, max: 2100 }, night: { min: 2000, max: 2200 } }
+        },
+        "partybus_dove_40": {
+            weekday: { day: { min: 2175, max: 2393.75 }, night: { min: 2275, max: 2493.75 } },
+            friday: { day: { min: 2375, max: 2593.75 }, night: { min: 2475, max: 2693.75 } },
+            saturday: { day: { min: 2375, max: 2593.75 }, night: { min: 2475, max: 2693.75 } }
+        },
+        "partybus_nightrider_30": {
+            weekday: { day: { min: 1400, max: 1600 }, night: { min: 1500, max: 1700 } },
+            friday: { day: { min: 1600, max: 1800 }, night: { min: 1700, max: 1900 } },
+            saturday: { day: { min: 1600, max: 1800 }, night: { min: 1700, max: 1900 } }
+        },
+        "partybus_eagle_25": {
+            weekday: { day: { min: 1400, max: 1600 }, night: { min: 1500, max: 1700 } },
+            friday: { day: { min: 1600, max: 1800 }, night: { min: 1700, max: 1900 } },
+            saturday: { day: { min: 1600, max: 1800 }, night: { min: 1700, max: 1900 } }
+        },
+        "partybus_whitehawk_20": {
+            weekday: { day: { min: 1180, max: 1350 }, night: { min: 1280, max: 1450 } },
+            friday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } },
+            saturday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } }
+        },
+        "pink_hummer_h2": {
+            weekday: { day: { min: 1180, max: 1350 }, night: { min: 1280, max: 1450 } },
+            friday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } },
+            saturday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } }
+        },
+        "pink_chrysler_300": {
+            weekday: { day: { min: 1180, max: 1350 }, night: { min: 1280, max: 1450 } },
+            friday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } },
+            saturday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } }
+        },
+        "christmas_trolley": {
+            weekday: { day: { min: 1700, max: 1900 }, night: { min: 1800, max: 2000 } },
+            friday: { day: { min: 1900, max: 2100 }, night: { min: 2000, max: 2200 } },
+            saturday: { day: { min: 1900, max: 2100 }, night: { min: 2000, max: 2200 } }
+        },
+        "ford_transit_limo": {
+            weekday: { day: { min: 1180, max: 1350 }, night: { min: 1280, max: 1450 } },
+            friday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } },
+            saturday: { day: { min: 1380, max: 1550 }, night: { min: 1480, max: 1650 } }
+        },
+        "sprinter_shuttle_van": {
+            weekday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } },
+            friday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } },
+            saturday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } }
+        },
+        "hummer_h2_stretch_limo": {
+            weekday: { day: { min: 1400, max: 1600 }, night: { min: 1500, max: 1700 } },
+            friday: { day: { min: 1600, max: 1800 }, night: { min: 1700, max: 1900 } },
+            saturday: { day: { min: 1600, max: 1800 }, night: { min: 1700, max: 1900 } }
+        },
+        "chrysler_300_limo": {
+            weekday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } },
+            friday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } },
+            saturday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } }
+        },
+        "lincoln_mkt_limo": {
+            weekday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } },
+            friday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } },
+            saturday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } }
+        },
+        "lincoln_navigator": {
+            weekday: { day: { min: 800, max: 950 }, night: { min: 900, max: 1050 } },
+            friday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } },
+            saturday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } }
+        },
+        "cadillac_escalade": {
+            weekday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } },
+            friday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } },
+            saturday: { day: { min: 1200, max: 1350 }, night: { min: 1300, max: 1450 } }
+        },
+        "chevrolet_suburban": {
+            weekday: { day: { min: 800, max: 950 }, night: { min: 900, max: 1050 } },
+            friday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } },
+            saturday: { day: { min: 1000, max: 1150 }, night: { min: 1100, max: 1250 } }
+        },
+        "lincoln_mkz": {
+            weekday: { day: { min: 600, max: 750 }, night: { min: 700, max: 850 } },
+            friday: { day: { min: 800, max: 950 }, night: { min: 900, max: 1050 } },
+            saturday: { day: { min: 800, max: 950 }, night: { min: 900, max: 1050 } }
+        },
+        "coach_bus_super": {
+            weekday: { day: { min: 2000, max: 2200 }, night: { min: 2100, max: 2300 } },
+            friday: { day: { min: 2200, max: 2400 }, night: { min: 2300, max: 2500 } },
+            saturday: { day: { min: 2200, max: 2400 }, night: { min: 2300, max: 2500 } }
+        },
+        "coach_bus_rentals": {
+            weekday: { day: { min: 1800, max: 2000 }, night: { min: 1900, max: 2100 } },
+            friday: { day: { min: 2000, max: 2200 }, night: { min: 2100, max: 2300 } },
+            saturday: { day: { min: 2000, max: 2200 }, night: { min: 2100, max: 2300 } }
+        },
+        "coach_bus_corporate": {
+            weekday: { day: { min: 2500, max: 2700 }, night: { min: 2600, max: 2800 } },
+            friday: { day: { min: 2700, max: 2900 }, night: { min: 2800, max: 3000 } },
+            saturday: { day: { min: 2700, max: 2900 }, night: { min: 2800, max: 3000 } }
+        },
+        "coach_bus_crystal": {
+            weekday: { day: { min: 2000, max: 2200 }, night: { min: 2100, max: 2300 } },
+            friday: { day: { min: 2200, max: 2400 }, night: { min: 2300, max: 2500 } },
+            saturday: { day: { min: 2200, max: 2400 }, night: { min: 2300, max: 2500 } }
+        }
+    };
+    
+
+    const vehicleRates = rates[vehicleType] || {};
+    let dayType = "weekday";
+    if (dayOfWeek === 5) { // Friday
+        dayType = "friday";
+    } else if (dayOfWeek === 6) { // Saturday
+        dayType = "saturday";
+    }
+
+    let timeOfDay = "day";
+    let timePeriod = "before 6pm";
+    if (time >= 18 || time < 4) {
+        timeOfDay = "night";
+        timePeriod = "after 6pm";
+    }
+
+    const selectedRates = (vehicleRates[dayType] && vehicleRates[dayType][timeOfDay]) || { min: 0, max: 0 };
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const selectedDay = dayNames[dayOfWeek];
+
+    document.getElementById("selected-day").textContent = `${selectedDay} (${timePeriod})`;
+    document.getElementById("min-rate").textContent = `$${selectedRates.min.toFixed(2)}`;
+    document.getElementById("max-rate").textContent = `$${selectedRates.max.toFixed(2)}`;
+}
 
 function formatNumber(num) {
     return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
+
+// Rest of your existing functions here
+
 
 function toggleCustomQuoteFields() {
     const customQuoteFields = document.getElementById("custom-quote-fields");

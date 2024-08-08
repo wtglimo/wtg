@@ -373,3 +373,7 @@ hr {
     color: #565656; /* Grey color */
     font-weight: 100;
 }
+
+#max-rate, #min-rate{
+    font-weight: bold;
+}
