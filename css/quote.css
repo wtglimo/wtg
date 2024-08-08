@@ -377,3 +377,11 @@ hr {
 #max-rate, #min-rate{
     font-weight: bold;
 }
+.rate-display{
+    margin-bottom: 5px;
+}
+.fleetAndRates{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
