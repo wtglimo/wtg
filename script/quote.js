@@ -39,7 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("include-alcohol-policy-custom").addEventListener("change", calculateQuote);
 });
 
-
+function formatNumber(num) {
+    return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
 
 function toggleCustomQuoteFields() {
     const customQuoteFields = document.getElementById("custom-quote-fields");
@@ -179,7 +181,7 @@ function calculateQuote() {
             gasFee = 250;
             vehicleName = "Trolley Midnight";
             paxNumber = 36;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyMidnight-main.png";
             vehicleLink = "https://wtglimo.com/Naperville-trolley-bus-rental.php";
             hasRearBalcony = true;
@@ -189,7 +191,7 @@ function calculateQuote() {
             gasFee = 175;
             vehicleName = "Trolley Fusion";
             paxNumber = 30;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFusion-main.png";
             vehicleLink = "https://wtglimo.com/Chicago-trolley-bus-rental.php";
             hasRearBalcony = true;
@@ -199,7 +201,7 @@ function calculateQuote() {
             gasFee = 175;
             vehicleName = "Trolley Bliss";
             paxNumber = 30;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyBliss-main.png";
             vehicleLink = "https://wtglimo.com/white-wedding-trolleys-Chicago.php";
             hasRearBalcony = true;
@@ -209,7 +211,7 @@ function calculateQuote() {
             gasFee = 175;
             vehicleName = "Trolley Classic";
             paxNumber = 30;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyClassic-main.png";
             vehicleLink = "https://wtglimo.com/Chicago-wedding-trolley-bus-rental.php";
             break;
@@ -218,18 +220,17 @@ function calculateQuote() {
             gasFee = 125;
             vehicleName = "Trolley Festive";
             paxNumber = 24;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFestive-main.png";
             vehicleLink = "https://wtglimo.com/Chicago-trolley-rental.php";
             hasRearBalcony = true;
             break;
         case "partybus_dove_40":
             baseRate = 1795;
-            minHours = 5;
             gasFee = 250;
             vehicleName = "Party Bus - Dove";
             paxNumber = 40;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBus-Dove-main.jpg";
             vehicleLink = "https://wtglimo.com/chicago-party-bus-rental.php";
             break;
@@ -239,7 +240,7 @@ function calculateQuote() {
             additionalHourRate = 300;
             vehicleName = "Party Bus - Night Rider";
             paxNumber = 30;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/nightRider-main.png";
             vehicleLink = "https://wtglimo.com/libertyville-party-bus-rental.php";
             break;
@@ -249,7 +250,7 @@ function calculateQuote() {
             additionalHourRate = 300;
             vehicleName = "Party Bus - Eagle";
             paxNumber = 25;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/eagle-main.png";
             vehicleLink = "https://wtglimo.com/Palatine-party-bus-rental.php";
             break;
@@ -259,7 +260,7 @@ function calculateQuote() {
             additionalHourRate = 250;
             vehicleName = "Party Bus - White Hawk";
             paxNumber = 20;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/whiteHawk-main.png";
             vehicleLink = "https://wtglimo.com/Arlington-Heights-Party-Bus-Rental.php";
             break;
@@ -269,7 +270,7 @@ function calculateQuote() {
             additionalHourRate = 250;
             vehicleName = "Pink Hummer H2";
             paxNumber = 18;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkHummer-main.png";
             vehicleLink = "https://wtglimo.com/hummer_pink_panther.php";
             break;
@@ -279,7 +280,7 @@ function calculateQuote() {
             additionalHourRate = 250;
             vehicleName = "Pink Chrysler 300";
             paxNumber = 10;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkChrysler-main.png";
             vehicleLink = "https://wtglimo.com/pink-limo-rental-Chicago.php";
             break;
@@ -288,7 +289,7 @@ function calculateQuote() {
             gasFee = 150;
             vehicleName = "Christmas Trolley";
             paxNumber = "24-36";
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/christmasTrolleyMain.png";
             vehicleLink = "https://wtglimo.com/Christmas-trolley-tours-Chicago.php";
             hasRearBalcony = true;
@@ -299,7 +300,7 @@ function calculateQuote() {
             additionalHourRate = 250;
             vehicleName = "Ford Transit Limo";
             paxNumber = 15;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/tranitBlack-main.png";
             vehicleLink = "https://wtglimo.com/limo-van.php";
             break;
@@ -309,7 +310,7 @@ function calculateQuote() {
             additionalHourRate = 200;
             vehicleName = "Sprinter Shuttle Van";
             paxNumber = 14;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/sprinter-main.png";
             vehicleLink = "https://wtglimo.com/sprinter_shuttle_van.php";
             break;
@@ -319,7 +320,7 @@ function calculateQuote() {
             additionalHourRate = 300;
             vehicleName = "Hummer H2 Stretch Limo";
             paxNumber = 20;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/hummerWhite-main.png";
             vehicleLink = "https://wtglimo.com/suv_stretch_limousine_hummer_galaxy.php";
             break;
@@ -329,7 +330,7 @@ function calculateQuote() {
             additionalHourRate = 200;
             vehicleName = "Chrysler 300 Limo";
             paxNumber = 10;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/chrysler300-main.png";
             vehicleLink = "https://wtglimo.com/sedan_stretch_limo_chrysler_300_limo.php";
             break;
@@ -339,7 +340,7 @@ function calculateQuote() {
             additionalHourRate = 200;
             vehicleName = "Lincoln MKT Limo";
             paxNumber = 10;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKT-main.png";
             vehicleLink = "https://wtglimo.com/sedan_stretch_limo_lincoln_MKT_limo.php";
             break;
@@ -349,7 +350,7 @@ function calculateQuote() {
             additionalHourRate = 150;
             vehicleName = "Lincoln Navigator";
             paxNumber = 7;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/navigator-main.png";
             vehicleLink = "https://wtglimo.com/lincoln-navigator-limo.php";
             break;
@@ -359,7 +360,7 @@ function calculateQuote() {
             additionalHourRate = 200;
             vehicleName = "Cadillac Escalade";
             paxNumber = 7;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/cadillac-main.png";
             vehicleLink = "https://wtglimo.com/cadillac-escalade-limo.php";
             break;
@@ -369,7 +370,7 @@ function calculateQuote() {
             additionalHourRate = 150;
             vehicleName = "Chevrolet Suburban";
             paxNumber = 7;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/suburban-main.png";
             vehicleLink = "https://wtglimo.com/suv-limo-rental.php";
             break;
@@ -379,39 +380,39 @@ function calculateQuote() {
             additionalHourRate = 100;
             vehicleName = "Lincoln MKZ";
             paxNumber = 4;
-            displayBaseRate = `$${baseRate.toLocaleString()}/hr`;
+            displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKZ-main.png";
             vehicleLink = "https://wtglimo.com/limo-car-service.php";
             break;
         case "coach_bus_super":
             baseRate = 1200;
-            minHours = 4;
+            minHours = 5;
             gasFee = 500;
             vehicleName = "Coach Bus - Super";
             hasRestroom = true;
             paxNumber = 50;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/superCoach-main.png";
             vehicleLink = "https://wtglimo.com/chicago-Super-Coach-Bus.php";
             break;
         case "coach_bus_rentals":
             baseRate = 1000;
-            minHours = 4;
+            minHours = 5;
             gasFee = 400;
             vehicleName = "Motor Coach - Everywhere";
             hasRestroom = true;
             paxNumber = 56;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/coachBusEverywhere-main.png";
             vehicleLink = "https://wtglimo.com/chicago_coach_bus.php";
             break;
         case "coach_bus_corporate":
             baseRate = 1500;
-            minHours = 4;
+            minHours = 5;
             gasFee = 600;
             vehicleName = "Coach Bus - Corporate";
             paxNumber = 42;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/exrcutiveBus-main.png";
             vehicleLink = "https://wtglimo.com/executive_shuttle_bus.php";
             break;
@@ -421,7 +422,7 @@ function calculateQuote() {
             gasFee = 500;
             vehicleName = "Coach Bus - Crystal";
             paxNumber = 25;
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBusCrystal-main.png";
             vehicleLink = "https://wtglimo.com/executive_bus_crystal.php";
             break;
@@ -455,7 +456,7 @@ function calculateQuote() {
 
             baseRate *= hours;
             perHourRate = baseRate / hours;
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
         } else if (tripType === "one-way" || tripType === "two-way") {
             baseRate = parseFloat(document.getElementById("custom-base-rate").value) || 0;
             gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
@@ -466,7 +467,7 @@ function calculateQuote() {
             }
 
             totalAdditionalCost = 0; // No additional hours for one-way or two-way trips
-            displayBaseRate = `$${baseRate.toFixed(2)}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             minHours = 0;
         }
     } else {
@@ -493,7 +494,7 @@ function calculateQuote() {
             const gratuity = (baseRate * gratuityPercentage) / 100;
             const total = baseRate + stc + gratuity + gasFee + securityGuardFee;
     
-            displayBaseRate = `$${baseRate.toLocaleString()}`;
+            displayBaseRate = `$${formatNumber(baseRate)}`;
             
             perHourRate = baseRate / hours;
         } else {
@@ -555,30 +556,30 @@ function calculateQuote() {
                     includeMinHoursPolicy && tripType === "hourly" ? `(Minimum Required)` : ''
                   }</span></strong></p>
                   <p>Base Rate: ${displayBaseRate} ${
-                    tripType === "hourly" ? `<span class="byob-text">(${hours.toFixed(2)} hrs @ $${perHourRate.toFixed(2)} per hour)</span>` :
-                    tripType === "two-way" ? `<span class='byob-text'>(${twoWaysDisplayRate.toFixed(2)} each way)</span>` : ''
+                    tripType === "hourly" ? `<span class="byob-text">(${hours.toFixed(2)} hrs @ $${formatNumber(perHourRate)} per hour)</span>` :
+                    tripType === "two-way" ? `<span class='byob-text'>(${formatNumber(twoWaysDisplayRate)} each way)</span>` : ''
                   }</p>
                   <ul>
                       <li>STC: ${stcPercentage.toFixed(2)}%</li>
                       <li>Gratuity: ${gratuityPercentage.toFixed(2)}%</li>
-                      <li>Gas Fee: $${gasFee.toFixed(2)}</li>
+                      <li>Gas Fee: $${formatNumber(gasFee)}</li>
                       ${
                         securityGuardFee > 0
-                          ? `<li>BYOB Security Guard Fee: $${securityGuardFee.toFixed(2)}</li>`
+                          ? `<li>BYOB Security Guard Fee: $${formatNumber(securityGuardFee)}</li>`
                           : ""
                       }
                       ${
                         totalBYOBCost > 0
-                          ? `<li>BYOB Security Cost: $${totalBYOBCost.toFixed(2)} <span class="byob-text">(Chicago Trips Only)</span></li>`
+                          ? `<li>BYOB Security Cost: $${formatNumber(totalBYOBCost)} <span class="byob-text">(Chicago Trips Only)</span></li>`
                           : ""
                       }
                       ${
                         totalAdditionalCost > 0
-                          ? `<li>Additional Hours Cost: $${totalAdditionalCost.toFixed(2)} <span class="byob-text">(${customAdditionalHours.toFixed(2)} hrs @ $${customRateAdditional.toFixed(2)})</span></li>`
+                          ? `<li>Additional Hours Cost: $${formatNumber(totalAdditionalCost)} <span class="byob-text">(${customAdditionalHours.toFixed(2)} hrs @ $${formatNumber(customRateAdditional)})</span></li>`
                           : ""
                       }
                   </ul>
-                  <p class="total"><strong>Total: $${total.toFixed(2)}<span class="byob-text"> (All Inclusive)</span></strong></p>
+                  <p class="total"><strong>Total: $${formatNumber(total)}<span class="byob-text"> (All Inclusive)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
               </div>
           </div>
@@ -599,7 +600,6 @@ function calculateQuote() {
 }
 
 
-
 function copyToClipboard() {
   const quoteContent = document.getElementById("quote-content");
   if (quoteContent) {
@@ -612,7 +612,6 @@ function copyToClipboard() {
 
     try {
       document.execCommand("copy");
-      alert("Quote copied to clipboard!");
     } catch (err) {
       alert("Failed to copy the quote. Please try again.");
     }
