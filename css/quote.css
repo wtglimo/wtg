@@ -385,3 +385,8 @@ hr {
     gap: 20px;
     align-items: center;
 }
+
+#min-max-rates{
+    display: flex;
+    gap: 20px;
+}
