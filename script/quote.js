@@ -617,7 +617,7 @@ function calculateQuote() {
             paxNumber = 15;
             displayBaseRate = `$${formatNumber(baseRate)}/hr`;
             imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/tranitBlack-main.png";
-            vehicleLink = "https://wtglimo.com/limo-van.php";
+            vehicleLink = "https://wtglimo.com/15-Passenger-Van-Rental-Chicago-Ford-Transit-Black.php";
             break;
         case "sprinter_shuttle_van":
             baseRate = 250 * minHours;
