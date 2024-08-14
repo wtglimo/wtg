@@ -143,7 +143,7 @@ function generateMessage() {
     <p class="btm-mrg">The quote of <span class="highlight">$${price}</span> is <strong>expiring soon.</strong> Therefore, I'm reaching out to see if you're still interested in the <a href="${vehicleInfo.vehicleLink}" class="highlight vehicleName" target="_blank">${vehicleInfo.vehicleName}</a> or have any questions.</p>
     <p><img src="${vehicleInfo.imageUrl}" alt="${vehicleKey}" style="max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); width: 100%; height: auto; object-fit: cover;"></p>
     <p><a href="${vehicleInfo.vehicleLink}" class="highlight btm-mrg-xl" target="_blank">View More</a></p>
-    <p class="btm-mrg-xxl">A 20% deposit is required to hold the vehicle. The availability is limited. </p><br>
+    <p class="btm-mrg-xxl">A 20% deposit is required to hold the vehicle. The availability is limited. </p>
     <p class="btm-mrg-xl">Secure your vehicle now!.</p>
     <p><a href="${reserveLink}" class="book-now" target="_blank">RESERVE NOW</a></p>
     <hr>
