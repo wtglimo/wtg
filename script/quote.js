@@ -586,7 +586,7 @@ function calculateQuote() {
             vehicleName = "Pink Hummer H2";
             paxNumber = 18;
             displayBaseRate = `$${formatNumber(baseRate)}/hr`;
-            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkHummer-main.png";
+            imageUrl = "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkHummer-main.webp";
             vehicleLink = "https://wtglimo.com/hummer_pink_panther.php";
             break;
         case "pink_chrysler_300":
