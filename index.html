@@ -61,25 +61,25 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label for="name">Customer Name:</label>
-              <input
-                type="text"
-                id="name"
-                placeholder="Customer Name"
-                required
-              />
-            </div>
-
-            <!-- Add this input field after the Customer Name input field -->
-            <div class="form-group">
-              <label for="email">Customer Email:</label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Customer Email"
-                required
-              />
+            <div class="form-group inline-fields">
+              <div>
+                <label for="name">Customer Name:</label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Customer Name"
+                  required
+                />
+              </div>
+              <div>
+                <label for="email">Customer Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Customer Email"
+                  required
+                />
+              </div>
             </div>
 
             <!-- Add this inside the form-group for trip-type -->
@@ -106,7 +106,7 @@
               </label>
             </div>
 
-            <div class="fleetAndRates">
+            <div class="fleetAndRates inline-fields">
               <div class="form-group">
                 <label for="vehicle">Vehicle Type:</label>
                 <select id="vehicle">
@@ -205,6 +205,8 @@
                 </div>
               </div>
             </div>
+
+            
             <div class="form-group preset-hours">
               <label for="preset-hours">Number of Hours:</label>
               <input type="number" id="preset-hours" min="4" value="4" />
@@ -258,6 +260,158 @@
 
               <label for="custom-gas-fee">Gas Fee:</label>
               <input type="number" id="custom-gas-fee" placeholder="Gas Fee" />
+            </div>
+
+            <div id="multiple-vehicle-switch-fields">
+              <!-- Additional Hours Toggle -->
+              <label for="multiple-vehicle-switch" class="switch-label"
+                >Multiple Options</label
+              >
+              <label class="switch">
+                <input type="checkbox" id="include-multiple-opitons" />
+                <span class="slider"></span>
+              </label>
+
+              <div id="multiple-vehile-fields" style="display: none">
+                <div class="inline-fields">
+                  <div>
+                    <label for="time">Time:</label>
+                    <input
+                      type="time"
+                      id="time-option-two"
+                      placeholder="Time"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="vehicle">Vehicle Type:</label>
+                    <select id="vehicle-option-two">
+                      <optgroup label="Trolley">
+                        <option value="trolley_midnight_36">
+                          36 Trolley Midnight
+                        </option>
+                        <option value="trolley_fusion_30">
+                          30 Trolley Fusion
+                        </option>
+                        <option value="trolley_bliss_30">
+                          30 Trolley Bliss
+                        </option>
+                        <option value="trolley_classic_30">
+                          30 Trolley Classic
+                        </option>
+                        <option value="trolley_festive_24">
+                          24 Trolley Festive
+                        </option>
+                      </optgroup>
+                      <optgroup label="Party Bus">
+                        <option value="partybus_dove_40">
+                          40 Party Bus - Dove
+                        </option>
+                        <option value="partybus_nightrider_30">
+                          30 Party Bus - Night Rider
+                        </option>
+                        <option value="partybus_eagle_25">
+                          25 Party Bus - Eagle
+                        </option>
+                        <option value="partybus_whitehawk_20">
+                          20 Party Bus - White Hawk
+                        </option>
+                      </optgroup>
+                      <optgroup label="Limo Van">
+                        <option value="ford_transit_limo">
+                          15 Ford Transit Limo
+                        </option>
+                        <option value="sprinter_shuttle_van">
+                          14 Sprinter Shuttle Van
+                        </option>
+                      </optgroup>
+                      <optgroup label="Coach Bus">
+                        <option value="coach_bus_super">
+                          50 Coach Bus - Super
+                        </option>
+                        <option value="coach_bus_corporate">
+                          40 Coach Bus - Corporate
+                        </option>
+                        <option value="coach_bus_crystal">
+                          25 Coach Bus - Crystal
+                        </option>
+                        <option value="coach_bus_rentals">
+                          56 Motor Coach
+                        </option>
+                      </optgroup>
+                      <optgroup label="Pink Limo">
+                        <option value="pink_hummer_h2">
+                          18 Pink Hummer H2
+                        </option>
+                        <option value="pink_chrysler_300">
+                          10 Pink Chrysler 300
+                        </option>
+                      </optgroup>
+                      <optgroup label="SUV Stretch Limo">
+                        <option value="hummer_h2_stretch_limo">
+                          18 Hummer H2 Stretch Limo
+                        </option>
+                      </optgroup>
+                      <optgroup label="Sedan Stretch Limo">
+                        <option value="chrysler_300_limo">
+                          10 Chrysler 300 Limo
+                        </option>
+                        <option value="lincoln_mkt_limo">
+                          8 Lincoln MKT Limo
+                        </option>
+                      </optgroup>
+                      <optgroup label="SUV">
+                        <option value="lincoln_navigator">
+                          6 Lincoln Navigator
+                        </option>
+                        <option value="cadillac_escalade">
+                          6 Cadillac Escalade
+                        </option>
+                        <option value="chevrolet_suburban">
+                          6 Chevrolet Suburban
+                        </option>
+                      </optgroup>
+                      <optgroup label="Sedan">
+                        <option value="lincoln_mkz">3 Lincoln MKZ</option>
+                      </optgroup>
+                      <optgroup label="Christmas Trolley">
+                        <option value="christmas_trolley">
+                          Christmas Trolley
+                        </option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group inline-fields">
+                  <div>
+                    <label for="hours">Number of Hours:</label>
+                    <input
+                      type="number"
+                      id="hours-option-two"
+                      min="4"
+                      value="4"
+                    />
+                  </div>
+                  <div id="base-rate">
+                    <label for="custom-base-rate">Base Rate:</label>
+                    <input
+                      type="number"
+                      id="custom-base-rate-option-two"
+                      placeholder="Base Rate"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="custom-gas-fee">Gas Fee:</label>
+                  <input
+                    type="number"
+                    id="custom-gas-fee-option-two"
+                    placeholder="Gas Fee"
+                  />
+                </div>
+              </div>
             </div>
 
             <div
