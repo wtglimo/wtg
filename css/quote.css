@@ -53,7 +53,9 @@ p {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a slight elevation effect */
     margin-top: 20px;
 }
-
+.quote-price ul{
+    margin-left: 20px;
+}
 
 .quote-container h1, .result-section h1 {
     text-align: center;
@@ -129,9 +131,9 @@ button:hover {
     margin-top: 15px;
     line-height: 1.5;
 }
-
-.paragraph-padding {
-    padding-bottom: 15px;
+.vehicle-name-quote-price{
+    font-size: 1.2em;
+    font-weight: 600;
 }
 
 .paragraph-reserve {
