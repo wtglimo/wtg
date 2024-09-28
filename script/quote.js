@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   toggleTripTypeFields();
 
   const formElements = document.querySelectorAll(
-    "#date, #time, #name, #vehicle-available, #vehicle, #preset-hours, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #custom-base-rate, #custom-gas-fee, #include-additional-hours, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob"
+    "#date, #time, #time-option-two, #name, #vehicle-available, #vehicle, #vehicle-option-two, #preset-hours, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #hours-option-two, #custom-base-rate, #custom-base-rate-option-two, #custom-gas-fee, #custom-gas-fee-option-two, #include-multiple-opitons, #multiple-vehile-fields, #additional-hours-fields, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob"
   );
 
   formElements.forEach((element) => {
@@ -33,6 +33,12 @@ document.addEventListener("DOMContentLoaded", function () {
       toggleAdditionalHoursFields();
       calculateQuote();
     });
+  document
+    .getElementById("include-multiple-opitons")
+    .addEventListener("change", function () {
+      toggleMultipleTripsFields();
+      calculateQuote();
+    });
 
   document
     .getElementById("include-byob")
@@ -50,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("vehicle").addEventListener("change", updateRates);
   document.getElementById("date").addEventListener("change", updateRates);
   document.getElementById("time").addEventListener("change", updateRates);
+
   updateRates(); // Initial call to set rates on page load
 
   // Add event listener to the date input for live filtering
@@ -438,6 +445,7 @@ function toggleTripTypeFields() {
   const customQuoteHoursBYOB = document.getElementById(
     "custom-quote-hours-byob"
   );
+  const customMultipleQuote = document.getElementById("multiple-vehicle-switch-fields");
   const fleetSelected = document.querySelector(".fleetAndRates");
   const vehicleAvailability = document.querySelector(".vehicle-availability");
   const includeMinHoursPolicy = document.getElementById(
@@ -456,6 +464,7 @@ function toggleTripTypeFields() {
     fleetSelected.style.display = "block";
     hoursField.parentElement.style.display = "block";
     weddingPackageGroup.style.display = "none";
+    customMultipleQuote.style.display = "block";
   } else if (tripType === "one-way" || tripType === "two-way") {
     customQuoteFields.style.display = "block";
     customQuoteHoursBYOB.style.display = "none";
@@ -466,6 +475,7 @@ function toggleTripTypeFields() {
     hoursField.value = "";
     hoursField.parentElement.style.display = "none";
     weddingPackageGroup.style.display = "none";
+    customMultipleQuote.style.display = "none";
   } else if (tripType === "wedding") {
     fleetSelected.style.display = "none";
     customQuoteHoursBYOB.style.display = "none";
@@ -475,6 +485,7 @@ function toggleTripTypeFields() {
     hoursField.value = "";
     hoursField.parentElement.style.display = "none";
     weddingPackageGroup.style.display = "block"; // Show the wedding package options
+    customMultipleQuote.style.display = "none";
   }
 }
 
@@ -503,6 +514,22 @@ document
     calculateQuote();
   });
 
+function toggleMultipleTripsFields() {
+  const multipleOptionsFields = document.getElementById(
+    "multiple-vehile-fields"
+  );
+
+  const multipleOptionsCheckbox = document.getElementById(
+    "include-multiple-opitons"
+  );
+
+  if (multipleOptionsCheckbox.checked) {
+    multipleOptionsFields.style.display = "block";
+  } else {
+    multipleOptionsFields.style.display = "none";
+  }
+}
+
 function toggleAdditionalHoursFields() {
   const additionalHoursFields = document.getElementById(
     "additional-hours-fields"
@@ -530,6 +557,7 @@ function toggleBYOBFields() {
 }
 
 let totalAmountGlobal = 0; // Define this outside of the function, at the top
+let totalAmountGlobal2 = 0; // Define this outside of the function, at the top
 
 function calculateQuote() {
   const name = document.getElementById("name").value || "Customer";
@@ -540,10 +568,17 @@ function calculateQuote() {
   const includeAlcoholPolicyCustom = document.getElementById(
     "include-alcohol-policy-custom"
   ).checked;
+  const multipleOptionsCheckbox = document.getElementById(
+    "include-multiple-opitons"
+  ).checked;
   const includeMinHoursPolicy = document.getElementById(
     "include-min-hours-policy"
   ).checked;
+
+  const hours2 = parseFloat(document.getElementById("hours-option-two").value) || 0;
   const vehicleType = document.getElementById("vehicle").value;
+  const vehicleTypeOptionTwo =
+    document.getElementById("vehicle-option-two").value;
   const hours = parseFloat(document.getElementById("hours").value) || 0; // Default to 0 if undefined
   const includeAlcohol = document.getElementById("include-alcohol").checked;
   const quoteType = document.querySelector(
@@ -568,13 +603,13 @@ function calculateQuote() {
 
     // Get the day of the week (0: Sunday, 1: Monday, etc.)
     const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+      "SUNDAY",
+      "MONDAY",
+      "TUESDAY",
+      "WEDNESDAY",
+      "THURSDAY",
+      "FRIDAY",
+      "SATURDAY",
     ];
     dayOfWeek = daysOfWeek[date.getDay()];
 
@@ -582,27 +617,43 @@ function calculateQuote() {
   }
 
   let time = document.getElementById("time").value || "Not specified";
-
-  // Convert 24-hour time to 12-hour format
+  let time2 = document.getElementById("time-option-two").value || "Not specified";
+  
+  // Convert 24-hour time to 12-hour format for time
   if (time !== "Not specified") {
-    let [hour, minute] = time.split(":");
-    hour = parseInt(hour, 10);
-    const ampm = hour >= 12 ? "PM" : "AM";
-    hour = hour % 12 || 12; // Convert hour to 12-hour format
-    time = `${hour}:${minute} ${ampm}`;
+      let [hour, minute] = time.split(":");
+      hour = parseInt(hour, 10);
+      const ampm = hour >= 12 ? "PM" : "AM";
+      hour = hour % 12 || 12; // Convert hour to 12-hour format
+      time = `${hour}:${minute} ${ampm}`;
   }
-
+  
+  // Convert 24-hour time to 12-hour format for time2
+  if (time2 !== "Not specified") {
+      let [hour2, minute2] = time2.split(":");
+      hour2 = parseInt(hour2, 10);
+      const ampm2 = hour2 >= 12 ? "PM" : "AM";
+      hour2 = hour2 % 12 || 12; // Convert hour2 to 12-hour format
+      time2 = `${hour2}:${minute2} ${ampm2}`;
+  }
+  
   let baseRate = 0;
+  let baseRate2 = 0;
   let minHours = 4;
   let gasFee = 0;
+  let gasFee2 = 0;
   let additionalHourRate = 300;
   let stcPercentage = 10;
   let gratuityPercentage = 15;
   let securityGuardFee = 0;
   let vehicleName = "";
+  let vehicleName2 = "";
   let paxNumber = 0;
+  let paxNumber2 = 0;
   let displayBaseRate = "";
+  let displayBaseRate2 = "";
   let imageUrl = "";
+  let imageUrl2 = "";
   let vehicleLink = "";
   let hasRearBalcony = false;
   let hasRestroom = false;
@@ -612,13 +663,16 @@ function calculateQuote() {
   let customAdditionalHours = 0;
   let customRateAdditional = 0;
   let perHourRate = 0;
+  let perHourRate2 = 0;
 
   // Fetch vehicle data regardless of quote type
+
   switch (vehicleType) {
     case "trolley_midnight_36":
       baseRate = 1795;
       gasFee = 250;
       vehicleName = "Trolley Midnight";
+      vehicleName2 = "Trolley Midnight";
       paxNumber = 36;
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
@@ -791,7 +845,7 @@ function calculateQuote() {
       additionalHourRate = 200;
       vehicleName = "Sprinter Shuttle Van";
       vehicleDetails =
-        "14 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+        "14 Passengers, Bluetooth Connection, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       paxNumber = 14;
       displayBaseRate = `$${formatNumber(baseRate)}/hr`;
       imageUrl =
@@ -899,7 +953,7 @@ function calculateQuote() {
       vehicleName = "Coach Bus - Super";
       hasRestroom = true;
       paxNumber = 50;
-      vehicleDetails = "50 Passengers, Climate Controlled, Water.";
+      vehicleDetails = "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/superCoach-main.png";
@@ -910,7 +964,7 @@ function calculateQuote() {
       minHours = 5;
       gasFee = 400;
       vehicleName = "Motor Coach - Everywhere";
-      vehicleDetails = "56 Passengers, Climate Controlled, Water.";
+      vehicleDetails = "56 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Underbody Storage.";
       hasRestroom = true;
       paxNumber = 56;
       displayBaseRate = `$${formatNumber(baseRate)}`;
@@ -923,8 +977,8 @@ function calculateQuote() {
       minHours = 5;
       gasFee = 600;
       vehicleName = "Coach Bus - Corporate";
-      paxNumber = 42;
-      vehicleDetails = "42 Passengers, Climate Controlled, Water.";
+      paxNumber = 40;
+      vehicleDetails = "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/exrcutiveBus-main.png";
@@ -936,7 +990,7 @@ function calculateQuote() {
       gasFee = 500;
       vehicleName = "Coach Bus - Crystal";
       paxNumber = 25;
-      vehicleDetails = "25 Passengers, Climate Controlled, Water.";
+      vehicleDetails = "25 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBusCrystal-main.png";
@@ -946,18 +1000,251 @@ function calculateQuote() {
       alert("Invalid vehicle type selected.");
       return;
   }
-
-
+  switch (vehicleTypeOptionTwo) {
+    case "trolley_midnight_36":
+      vehicleName2 = "Trolley Midnight";
+      paxNumber2 = 36;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyMidnight-main.png";
+      vehicleLink2 = "https://wtglimo.com/Naperville-trolley-bus-rental.php";
+      vehicleDetails2 =
+        "36 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony, Ice & Water.";
+      break;
+    case "trolley_fusion_30":
+      vehicleName2 = "Trolley Fusion";
+      paxNumber2 = 30;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFusion-main.png";
+      vehicleLink2 = "https://wtglimo.com/Chicago-trolley-bus-rental.php";
+      vehicleDetails2 =
+        "30 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony, Ice & Water.";
+      break;
+    case "trolley_bliss_30":
+      vehicleName2 = "Trolley Bliss";
+      paxNumber2 = 30;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyBliss-main.png";
+      vehicleLink2 = "https://wtglimo.com/white-wedding-trolleys-Chicago.php";
+      vehicleDetails2 =
+        "30 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony, Ice & Water.";
+      break;
+    case "trolley_classic_30":
+      vehicleName2 = "Trolley Classic";
+      paxNumber2 = 30;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyClassic-main.png";
+      vehicleLink2 =
+        "https://wtglimo.com/Chicago-wedding-trolley-bus-rental.php";
+      vehicleDetails2 =
+        "30 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "trolley_festive_24":
+      vehicleName2 = "Trolley Festive";
+      paxNumber2 = 24;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFestive-main.png";
+      vehicleLink2 = "https://wtglimo.com/Chicago-trolley-rental.php";
+      vehicleDetails2 =
+        "24 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony, Ice & Water.";
+      break;
+    case "partybus_dove_40":
+      vehicleName2 = "Party Bus - Dove";
+      paxNumber2 = 40;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBus-Dove-main.jpg";
+      vehicleLink2 = "https://wtglimo.com/chicago-party-bus-rental.php";
+      vehicleDetails2 =
+        "40 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "partybus_nightrider_30":
+      vehicleName2 = "Party Bus - Night Rider";
+      paxNumber2 = 30;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/nightRider-main.png";
+      vehicleLink2 = "https://wtglimo.com/libertyville-party-bus-rental.php";
+      vehicleDetails2 =
+        "30 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "partybus_eagle_25":
+      vehicleName2 = "Party Bus - Eagle";
+      paxNumber2 = 25;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/eagle-main.png";
+      vehicleLink2 = "https://wtglimo.com/Palatine-party-bus-rental.php";
+      vehicleDetails2 =
+        "25 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "partybus_whitehawk_20":
+      vehicleName2 = "Party Bus - White Hawk";
+      paxNumber2 = 20;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/whiteHawk-main.png";
+      vehicleLink2 =
+        "https://wtglimo.com/Arlington-Heights-Party-Bus-Rental.php";
+      vehicleDetails2 =
+        "20 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "pink_hummer_h2":
+      vehicleName2 = "Pink Hummer H2";
+      paxNumber2 = 18;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkHummer-main.webp";
+      vehicleLink2 = "https://wtglimo.com/hummer_pink_panther.php";
+      vehicleDetails2 =
+        "18 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "pink_chrysler_300":
+      vehicleName2 = "Pink Chrysler 300";
+      paxNumber2 = 10;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkChrysler-main.png";
+      vehicleLink2 = "https://wtglimo.com/pink-limo-rental-Chicago.php";
+      vehicleDetails2 =
+        "10 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "christmas_trolley":
+      vehicleName2 = "Christmas Trolley";
+      paxNumber2 = "24-36";
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/christmasTrolleyMain.png";
+      vehicleLink2 = "https://wtglimo.com/Christmas-trolley-tours-Chicago.php";
+      vehicleDetails2 =
+        "24-36 Passengers, Rear Balcony, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "ford_transit_limo":
+      vehicleName2 = "Ford Transit Limo";
+      paxNumber2 = 15;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/tranitBlack-main.png";
+      vehicleLink2 =
+        "https://wtglimo.com/15-Passenger-Van-Rental-Chicago-Ford-Transit-Black.php";
+      vehicleDetails2 =
+        "15 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "sprinter_shuttle_van":
+      vehicleName2 = "Sprinter Shuttle Van";
+      paxNumber2 = 14;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/sprinter-main.png";
+      vehicleLink2 = "https://wtglimo.com/sprinter_shuttle_van.php";
+      vehicleDetails2 =
+        "14 Passengers, Bluetooth Connection, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      break;
+    case "hummer_h2_stretch_limo":
+      vehicleName2 = "Hummer H2 Stretch Limo";
+      paxNumber2 = 20;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/hummerWhite-main.png";
+      vehicleLink2 =
+        "https://wtglimo.com/suv_stretch_limousine_hummer_galaxy.php";
+      vehicleDetails2 =
+        "20 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "chrysler_300_limo":
+      vehicleName2 = "Chrysler 300 Limo";
+      paxNumber2 = 10;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/chrysler300-main.png";
+      vehicleLink2 =
+        "https://wtglimo.com/sedan_stretch_limo_chrysler_300_limo.php";
+      vehicleDetails2 =
+        "10 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "lincoln_mkt_limo":
+      vehicleName2 = "Lincoln MKT Limo";
+      paxNumber2 = 10;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKT-main.png";
+      vehicleLink2 =
+        "https://wtglimo.com/sedan_stretch_limo_lincoln_MKT_limo.php";
+      vehicleDetails2 =
+        "10 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+      break;
+    case "lincoln_navigator":
+      vehicleName2 = "Lincoln Navigator";
+      paxNumber2 = 6;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/navigator-main.png";
+      vehicleLink2 = "https://wtglimo.com/lincoln-navigator-limo.php";
+      vehicleDetails2 =
+        "6 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Water.";
+      break;
+    case "cadillac_escalade":
+      vehicleName2 = "Cadillac Escalade";
+      paxNumber2 = 6;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/cadillac-main.png";
+      vehicleLink2 = "https://wtglimo.com/cadillac-escalade-limo.php";
+      vehicleDetails2 =
+        "6 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Water.";
+      break;
+    case "chevrolet_suburban":
+      vehicleName2 = "Chevrolet Suburban";
+      paxNumber2 = 6;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/suburban-main.png";
+      vehicleLink2 = "https://wtglimo.com/suv-limo-rental.php";
+      vehicleDetails2 =
+        "6 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Water.";
+      break;
+    case "lincoln_mkz":
+      vehicleName2 = "Lincoln MKZ";
+      paxNumber2 = 3;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKZ-main.png";
+      vehicleLink2 = "https://wtglimo.com/limo-car-service.php";
+      vehicleDetails2 =
+        "3 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Water.";
+      break;
+    case "coach_bus_super":
+      vehicleName2 = "Coach Bus - Super";
+      paxNumber2 = 50;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/superCoach-main.png";
+      vehicleLink2 = "https://wtglimo.com/chicago-Super-Coach-Bus.php";
+      vehicleDetails2 = "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      break;
+    case "coach_bus_rentals":
+      vehicleName2 = "56 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Underbody Storage";
+      paxNumber2 = 56;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/coachBusEverywhere-main.png";
+      vehicleLink2 = "https://wtglimo.com/chicago_coach_bus.php";
+      vehicleDetails2 = "56 Passengers, Climate Controlled, Water.";
+      break;
+    case "coach_bus_corporate":
+      vehicleName2 = "Coach Bus - Corporate";
+      paxNumber2 = 40;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/exrcutiveBus-main.png";
+      vehicleLink2 = "https://wtglimo.com/executive_shuttle_bus.php";
+      vehicleDetails2 = "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      break;
+    case "coach_bus_crystal":
+      vehicleName2 = "Coach Bus - Crystal";
+      paxNumber2 = 25;
+      imageUrl2 =
+        "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBusCrystal-main.png";
+      vehicleLink2 = "https://wtglimo.com/executive_bus_crystal.php";
+      vehicleDetails2 = "25 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      break;
+    default:
+      alert("Invalid vehicle type selected.");
+      return;
+  }
 
   let totalAdditionalCost = 0;
   let totalBYOBCost = 0;
   let totalHours = hours;
+  let totalHours2 = hours2;
 
   if (quoteType === "custom") {
     if (tripType === "hourly") {
       baseRate =
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
+      baseRate2 = parseFloat(document.getElementById("custom-base-rate-option-two").value) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
+      gasFee2 = parseFloat(document.getElementById("custom-gas-fee-option-two").value) || 0;
 
       if (includeAdditionalHours) {
         customAdditionalHours =
@@ -979,15 +1266,16 @@ function calculateQuote() {
         totalBYOBCost = customBYOBHours * customRateBYOB;
       }
 
-
       baseRate *= hours;
+      baseRate2 *= hours2;
       perHourRate = baseRate / hours;
+      perHourRate2 = baseRate2 / hours2;
       displayBaseRate = `$${formatNumber(baseRate)}`;
+      displayBaseRate2 = `$${formatNumber(baseRate2)}`;
     } else if (tripType === "wedding") {
       baseRate =
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
-
 
       displayBaseRate = `$${formatNumber(baseRate)}`;
     } else if (tripType === "one-way" || tripType === "two-way") {
@@ -1046,8 +1334,11 @@ function calculateQuote() {
   }
 
   const totalBaseRate = baseRate;
+  const totalBaseRate2 = baseRate2;
   const stc = (totalBaseRate * stcPercentage) / 100;
+  const stc2 = (totalBaseRate2 * stcPercentage) / 100;
   const gratuity = (totalBaseRate * gratuityPercentage) / 100;
+  const gratuity2 = (totalBaseRate2 * gratuityPercentage) / 100;
   const total =
     totalBaseRate +
     stc +
@@ -1056,10 +1347,17 @@ function calculateQuote() {
     securityGuardFee +
     totalAdditionalCost +
     totalBYOBCost;
+  const total2 =
+    totalBaseRate2 +
+    stc2 +
+    gratuity2 +
+    gasFee2 +
+    securityGuardFee +
+    totalAdditionalCost +
+    totalBYOBCost;
 
   totalAmountGlobal = total; // Store the total amount in the global variable
-
-
+  totalAmountGlobal2 = total2; // Store the total amount in the global variable
 
   const weddingPackage = document.getElementById("wedding-package").value;
   let weddingPackagePrint = "";
@@ -1071,12 +1369,19 @@ function calculateQuote() {
     weddingPackagePrint = "Large Group Package";
   }
 
+
   let availabilityMessage = "";
   let wedding = tripType === "wedding";
   if (vehicleAvailable) {
-    availabilityMessage = `We're excited to inform you that the <strong> ${
-      wedding ? weddingPackagePrint : vehicleName
-    }</strong> is available.`;
+    if(multipleOptionsCheckbox){
+      availabilityMessage = `We're excited to inform you that the <strong> ${vehicleName}</strong> & the <strong>${vehicleName2}</strong> are available.`;
+    }
+    else if(wedding){
+      availabilityMessage = `We're excited to inform you that the <strong> ${weddingPackagePrint}</strong> is available.`;
+    }
+    else{
+      availabilityMessage = `We're excited to inform you that the <strong> ${vehicleName}</strong> is available.`;
+    }
   } else {
     availabilityMessage =
       "The requested vehicle is not available. However, we do have a similar vehicle that can meet your expectations.";
@@ -1087,21 +1392,29 @@ function calculateQuote() {
   // Define the label based on tripType
   if (tripType === "wedding") {
     packageLabel = weddingPackagePrint;
-    quoteIncludes =
-    `${weddingPackagePrint}, unlimited stops & mileage, gratuity, all fees, fuel and service charges.`;
+    quoteIncludes = `${weddingPackagePrint}, unlimited stops & mileage, gratuity, all fees, fuel and service charges.`;
   } else if (tripType === "hourly") {
     packageLabel = `${totalHours} Hour Package`;
     quoteIncludes =
-    "Unlimited stops & mileage, gratuity, all fees, fuel and service charges.";
+      "Unlimited stops & mileage, gratuity, all fees, fuel and service charges.";
   } else if (tripType === "one-way") {
     packageLabel = "Transfer <span class='byob-text'>(one-way)</span>";
     quoteIncludes =
-    "One way trip, gratuity, all fees, fuel and service charges.";
+      "One way trip, gratuity, all fees, fuel and service charges.";
   } else if (tripType === "two-way") {
     packageLabel = "Round Trip <span class='byob-text'>(to/from)</span>";
-    quoteIncludes =
-    "Round trip, gratuity, all fees, fuel and service charges.";
+    quoteIncludes = "Round trip, gratuity, all fees, fuel and service charges.";
   }
+
+  let vehicleNamePax = "";
+  if (wedding){
+    vehicleNamePax = "";
+  } 
+else{
+    vehicleNamePax = `<p class="vehicle-name-quote-price">${vehicleName} <span class="byob-text">(${paxNumber} Passengers)</span></p>`;
+  }
+  
+
 
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = `
@@ -1120,7 +1433,7 @@ function calculateQuote() {
               <p><a href="${vehicleLink}" target="_blank">(View More Pictures)</a></p>
           </div>
           <div class="details">
-              <p class="paragraph-padding"><strong>Vehicle Details: </strong>${vehicleDetails}</p>
+              <p><strong>Vehicle Details: </strong>${vehicleDetails}</p>
 
               <p><strong>Quote Includes:</strong> ${quoteIncludes}</p>
               ${
@@ -1132,14 +1445,13 @@ function calculateQuote() {
               }
 
               <div class="quote-price">
+              <div class="quote-vehicle-name"> ${vehicleNamePax} </div>
                   <div class="quote-datetime">
-                      <p><small>${formattedDate} (${dayOfWeek})</small></p>
+                      <p><small>${dayOfWeek} ${formattedDate}</small></p>
                       <p><small>&nbsp;/ ${time}</small></p>
                   </div>
                     <p class="quote-heading">
-                    <strong>${
-                      wedding ? "" : vehicleName
-                    } Quote: ${packageLabel} <span class="byob-text">
+                    <strong>Quote: ${packageLabel} <span class="byob-text">
                     ${
                       includeMinHoursPolicy && tripType === "hourly"
                         ? "(Minimum Required)"
@@ -1147,7 +1459,7 @@ function calculateQuote() {
                     }
                     </span></strong>
                   </p>
-                  <p>Base Rate: ${displayBaseRate} ${
+                      <p>Base Rate: ${displayBaseRate} ${
     tripType === "hourly"
       ? `<span class="byob-text">(${hours.toFixed(2)} hrs @ $${formatNumber(
           perHourRate
@@ -1158,7 +1470,7 @@ function calculateQuote() {
         )} each way)</span>`
       : ""
   }</p>
-                  <ul>
+                        <ul>
                       <li>STC: ${stcPercentage.toFixed(2)}%</li>
                       <li>Gratuity: ${gratuityPercentage.toFixed(2)}%</li>
                       <li>Gas Fee: $${formatNumber(gasFee)}</li>
@@ -1193,7 +1505,103 @@ function calculateQuote() {
                   )}<span class="byob-text"> (All Inclusive)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
               </div>
+               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
+          <div class="reserve-btn">
+              <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
+                wedding ? weddingPackagePrint : vehicleName
+              }</a>
           </div>
+
+
+          ${
+            multipleOptionsCheckbox
+              ? `
+            <h2 class="vehicle-name">${vehicleName2} <span class="byob-text">(${paxNumber2} Passengers)</span><span class="vehicle-recommeded"> ${
+                  !vehicleAvailable ? "(Recommended Vehicle)" : ""
+                }</span></h2>
+          <div class="image-container">
+              <img src="${imageUrl2}" alt="${vehicleName2}" />
+          </div>
+          <div class="vehicle-name-link">
+              <p><a href="${vehicleLink2}" target="_blank">(View More Pictures)</a></p>
+          </div>
+          <div class="details">
+              <p><strong>Vehicle Details: </strong>${vehicleDetails2}</p>
+
+              <p><strong>Quote Includes:</strong> ${quoteIncludes}</p>
+
+              
+            
+            <div class="quote-price">
+            <p class="vehicle-name-quote-price">${vehicleName2} <span class="byob-text">(${paxNumber2} Passengers)</span></p>
+                  <div class="quote-datetime">
+                      <p><small>${dayOfWeek} ${formattedDate}</small></p>
+                      <p><small>&nbsp;/ ${time2}</small></p>
+                  </div>
+                    <p class="quote-heading">
+                    <strong>Quote: ${totalHours2} Hour Package <span class="byob-text">
+                    ${
+                      includeMinHoursPolicy && tripType === "hourly"
+                        ? "(Minimum Required)"
+                        : ""
+                    }
+                    </span></strong>
+                  </p>
+                      <p>Base Rate: ${displayBaseRate2} ${
+                  tripType === "hourly"
+                    ? `<span class="byob-text">(${hours2.toFixed(
+                        2
+                      )} hrs @ $${formatNumber(perHourRate2)} per hour)</span>`
+                    : tripType === "two-way"
+                    ? `<span class='byob-text'>(${formatNumber(
+                        twoWaysDisplayRate
+                      )} each way)</span>`
+                    : ""
+                }</p>
+                        <ul>
+                      <li>STC: ${stcPercentage.toFixed(2)}%</li>
+                      <li>Gratuity: ${gratuityPercentage.toFixed(2)}%</li>
+                      <li>Gas Fee: $${formatNumber(gasFee2)}</li>
+                      ${
+                        securityGuardFee > 0
+                          ? `<li>BYOB Security Guard Fee: $${formatNumber(
+                              securityGuardFee
+                            )}</li>`
+                          : ""
+                      }
+                      ${
+                        totalBYOBCost > 0
+                          ? `<li>BYOB Security Cost: $${formatNumber(
+                              totalBYOBCost
+                            )} <span class="byob-text">(Chicago Trips Only)</span></li>`
+                          : ""
+                      }
+                      ${
+                        totalAdditionalCost > 0
+                          ? `<li>Additional Hours Cost: $${formatNumber(
+                              totalAdditionalCost
+                            )} <span class="byob-text">(${customAdditionalHours.toFixed(
+                              2
+                            )} hrs @ $${formatNumber(
+                              customRateAdditional
+                            )})</span></li>`
+                          : ""
+                      }
+                  </ul>
+                  <p class="total"><strong>Total: $${formatNumber(
+                    total2
+                  )}<span class="byob-text"> (All Inclusive)</span></strong></p>
+                  <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
+              </div>
+
+               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
+          <div class="reserve-btn">
+              <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
+                wedding ? weddingPackagePrint : vehicleName2
+              }</a>
+          </div>`
+              : ""
+          }
           ${
             includeAlcoholPolicy
               ? `<div class="minimum-requirements">
@@ -1209,11 +1617,7 @@ function calculateQuote() {
               : ""
           }
             
-          <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
-          <div class="reserve-btn">
-              <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
-                wedding ? weddingPackagePrint : vehicleName
-              }</a>
+         
           </div>
           <hr>
         </div>
@@ -1279,6 +1683,7 @@ function saveQuote() {
 
   // Use the correct total amount from the global variable
   let totalAmount = totalAmountGlobal;
+  let totalAmount2 = totalAmountGlobal2;
 
   // Send data to the backend server to save the quote
   fetch("http://localhost:3000/save-quote", {
