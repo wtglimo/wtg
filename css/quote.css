@@ -361,7 +361,6 @@ hr {
     color: #888; /* Grey color */
     margin-bottom: 10px; /* Space between date/time and other content */
     display: flex;
-    margin-bottom: 0;
     font-weight: 600;
 }
 
