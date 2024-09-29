@@ -445,7 +445,9 @@ function toggleTripTypeFields() {
   const customQuoteHoursBYOB = document.getElementById(
     "custom-quote-hours-byob"
   );
-  const customMultipleQuote = document.getElementById("multiple-vehicle-switch-fields");
+  const customMultipleQuote = document.getElementById(
+    "multiple-vehicle-switch-fields"
+  );
   const fleetSelected = document.querySelector(".fleetAndRates");
   const vehicleAvailability = document.querySelector(".vehicle-availability");
   const includeMinHoursPolicy = document.getElementById(
@@ -575,7 +577,8 @@ function calculateQuote() {
     "include-min-hours-policy"
   ).checked;
 
-  const hours2 = parseFloat(document.getElementById("hours-option-two").value) || 0;
+  const hours2 =
+    parseFloat(document.getElementById("hours-option-two").value) || 0;
   const vehicleType = document.getElementById("vehicle").value;
   const vehicleTypeOptionTwo =
     document.getElementById("vehicle-option-two").value;
@@ -617,26 +620,27 @@ function calculateQuote() {
   }
 
   let time = document.getElementById("time").value || "Not specified";
-  let time2 = document.getElementById("time-option-two").value || "Not specified";
-  
+  let time2 =
+    document.getElementById("time-option-two").value || "Not specified";
+
   // Convert 24-hour time to 12-hour format for time
   if (time !== "Not specified") {
-      let [hour, minute] = time.split(":");
-      hour = parseInt(hour, 10);
-      const ampm = hour >= 12 ? "PM" : "AM";
-      hour = hour % 12 || 12; // Convert hour to 12-hour format
-      time = `${hour}:${minute} ${ampm}`;
+    let [hour, minute] = time.split(":");
+    hour = parseInt(hour, 10);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12 || 12; // Convert hour to 12-hour format
+    time = `${hour}:${minute} ${ampm}`;
   }
-  
+
   // Convert 24-hour time to 12-hour format for time2
   if (time2 !== "Not specified") {
-      let [hour2, minute2] = time2.split(":");
-      hour2 = parseInt(hour2, 10);
-      const ampm2 = hour2 >= 12 ? "PM" : "AM";
-      hour2 = hour2 % 12 || 12; // Convert hour2 to 12-hour format
-      time2 = `${hour2}:${minute2} ${ampm2}`;
+    let [hour2, minute2] = time2.split(":");
+    hour2 = parseInt(hour2, 10);
+    const ampm2 = hour2 >= 12 ? "PM" : "AM";
+    hour2 = hour2 % 12 || 12; // Convert hour2 to 12-hour format
+    time2 = `${hour2}:${minute2} ${ampm2}`;
   }
-  
+
   let baseRate = 0;
   let baseRate2 = 0;
   let minHours = 4;
@@ -664,6 +668,27 @@ function calculateQuote() {
   let customRateAdditional = 0;
   let perHourRate = 0;
   let perHourRate2 = 0;
+  
+
+
+  const weddingImage = "https://wtglimo.com/img/wedding/trolley-shuttleBus.png";
+  
+  let weddingSmall = {
+    trolleyDetails: "24 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony.",
+    shuttleBusDetials: "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.",
+    quoteIncludes: "Small-Group Package 5-hour Trolley & 8-hour Bus, unlimited stops & mileage, gratuity, all fees, fuel and service charges."
+  }
+  let weddingMedium = {
+    trolleyDetails: "30 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony.",
+    shuttleBusDetials: "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.",
+    quoteIncludes: "Medium-Group Package 5-hour Trolley & 8-hour Bus, unlimited stops & mileage, gratuity, all fees, fuel and service charges."
+  }
+  let weddingLarge = {
+    trolleyDetails: "36 Passengers Trolley OR 40 Passengers Party Bus, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony.",
+    shuttleBusDetials: "2 of the 50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.",
+    quoteIncludes: "Large-Group Package 5-hour Trolley & 8-hour per Bus, unlimited stops & mileage, gratuity, all fees, fuel and service charges."
+  }
+
 
   // Fetch vehicle data regardless of quote type
 
@@ -953,7 +978,8 @@ function calculateQuote() {
       vehicleName = "Coach Bus - Super";
       hasRestroom = true;
       paxNumber = 50;
-      vehicleDetails = "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      vehicleDetails =
+        "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/superCoach-main.png";
@@ -964,7 +990,8 @@ function calculateQuote() {
       minHours = 5;
       gasFee = 400;
       vehicleName = "Motor Coach - Everywhere";
-      vehicleDetails = "56 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Underbody Storage.";
+      vehicleDetails =
+        "56 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Underbody Storage.";
       hasRestroom = true;
       paxNumber = 56;
       displayBaseRate = `$${formatNumber(baseRate)}`;
@@ -978,7 +1005,8 @@ function calculateQuote() {
       gasFee = 600;
       vehicleName = "Coach Bus - Corporate";
       paxNumber = 40;
-      vehicleDetails = "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      vehicleDetails =
+        "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/exrcutiveBus-main.png";
@@ -990,7 +1018,8 @@ function calculateQuote() {
       gasFee = 500;
       vehicleName = "Coach Bus - Crystal";
       paxNumber = 25;
-      vehicleDetails = "25 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      vehicleDetails =
+        "25 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBusCrystal-main.png";
@@ -1202,10 +1231,12 @@ function calculateQuote() {
       imageUrl2 =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/superCoach-main.png";
       vehicleLink2 = "https://wtglimo.com/chicago-Super-Coach-Bus.php";
-      vehicleDetails2 = "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      vehicleDetails2 =
+        "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       break;
     case "coach_bus_rentals":
-      vehicleName2 = "56 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Underbody Storage";
+      vehicleName2 =
+        "56 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Underbody Storage";
       paxNumber2 = 56;
       imageUrl2 =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/coachBusEverywhere-main.png";
@@ -1218,7 +1249,8 @@ function calculateQuote() {
       imageUrl2 =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/exrcutiveBus-main.png";
       vehicleLink2 = "https://wtglimo.com/executive_shuttle_bus.php";
-      vehicleDetails2 = "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      vehicleDetails2 =
+        "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       break;
     case "coach_bus_crystal":
       vehicleName2 = "Coach Bus - Crystal";
@@ -1226,7 +1258,8 @@ function calculateQuote() {
       imageUrl2 =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBusCrystal-main.png";
       vehicleLink2 = "https://wtglimo.com/executive_bus_crystal.php";
-      vehicleDetails2 = "25 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
+      vehicleDetails2 =
+        "25 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.";
       break;
     default:
       alert("Invalid vehicle type selected.");
@@ -1242,9 +1275,15 @@ function calculateQuote() {
     if (tripType === "hourly") {
       baseRate =
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
-      baseRate2 = parseFloat(document.getElementById("custom-base-rate-option-two").value) || 0;
+      baseRate2 =
+        parseFloat(
+          document.getElementById("custom-base-rate-option-two").value
+        ) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
-      gasFee2 = parseFloat(document.getElementById("custom-gas-fee-option-two").value) || 0;
+      gasFee2 =
+        parseFloat(
+          document.getElementById("custom-gas-fee-option-two").value
+        ) || 0;
 
       if (includeAdditionalHours) {
         customAdditionalHours =
@@ -1362,24 +1401,21 @@ function calculateQuote() {
   const weddingPackage = document.getElementById("wedding-package").value;
   let weddingPackagePrint = "";
   if (weddingPackage === "small") {
-    weddingPackagePrint = "Small Group Package";
+    weddingPackagePrint = "Small Group";
   } else if (weddingPackage === "medium") {
-    weddingPackagePrint = "Medium Group Package";
+    weddingPackagePrint = "Medium Group";
   } else if (weddingPackage === "large") {
-    weddingPackagePrint = "Large Group Package";
+    weddingPackagePrint = "Large Group";
   }
-
 
   let availabilityMessage = "";
   let wedding = tripType === "wedding";
   if (vehicleAvailable) {
-    if(multipleOptionsCheckbox){
+    if (multipleOptionsCheckbox) {
       availabilityMessage = `We're excited to inform you that the <strong> ${vehicleName}</strong> & the <strong>${vehicleName2}</strong> are available.`;
-    }
-    else if(wedding){
-      availabilityMessage = `We're excited to inform you that the <strong> ${weddingPackagePrint}</strong> is available.`;
-    }
-    else{
+    } else if (wedding) {
+      availabilityMessage = `We're excited to inform you that the <strong> ${weddingPackagePrint} Package</strong> is available.`;
+    } else {
       availabilityMessage = `We're excited to inform you that the <strong> ${vehicleName}</strong> is available.`;
     }
   } else {
@@ -1388,11 +1424,24 @@ function calculateQuote() {
   }
 
   let packageLabel = "";
-
+  let trolleyDetails = "";
+  let shuttleBusDetails = "";
   // Define the label based on tripType
   if (tripType === "wedding") {
     packageLabel = weddingPackagePrint;
-    quoteIncludes = `${weddingPackagePrint}, unlimited stops & mileage, gratuity, all fees, fuel and service charges.`;
+    if (weddingPackage === "small") {
+      quoteIncludes = weddingSmall.quoteIncludes;
+      trolleyDetails = weddingSmall.trolleyDetails;
+      shuttleBusDetails = weddingSmall.shuttleBusDetials;
+    } else if (weddingPackage === "medium") {
+      quoteIncludes = weddingMedium.quoteIncludes;
+      trolleyDetails = weddingMedium.trolleyDetails;
+      shuttleBusDetails = weddingMedium.shuttleBusDetials;
+    } else if (weddingPackage === "large") {
+      quoteIncludes = weddingLarge.quoteIncludes;
+      trolleyDetails = weddingLarge.trolleyDetails;
+      shuttleBusDetails = weddingLarge.shuttleBusDetials;
+    }
   } else if (tripType === "hourly") {
     packageLabel = `${totalHours} Hour Package`;
     quoteIncludes =
@@ -1407,14 +1456,11 @@ function calculateQuote() {
   }
 
   let vehicleNamePax = "";
-  if (wedding){
+  if (wedding) {
     vehicleNamePax = "";
-  } 
-else{
+  } else {
     vehicleNamePax = `<p class="vehicle-name-quote-price">${vehicleName} <span class="byob-text">(${paxNumber} Passengers)</span></p>`;
   }
-  
-
 
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = `
@@ -1423,19 +1469,40 @@ else{
             Hello <strong>${name}</strong>,<br><br>
             Thank you for choosing <strong>WAYTOGO Trolley & Charter Bus</strong>. ${availabilityMessage} Please review the quote below and make your reservation online.
           </p>
-          <h2 class="vehicle-name">${vehicleName} <span class="byob-text">(${paxNumber} Passengers)</span><span class="vehicle-recommeded"> ${
+          
+          ${
+            wedding
+              ? `<p><strong>Quote Includes:</strong> ${quoteIncludes}</p><br>`
+              : ""
+          }
+          <h2 class="vehicle-name">${
+            wedding ? `${weddingPackagePrint} Package` : vehicleName
+          } ${
+    wedding ? "" : `<span class="byob-text">(${paxNumber} Passengers)</span>`
+  }<span class="vehicle-recommeded"> ${
     !vehicleAvailable ? "(Recommended Vehicle)" : ""
   }</span></h2>
-          <div class="image-container">
-              <img src="${imageUrl}" alt="${vehicleName}" />
-          </div>
-          <div class="vehicle-name-link">
-              <p><a href="${vehicleLink}" target="_blank">(View More Pictures)</a></p>
-          </div>
-          <div class="details">
-              <p><strong>Vehicle Details: </strong>${vehicleDetails}</p>
 
-              <p><strong>Quote Includes:</strong> ${quoteIncludes}</p>
+          <div class="image-container">
+          ${
+            wedding
+              ? `<img src="${weddingImage}" alt="${weddingPackagePrint}" />`
+              : `<img src="${imageUrl}" alt="${vehicleName}" />`
+          }
+          </div>
+          ${wedding ? "" : `<div class="vehicle-name-link">
+              <p><a href="${vehicleLink}" target="_blank">(View More Pictures)</a></p>
+          </div>`}
+          <div class="details">
+          ${wedding ? `<p><strong>Trolley Details: </strong> ${trolleyDetails}</p>
+            <p><strong>Shuttle Bus Details: </strong> ${shuttleBusDetails}</p>` :
+              `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
+          }
+            ${
+              wedding
+                ? ""
+                : `<p><strong>Quote Includes:</strong> ${quoteIncludes}</p>`
+            }
               ${
                 includeMinHoursPolicy && tripType === "hourly"
                   ? `<div id="min-hours-requirement" class="minimum-requirements">
@@ -1446,12 +1513,25 @@ else{
 
               <div class="quote-price">
               <div class="quote-vehicle-name"> ${vehicleNamePax} </div>
+
+                  ${
+                    wedding
+                      ? `<div style="
+                          line-height: normal;">
+                    <p class="quote-heading"><strong>Trolley & Shuttle Bus</strong></p>
                   <div class="quote-datetime">
                       <p><small>${dayOfWeek} ${formattedDate}</small></p>
                       <p><small>&nbsp;/ ${time}</small></p>
-                  </div>
+                  </div></div>`
+                      : `<div style="
+                          line-height: normal;">
+                  <div class="quote-datetime">
+                      <p><small>${dayOfWeek} ${formattedDate}</small></p>
+                      <p><small>&nbsp;/ ${time}</small></p>
+                  </div></div>`
+                  }
                     <p class="quote-heading">
-                    <strong>Quote: ${packageLabel} <span class="byob-text">
+                    <strong>${wedding ? "Wedding Package:" : "Quote:"} ${packageLabel} <span class="byob-text">
                     ${
                       includeMinHoursPolicy && tripType === "hourly"
                         ? "(Minimum Required)"
