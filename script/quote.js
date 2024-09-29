@@ -1544,7 +1544,7 @@ function calculateQuote() {
                   </div></div>`
                   }
                     <p class="quote-heading">
-                    <strong>Quote: ${packageLabel} <span class="byob-text">
+                    <strong>QUOTES: ${packageLabel} <span class="byob-text">
                     ${
                       includeMinHoursPolicy && tripType === "hourly"
                         ? "(Minimum Required)"
@@ -1602,7 +1602,7 @@ function calculateQuote() {
           <div class="reserve-btn">
               <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
                 wedding ? weddingPackagePrint : vehicleName
-              }</a>
+              } Now</a>
           </div>
 
 
@@ -1632,7 +1632,7 @@ function calculateQuote() {
                       <p><small>&nbsp;/ ${time2}</small></p>
                   </div>
                     <p class="quote-heading">
-                    <strong>Quote: ${totalHours2} Hour Package <span class="byob-text">
+                    <strong>QUOTE: ${totalHours2} Hour Package <span class="byob-text">
                     ${
                       includeMinHoursPolicy && tripType === "hourly"
                         ? "(Minimum Required)"
