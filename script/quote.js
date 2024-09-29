@@ -1532,7 +1532,7 @@ function calculateQuote() {
                     wedding
                       ? `<div style="
                           line-height: normal;">
-                    <p class="quote-heading"><strong>Trolley & Bus</strong></p>
+                    <p class="quote-heading"><strong>${weddingPackage === "large" ? "Trolley or Party Bus & 2 Buses" : "Trolley & Bus"}</strong></p>
                   <div class="quote-datetime">
                       <p><small>${dayOfWeek} ${formattedDate}</small></p>
                   </div></div>`
@@ -1544,7 +1544,7 @@ function calculateQuote() {
                   </div></div>`
                   }
                     <p class="quote-heading">
-                    <strong>QUOTES: ${packageLabel} <span class="byob-text">
+                    <strong>QUOTE: ${packageLabel} <span class="byob-text">
                     ${
                       includeMinHoursPolicy && tripType === "hourly"
                         ? "(Minimum Required)"
