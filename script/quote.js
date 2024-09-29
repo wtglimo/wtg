@@ -445,6 +445,9 @@ function toggleTripTypeFields() {
   const customQuoteHoursBYOB = document.getElementById(
     "custom-quote-hours-byob"
   );
+  const time = document.getElementById(
+    "time-wrapper"
+  );
   const customMultipleQuote = document.getElementById(
     "multiple-vehicle-switch-fields"
   );
@@ -459,6 +462,7 @@ function toggleTripTypeFields() {
 
   if (tripType === "hourly") {
     customQuoteFields.style.display = "block";
+    time.style.display = "block";
     customQuoteHoursBYOB.style.display = "block";
     includeMinHoursPolicy.style.display = "block";
     vehicleAvailability.style.display = "block";
@@ -469,6 +473,7 @@ function toggleTripTypeFields() {
     customMultipleQuote.style.display = "block";
   } else if (tripType === "one-way" || tripType === "two-way") {
     customQuoteFields.style.display = "block";
+    time.style.display = "block";
     customQuoteHoursBYOB.style.display = "none";
     includeMinHoursPolicy.style.display = "none";
     vehicleAvailability.style.display = "block";
@@ -480,6 +485,7 @@ function toggleTripTypeFields() {
     customMultipleQuote.style.display = "none";
   } else if (tripType === "wedding") {
     fleetSelected.style.display = "none";
+    time.style.display = "none";
     customQuoteHoursBYOB.style.display = "none";
     vehicleAvailability.style.display = "none";
     includeMinHoursPolicy.style.display = "none";
@@ -674,19 +680,23 @@ function calculateQuote() {
   const weddingImage = "https://wtglimo.com/img/wedding/trolley-shuttleBus.png";
   
   let weddingSmall = {
-    trolleyDetails: "24 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony.",
-    shuttleBusDetials: "40 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.",
-    quoteIncludes: "Small-Group Package 5-hour Trolley & 8-hour Bus, unlimited stops & mileage, gratuity, all fees, fuel and service charges."
+    trolleyDetails: "seating capacity 24, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
+    shuttleBusDetials: "seating capacity 40, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
+    packageIncludes: "24-trolley for 5-hours AND a 40-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
+    VehilceName: "24-Trolley & 40-Bus"
+    
   }
   let weddingMedium = {
-    trolleyDetails: "30 Passengers, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony.",
-    shuttleBusDetials: "50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.",
-    quoteIncludes: "Medium-Group Package 5-hour Trolley & 8-hour Bus, unlimited stops & mileage, gratuity, all fees, fuel and service charges."
+    trolleyDetails: "seating capacity 30, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
+    shuttleBusDetials: "seating capacity 50, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
+    packageIncludes: "30-trolley for 5-hours AND a 50-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
+    VehilceName: "30-Trolley & 50-Bus"
   }
   let weddingLarge = {
-    trolleyDetails: "36 Passengers Trolley OR 40 Passengers Party Bus, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Rear Balcony.",
-    shuttleBusDetials: "2 of the 50 Passengers, Basic Radio, Bluetooth, Charging Ports, Climate Controlled, Individual Face-Forward Seating, Seat belts, Rear Storage.",
-    quoteIncludes: "Large-Group Package 5-hour Trolley & 8-hour per Bus, unlimited stops & mileage, gratuity, all fees, fuel and service charges."
+    trolleyDetails: "36-trolley OR a 40-party bus, premium sound system with bluetooth connection, charging ports, climate controlled, comfortable perimeter seats, rear balcony.",
+    shuttleBusDetials: "seating capacity 50 per bus, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
+    packageIncludes: "36-trolley OR a 40-party bus for 5 hours AND 2 of the 50-shuttle buses for 8-hours each, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
+    VehilceName: "36-Trolley & 2 of the 50-Buses"
   }
 
 
@@ -1426,21 +1436,25 @@ function calculateQuote() {
   let packageLabel = "";
   let trolleyDetails = "";
   let shuttleBusDetails = "";
+  let headingVehicleNames = "";
   // Define the label based on tripType
   if (tripType === "wedding") {
     packageLabel = weddingPackagePrint;
     if (weddingPackage === "small") {
-      quoteIncludes = weddingSmall.quoteIncludes;
+      quoteIncludes = weddingSmall.packageIncludes;
       trolleyDetails = weddingSmall.trolleyDetails;
       shuttleBusDetails = weddingSmall.shuttleBusDetials;
+      headingVehicleNames = weddingSmall.VehilceName;
     } else if (weddingPackage === "medium") {
-      quoteIncludes = weddingMedium.quoteIncludes;
+      quoteIncludes = weddingMedium.packageIncludes;
       trolleyDetails = weddingMedium.trolleyDetails;
       shuttleBusDetails = weddingMedium.shuttleBusDetials;
+      headingVehicleNames = weddingMedium.VehilceName;
     } else if (weddingPackage === "large") {
-      quoteIncludes = weddingLarge.quoteIncludes;
+      quoteIncludes = weddingLarge.packageIncludes;
       trolleyDetails = weddingLarge.trolleyDetails;
       shuttleBusDetails = weddingLarge.shuttleBusDetials;
+      headingVehicleNames = weddingLarge.VehilceName;
     }
   } else if (tripType === "hourly") {
     packageLabel = `${totalHours} Hour Package`;
@@ -1472,11 +1486,11 @@ function calculateQuote() {
           
           ${
             wedding
-              ? `<p><strong>Quote Includes:</strong> ${quoteIncludes}</p><br>`
+              ? `<p><strong>Package Includes:</strong> ${quoteIncludes}</p><br>`
               : ""
           }
           <h2 class="vehicle-name">${
-            wedding ? `${weddingPackagePrint} Package` : vehicleName
+            wedding ? `${weddingPackagePrint}: <span class="unbold-heading">${headingVehicleNames}</span>` : vehicleName
           } ${
     wedding ? "" : `<span class="byob-text">(${paxNumber} Passengers)</span>`
   }<span class="vehicle-recommeded"> ${
@@ -1494,7 +1508,7 @@ function calculateQuote() {
               <p><a href="${vehicleLink}" target="_blank">(View More Pictures)</a></p>
           </div>`}
           <div class="details">
-          ${wedding ? `<p><strong>Trolley Details: </strong> ${trolleyDetails}</p>
+          ${wedding ? `<p><strong>${weddingPackage === "large" ? "Trolley OR Party Bus Details:" : "Trolley Details:"} </strong> ${trolleyDetails}</p>
             <p><strong>Shuttle Bus Details: </strong> ${shuttleBusDetails}</p>` :
               `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
           }
@@ -1518,10 +1532,9 @@ function calculateQuote() {
                     wedding
                       ? `<div style="
                           line-height: normal;">
-                    <p class="quote-heading"><strong>Trolley & Shuttle Bus</strong></p>
+                    <p class="quote-heading"><strong>Trolley & Bus</strong></p>
                   <div class="quote-datetime">
                       <p><small>${dayOfWeek} ${formattedDate}</small></p>
-                      <p><small>&nbsp;/ ${time}</small></p>
                   </div></div>`
                       : `<div style="
                           line-height: normal;">
@@ -1531,7 +1544,7 @@ function calculateQuote() {
                   </div></div>`
                   }
                     <p class="quote-heading">
-                    <strong>${wedding ? "Wedding Package:" : "Quote:"} ${packageLabel} <span class="byob-text">
+                    <strong>Quote: ${packageLabel} <span class="byob-text">
                     ${
                       includeMinHoursPolicy && tripType === "hourly"
                         ? "(Minimum Required)"
