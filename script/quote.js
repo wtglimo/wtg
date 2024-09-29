@@ -696,7 +696,7 @@ function calculateQuote() {
     trolleyDetails: "36-trolley OR a 40-party bus, premium sound system with bluetooth connection, charging ports, climate controlled, comfortable perimeter seats, rear balcony.",
     shuttleBusDetials: "seating capacity 50 per bus, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
     packageIncludes: "36-trolley OR a 40-party bus for 5 hours AND 2 of the 50-shuttle buses for 8-hours each, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
-    VehilceName: "36-Trolley & 2 of the 50-Buses"
+    VehilceName: "Trolley or Party bus & 2 Buses "
   }
 
 
