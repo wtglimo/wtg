@@ -155,6 +155,7 @@ button:hover {
 
 .quote-heading {
     font-size: 18px;
+    line-height: normal;
 }
 
 .total {
@@ -366,7 +367,11 @@ hr {
     display: flex;
     font-weight: 600;
 }
-
+.quoteSpec{
+    margin-bottom: 10px;
+    line-height: normal;
+    color: #888;
+}
 .minimum-requirements{
     margin-top: 10px;
     font-weight: 100;
