@@ -683,20 +683,24 @@ function calculateQuote() {
     trolleyDetails: "seating capacity 24, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
     shuttleBusDetials: "seating capacity 40, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
     packageIncludes: "24-trolley for 5-hours AND a 40-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
-    VehilceName: "24-Trolley & 40-Bus"
+    VehilceName: "24-Trolley & 40-Bus",
+    quoteSpec: "(5-hour Trolley & 8-hour Bus)"
+
     
   }
   let weddingMedium = {
     trolleyDetails: "seating capacity 30, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
     shuttleBusDetials: "seating capacity 50, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
     packageIncludes: "30-trolley for 5-hours AND a 50-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
-    VehilceName: "30-Trolley & 50-Bus"
+    VehilceName: "30-Trolley & 50-Bus",
+    quoteSpec: "(5-hour Trolley & 8-hour Bus)"
   }
   let weddingLarge = {
     trolleyDetails: "36-trolley OR a 40-party bus, premium sound system with bluetooth connection, charging ports, climate controlled, comfortable perimeter seats, rear balcony.",
     shuttleBusDetials: "seating capacity 50 per bus, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
     packageIncludes: "36-trolley OR a 40-party bus for 5 hours AND 2 of the 50-shuttle buses for 8-hours each, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
-    VehilceName: "Trolley or Party bus & 2 Buses "
+    VehilceName: "Trolley or Party bus & 2 Buses ",
+    quoteSpec: "(5-hour Trolley or Party Bus & 8-hour 2-Buses)"
   }
 
 
@@ -1437,6 +1441,7 @@ function calculateQuote() {
   let trolleyDetails = "";
   let shuttleBusDetails = "";
   let headingVehicleNames = "";
+  let quoteSpec = "";
   // Define the label based on tripType
   if (tripType === "wedding") {
     packageLabel = weddingPackagePrint;
@@ -1445,16 +1450,19 @@ function calculateQuote() {
       trolleyDetails = weddingSmall.trolleyDetails;
       shuttleBusDetails = weddingSmall.shuttleBusDetials;
       headingVehicleNames = weddingSmall.VehilceName;
+      quoteSpec = weddingSmall.quoteSpec;
     } else if (weddingPackage === "medium") {
       quoteIncludes = weddingMedium.packageIncludes;
       trolleyDetails = weddingMedium.trolleyDetails;
       shuttleBusDetails = weddingMedium.shuttleBusDetials;
       headingVehicleNames = weddingMedium.VehilceName;
+      quoteSpec = weddingMedium.quoteSpec;
     } else if (weddingPackage === "large") {
       quoteIncludes = weddingLarge.packageIncludes;
       trolleyDetails = weddingLarge.trolleyDetails;
       shuttleBusDetails = weddingLarge.shuttleBusDetials;
       headingVehicleNames = weddingLarge.VehilceName;
+      quoteSpec = weddingLarge.quoteSpec;
     }
   } else if (tripType === "hourly") {
     packageLabel = `${totalHours} Hour Package`;
@@ -1541,7 +1549,9 @@ function calculateQuote() {
                   <div class="quote-datetime">
                       <p><small>${dayOfWeek} ${formattedDate}</small></p>
                       <p><small>&nbsp;/ ${time}</small></p>
-                  </div></div>`
+                  </div></div>
+                  
+                  `
                   }
                     <p class="quote-heading">
                     <strong>QUOTE: ${packageLabel} <span class="byob-text">
@@ -1552,6 +1562,9 @@ function calculateQuote() {
                     }
                     </span></strong>
                   </p>
+                  ${ wedding ?
+                  `<p class="quoteSpec"><i>${quoteSpec}</i></p>` : ""}
+                      
                       <p>Base Rate: ${displayBaseRate} ${
     tripType === "hourly"
       ? `<span class="byob-text">(${hours.toFixed(2)} hrs @ $${formatNumber(
