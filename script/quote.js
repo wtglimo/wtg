@@ -3,11 +3,20 @@ document.addEventListener("DOMContentLoaded", function () {
   toggleTripTypeFields();
 
   const formElements = document.querySelectorAll(
-    "#date, #time, #time-option-two, #name, #vehicle-available, #vehicle, #vehicle-option-two, #preset-hours, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #hours-option-two, #custom-base-rate, #custom-base-rate-option-two, #custom-gas-fee, #custom-gas-fee-option-two, #include-multiple-opitons, #multiple-vehile-fields, #additional-hours-fields, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob"
+    "#date, #time, #time-option-two, #name, #slider, #vehicle-available, #vehicle, #vehicle-option-two, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #hours-option-two, #custom-base-rate, #custom-base-rate-option-two, #custom-gas-fee, #custom-gas-fee-option-two, #include-multiple-opitons, #multiple-vehile-fields, #additional-hours-fields, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob"
   );
 
   formElements.forEach((element) => {
     element.addEventListener("input", calculateQuote);
+  });
+
+  const slider = document.getElementById("slider");
+
+  slider.addEventListener("input", function () {
+    preserBaseRate = parseInt(this.value, 10);
+
+    console.log("preserBaseRate is now: " + preserBaseRate);
+    calculateQuote(); // Recalculate the quote when slider changes
   });
 
   const quoteTypeRadios = document.getElementsByName("quote-type");
@@ -417,23 +426,44 @@ function toggleCustomQuoteFields() {
     "preset-quote-alcohol-policy"
   );
   const byobSwitchContainer = document.querySelector(".form-group.byob-switch");
-  const presetHoursField = document.querySelector(".preset-hours");
+  const byobSwitch = document.getElementById("includeByobAlchol");
+  const tripType = document.querySelector(".trip-type");
   const quoteType = document.querySelector(
     'input[name="quote-type"]:checked'
   ).value;
+  const customMultipleQuote = document.getElementById(
+    "multiple-vehicle-switch-fields"
+  );
 
+  const byobfield = document.getElementById("includeByob");
+
+  const additionalHours = document.getElementById(
+    "additional-hours-fields-wrapper"
+  );
+
+  const sliderPreset = document.getElementById("slider-perset");
   if (quoteType === "custom") {
     customQuoteFields.style.display = "block";
     customQuoteHoursBYOB.style.display = "block";
+    customMultipleQuote.style.display = "block";
     byobSwitchContainer.style.display = "none";
     presetQuoteAlcoholPolicy.style.display = "none";
-    presetHoursField.style.display = "none";
+    sliderPreset.style.display = "none";
+    tripType.style.display = "flex";
+    byobfield.style.display = "block";
+    additionalHours.style.display = "block";
+    byobSwitch.style.display = "none";
   } else {
     customQuoteFields.style.display = "none";
-    customQuoteHoursBYOB.style.display = "none";
+    customQuoteHoursBYOB.style.display = "block";
+    tripType.style.display = "none";
+    customMultipleQuote.style.display = "none";
     byobSwitchContainer.style.display = "block";
-    presetQuoteAlcoholPolicy.style.display = "block";
-    presetHoursField.style.display = "block";
+    presetQuoteAlcoholPolicy.style.display = "none";
+    sliderPreset.style.display = "block";
+    byobfield.style.display = "none";
+    additionalHours.style.display = "none";
+    byobSwitch.style.display = "none";
   }
 }
 
@@ -445,9 +475,7 @@ function toggleTripTypeFields() {
   const customQuoteHoursBYOB = document.getElementById(
     "custom-quote-hours-byob"
   );
-  const time = document.getElementById(
-    "time-wrapper"
-  );
+  const time = document.getElementById("time-wrapper");
   const customMultipleQuote = document.getElementById(
     "multiple-vehicle-switch-fields"
   );
@@ -564,8 +592,34 @@ function toggleBYOBFields() {
   }
 }
 
+const customSteps = [195, 210, 227, 243, 259, 275, 290, 307, 323, 339, 355];
+
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.getElementById("slider");
+  const stepsContainer = document.getElementById("slider-steps");
+
+  // Create labels for the custom steps
+  customSteps.forEach((step) => {
+    const stepLabel = document.createElement("span");
+    stepLabel.textContent = step;
+    stepsContainer.appendChild(stepLabel);
+  });
+
+  // Update the output text based on slider value
+  slider.addEventListener("input", function () {
+    const stepIndex = parseInt(this.value, 10); // The slider's value corresponds to the index in the customSteps array
+    const stepValue = customSteps[stepIndex]; // Get the corresponding step value
+    preserBaseRate = stepValue; // Update your base rate or other logic here
+    console.log("preserBaseRate is now: " + preserBaseRate);
+    calculateQuote(); // Recalculate the quote when slider changes
+  });
+});
+
 let totalAmountGlobal = 0; // Define this outside of the function, at the top
 let totalAmountGlobal2 = 0; // Define this outside of the function, at the top
+let preserBaseRate = 195;
+let presetGasFee = 175;
+let presetMinHours = 5;
 
 function calculateQuote() {
   const name = document.getElementById("name").value || "Customer";
@@ -588,7 +642,7 @@ function calculateQuote() {
   const vehicleType = document.getElementById("vehicle").value;
   const vehicleTypeOptionTwo =
     document.getElementById("vehicle-option-two").value;
-  const hours = parseFloat(document.getElementById("hours").value) || 0; // Default to 0 if undefined
+  let hours = parseFloat(document.getElementById("hours").value) || 0; // Default to 0 if undefined
   const includeAlcohol = document.getElementById("include-alcohol").checked;
   const quoteType = document.querySelector(
     'input[name="quote-type"]:checked'
@@ -674,35 +728,39 @@ function calculateQuote() {
   let customRateAdditional = 0;
   let perHourRate = 0;
   let perHourRate2 = 0;
-  
-
 
   const weddingImage = "https://wtglimo.com/img/wedding/trolley-shuttleBus.png";
-  
+
   let weddingSmall = {
-    trolleyDetails: "seating capacity 24, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
-    shuttleBusDetials: "seating capacity 40, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
-    packageIncludes: "24-trolley for 5-hours AND a 40-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
+    trolleyDetails:
+      "seating capacity 24, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
+    shuttleBusDetials:
+      "seating capacity 40, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
+    packageIncludes:
+      "24-trolley for 5-hours AND a 40-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
     VehilceName: "24-Trolley & 40-Bus",
-    quoteSpec: "(5-hour Trolley & 8-hour Bus)"
-
-    
-  }
+    quoteSpec: "(5-hour Trolley & 8-hour Bus)",
+  };
   let weddingMedium = {
-    trolleyDetails: "seating capacity 30, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
-    shuttleBusDetials: "seating capacity 50, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
-    packageIncludes: "30-trolley for 5-hours AND a 50-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
+    trolleyDetails:
+      "seating capacity 30, premium sound system with bluetooth connection, climate controlled, Charging ports, comfortable perimeter seats, rear balcony.",
+    shuttleBusDetials:
+      "seating capacity 50, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
+    packageIncludes:
+      "30-trolley for 5-hours AND a 50-shuttle bus for 8-hours, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
     VehilceName: "30-Trolley & 50-Bus",
-    quoteSpec: "(5-hour Trolley & 8-hour Bus)"
-  }
+    quoteSpec: "(5-hour Trolley & 8-hour Bus)",
+  };
   let weddingLarge = {
-    trolleyDetails: "36-trolley OR a 40-party bus, premium sound system with bluetooth connection, charging ports, climate controlled, comfortable perimeter seats, rear balcony.",
-    shuttleBusDetials: "seating capacity 50 per bus, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
-    packageIncludes: "36-trolley OR a 40-party bus for 5 hours AND 2 of the 50-shuttle buses for 8-hours each, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
+    trolleyDetails:
+      "36-trolley OR a 40-party bus, premium sound system with bluetooth connection, charging ports, climate controlled, comfortable perimeter seats, rear balcony.",
+    shuttleBusDetials:
+      "seating capacity 50 per bus, basic radio, bluetooth, charging ports, climate controlled, individual face-forward seating, seat belts, rear storage.",
+    packageIncludes:
+      "36-trolley OR a 40-party bus for 5 hours AND 2 of the 50-shuttle buses for 8-hours each, unlimited stops & mileage, gratuity, all fees, fuel and service charges.",
     VehilceName: "Trolley or Party bus & 2 Buses ",
-    quoteSpec: "(5-hour Trolley or Party Bus & 8-hour 2-Buses)"
-  }
-
+    quoteSpec: "(5-hour Trolley or Party Bus & 8-hour 2-Buses)",
+  };
 
   // Fetch vehicle data regardless of quote type
 
@@ -1347,32 +1405,150 @@ function calculateQuote() {
       displayBaseRate = `$${formatNumber(baseRate)}`;
       minHours = 0;
     }
-  } else {
+  } else if ("preset") {
+    console.log(preserBaseRate);
+
     const presetVehicleRates = {
-      trolley_midnight_36: { baseRate: 1800, minHours: 4, gasFee: 250 },
-      // Add more vehicles as needed
+      trolley_midnight_36: {
+        baseRate: preserBaseRate,
+        hours: presetMinHours,
+        gasFee: presetGasFee,
+      },
+      trolley_fusion_30: {
+        baseRate: preserBaseRate,
+        hours: presetMinHours,
+        gasFee: presetGasFee,
+      },
+      trolley_bliss_30: {
+        baseRate: preserBaseRate,
+        hours: presetMinHours,
+        gasFee: presetGasFee,
+      },
+      trolley_classic_30: {
+        baseRate: preserBaseRate,
+        hours: presetMinHours,
+        gasFee: presetGasFee,
+      },
+      trolley_festive_24: {
+        baseRate: preserBaseRate,
+        hours: presetMinHours,
+        gasFee: presetGasFee,
+      },
+      partybus_dove_40: {
+        baseRate: preserBaseRate,
+        hours: presetMinHours,
+        gasFee: presetGasFee,
+      },
+      partybus_nightrider_30: {
+        baseRate: 350,
+        minHours: 4,
+        gasFee: 125,
+        additionalHourRate: 300,
+      },
+      partybus_eagle_25: {
+        baseRate: 350,
+        minHours: 4,
+        gasFee: 125,
+        additionalHourRate: 300,
+      },
+      partybus_whitehawk_20: {
+        baseRate: 295,
+        minHours: 4,
+        gasFee: 120,
+        additionalHourRate: 250,
+      },
+      pink_hummer_h2: {
+        baseRate: 295,
+        minHours: 4,
+        gasFee: 120,
+        additionalHourRate: 250,
+      },
+      pink_chrysler_300: {
+        baseRate: 295,
+        minHours: 4,
+        gasFee: 120,
+        additionalHourRate: 250,
+      },
+      christmas_trolley: { baseRate: 1495, minHours: 4, gasFee: 150 },
+      ford_transit_limo: {
+        baseRate: 295,
+        minHours: 4,
+        gasFee: 120,
+        additionalHourRate: 250,
+      },
+      sprinter_shuttle_van: {
+        baseRate: 250,
+        minHours: 4,
+        gasFee: 100,
+        additionalHourRate: 200,
+      },
+      hummer_h2_stretch_limo: {
+        baseRate: 350,
+        minHours: 4,
+        gasFee: 150,
+        additionalHourRate: 300,
+      },
+      chrysler_300_limo: {
+        baseRate: 250,
+        minHours: 4,
+        gasFee: 100,
+        additionalHourRate: 200,
+      },
+      lincoln_mkt_limo: {
+        baseRate: 250,
+        minHours: 4,
+        gasFee: 100,
+        additionalHourRate: 200,
+      },
+      lincoln_navigator: {
+        baseRate: 200,
+        minHours: 4,
+        gasFee: 80,
+        additionalHourRate: 150,
+      },
+      cadillac_escalade: {
+        baseRate: 250,
+        minHours: 4,
+        gasFee: 100,
+        additionalHourRate: 200,
+      },
+      chevrolet_suburban: {
+        baseRate: 200,
+        minHours: 4,
+        gasFee: 80,
+        additionalHourRate: 150,
+      },
+      lincoln_mkz: {
+        baseRate: 150,
+        minHours: 4,
+        gasFee: 50,
+        additionalHourRate: 100,
+      },
+      coach_bus_super: { baseRate: 1200, minHours: 5, gasFee: 500 },
+      coach_bus_rentals: { baseRate: 1000, minHours: 5, gasFee: 400 },
+      coach_bus_corporate: { baseRate: 1500, minHours: 5, gasFee: 600 },
+      coach_bus_crystal: { baseRate: 1300, minHours: 4, gasFee: 500 },
     };
 
     const vehicleDetails = presetVehicleRates[vehicleType];
 
     if (vehicleDetails) {
       baseRate = vehicleDetails.baseRate;
-      minHours = vehicleDetails.minHours;
+      minHours = vehicleDetails.hours;
       gasFee = vehicleDetails.gasFee;
 
-      if (hours < minHours) {
-        alert(`Minimum hours for ${vehicleName} is ${minHours}.`);
-        return;
-      }
+      console.log;
 
-      baseRate *= hours;
+      baseRate *= minHours;
       const stc = (baseRate * stcPercentage) / 100;
       const gratuity = (baseRate * gratuityPercentage) / 100;
       const total = baseRate + stc + gratuity + gasFee + securityGuardFee;
 
       displayBaseRate = `$${formatNumber(baseRate)}`;
 
-      perHourRate = baseRate / hours;
+      perHourRate = baseRate / minHours;
+      hours = minHours;
+      totalHours = minHours;
     } else {
       alert("Invalid vehicle type selected.");
       return;
@@ -1498,7 +1674,9 @@ function calculateQuote() {
               : ""
           }
           <h2 class="vehicle-name">${
-            wedding ? `${weddingPackagePrint}: <span class="unbold-heading">${headingVehicleNames}</span>` : vehicleName
+            wedding
+              ? `${weddingPackagePrint}: <span class="unbold-heading">${headingVehicleNames}</span>`
+              : vehicleName
           } ${
     wedding ? "" : `<span class="byob-text">(${paxNumber} Passengers)</span>`
   }<span class="vehicle-recommeded"> ${
@@ -1512,13 +1690,23 @@ function calculateQuote() {
               : `<img src="${imageUrl}" alt="${vehicleName}" />`
           }
           </div>
-          ${wedding ? "" : `<div class="vehicle-name-link">
+          ${
+            wedding
+              ? ""
+              : `<div class="vehicle-name-link">
               <p><a href="${vehicleLink}" target="_blank">(View More Pictures)</a></p>
-          </div>`}
+          </div>`
+          }
           <div class="details">
-          ${wedding ? `<p><strong>${weddingPackage === "large" ? "Trolley OR Party Bus Details:" : "Trolley Details:"} </strong> ${trolleyDetails}</p>
-            <p><strong>Shuttle Bus Details: </strong> ${shuttleBusDetails}</p>` :
-              `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
+          ${
+            wedding
+              ? `<p><strong>${
+                  weddingPackage === "large"
+                    ? "Trolley OR Party Bus Details:"
+                    : "Trolley Details:"
+                } </strong> ${trolleyDetails}</p>
+            <p><strong>Shuttle Bus Details: </strong> ${shuttleBusDetails}</p>`
+              : `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
           }
             ${
               wedding
@@ -1540,7 +1728,11 @@ function calculateQuote() {
                     wedding
                       ? `<div style="
                           line-height: normal;">
-                    <p class="quote-heading"><strong>${weddingPackage === "large" ? "Trolley or Party Bus & 2 Buses" : "Trolley & Bus"}</strong></p>
+                    <p class="quote-heading"><strong>${
+                      weddingPackage === "large"
+                        ? "Trolley or Party Bus & 2 Buses"
+                        : "Trolley & Bus"
+                    }</strong></p>
                   <div class="quote-datetime">
                       <p><small>${dayOfWeek} ${formattedDate}</small></p>
                   </div></div>`
@@ -1562,8 +1754,11 @@ function calculateQuote() {
                     }
                     </span></strong>
                   </p>
-                  ${ wedding ?
-                  `<p class="quoteSpec"><i>${quoteSpec}</i></p>` : ""}
+                  ${
+                    wedding
+                      ? `<p class="quoteSpec"><i>${quoteSpec}</i></p>`
+                      : ""
+                  }
                       
                       <p>Base Rate: ${displayBaseRate} ${
     tripType === "hourly"
@@ -1611,6 +1806,21 @@ function calculateQuote() {
                   )}<span class="byob-text"> (All Inclusive)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
               </div>
+
+               ${
+                 includeAlcoholPolicy
+                   ? `<div class="minimum-requirements">
+              <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
+            </div>`
+                   : ""
+               }
+              ${
+                includeAlcoholPolicyCustom
+                  ? `<div class="minimum-requirements">
+              <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
+            </div>`
+                  : ""
+              }
                <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
           <div class="reserve-btn">
               <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
@@ -1699,6 +1909,21 @@ function calculateQuote() {
                   )}<span class="byob-text"> (All Inclusive)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
               </div>
+               ${
+                 includeAlcoholPolicy
+                   ? `<div class="minimum-requirements">
+              <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
+            </div>`
+                   : ""
+               }
+              ${
+                includeAlcoholPolicyCustom
+                  ? `<div class="minimum-requirements">
+              <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
+            </div>`
+                  : ""
+              }
+            
 
                <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
           <div class="reserve-btn">
@@ -1708,21 +1933,8 @@ function calculateQuote() {
           </div>`
               : ""
           }
-          ${
-            includeAlcoholPolicy
-              ? `<div class="minimum-requirements">
-              <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
-            </div>`
-              : ""
-          }
-          ${
-            includeAlcoholPolicyCustom
-              ? `<div class="minimum-requirements">
-              <p><strong>Alcohol Policy</strong> <span class="byob-text">(Security Guard Needed For Chicago Trips Only)</span><br> For 15+ passengers, a security guard is needed if there is alcohol on board within the city limits of Chicago. Security guard charge is an additional $50.00 per hour.</p>
-            </div>`
-              : ""
-          }
-            
+         
+          
          
           </div>
           <hr>
@@ -1759,11 +1971,7 @@ function saveQuote() {
   const vehicleType = document.getElementById("vehicle").value;
   const date = document.getElementById("date").value;
   const time = document.getElementById("time").value;
-  const hours =
-    parseFloat(
-      document.getElementById("hours").value ||
-        document.getElementById("preset-hours").value
-    ) || 0;
+  const hours = parseFloat(document.getElementById("hours").value) || 0;
   const includeAlcoholPolicy = document.getElementById(
     "include-alcohol-policy"
   ).checked;
