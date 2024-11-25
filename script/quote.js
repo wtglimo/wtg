@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   toggleTripTypeFields();
 
   const formElements = document.querySelectorAll(
-    "#date, #time, #time-option-two, #name, #slider, #vehicle-available, #vehicle, #vehicle-option-two, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #hours-option-two, #custom-base-rate, #custom-base-rate-option-two, #custom-gas-fee, #custom-gas-fee-option-two, #include-multiple-opitons, #multiple-vehile-fields, #additional-hours-fields, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob"
+    "#date, #fixed-gratuity, #fixed-gratuity-option-two, #time, #time-option-two, #name, #slider, #vehicle-available, #vehicle, #vehicle-option-two, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #hours-option-two, #custom-base-rate, #custom-base-rate-option-two, #custom-gas-fee, #custom-gas-fee-option-two, #include-multiple-opitons, #multiple-vehile-fields, #additional-hours-fields, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob"
   );
 
   formElements.forEach((element) => {
@@ -709,6 +709,8 @@ function calculateQuote() {
   let additionalHourRate = 300;
   let stcPercentage = 10;
   let gratuityPercentage = 15;
+  let fixedGratuity = 0;
+  let fixedGratuity2 = 0;
   let securityGuardFee = 0;
   let vehicleName = "";
   let vehicleName2 = "";
@@ -1351,6 +1353,8 @@ function calculateQuote() {
         parseFloat(
           document.getElementById("custom-base-rate-option-two").value
         ) || 0;
+      fixedGratuity = parseFloat(document.getElementById("fixed-gratuity").value) || 0;
+      fixedGratuity2 = parseFloat(document.getElementById("fixed-gratuity-option-two").value) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
       gasFee2 =
         parseFloat(
@@ -1571,7 +1575,7 @@ function calculateQuote() {
   const total =
     totalBaseRate +
     stc +
-    gratuity +
+    fixedGratuity +
     gasFee +
     securityGuardFee +
     totalAdditionalCost +
@@ -1579,7 +1583,7 @@ function calculateQuote() {
   const total2 =
     totalBaseRate2 +
     stc2 +
-    gratuity2 +
+    fixedGratuity2 +
     gasFee2 +
     securityGuardFee +
     totalAdditionalCost +
@@ -1773,7 +1777,7 @@ function calculateQuote() {
   }</p>
                         <ul>
                       <li>STC: ${stcPercentage.toFixed(2)}%</li>
-                      <li>Gratuity: ${gratuityPercentage.toFixed(2)}%</li>
+                      <li>Gratuity: $${fixedGratuity}</li>
                       <li>Gas Fee: $${formatNumber(gasFee)}</li>
                       ${
                         securityGuardFee > 0
