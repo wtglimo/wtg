@@ -1827,7 +1827,7 @@ function calculateQuote() {
             </div>`
                   : ""
               }
-               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
+               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event.</p>
           <div class="reserve-btn">
               <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
                 wedding ? weddingPackagePrint : vehicleName
@@ -1931,7 +1931,7 @@ function calculateQuote() {
               }
             
 
-               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event. Credit card processing fee is 3.75%.</p>
+               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event.</p>
           <div class="reserve-btn">
               <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
                 wedding ? weddingPackagePrint : vehicleName2
