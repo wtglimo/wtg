@@ -1391,12 +1391,14 @@ function calculateQuote() {
       baseRate =
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
+      fixedGratuity = parseFloat(document.getElementById("fixed-gratuity").value) || 0;
 
       displayBaseRate = `$${formatNumber(baseRate)}`;
     } else if (tripType === "one-way" || tripType === "two-way") {
       baseRate =
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
+      fixedGratuity = parseFloat(document.getElementById("fixed-gratuity").value) || 0;
       twoWaysDisplayRate = baseRate;
       displayBaseRate = `$${formatNumber(baseRate)}`;
       minHours = 0;
@@ -1777,7 +1779,7 @@ function calculateQuote() {
   }</p>
                         <ul>
                       <li>STC: ${stcPercentage.toFixed(2)}%</li>
-                      <li>Gratuity: $${fixedGratuity}</li>
+                      <li>Gratuity: $${formatNumber(fixedGratuity)}</li>
                       <li>Gas Fee: $${formatNumber(gasFee)}</li>
                       ${
                         securityGuardFee > 0
