@@ -1671,7 +1671,7 @@ function calculateQuote() {
         <div id="quote-content">
           <p class="intro-para">
             Hello <strong>${name}</strong>,<br><br>
-            Thank you for choosing <strong>WAYTOGO Trolley & Charter Bus</strong>. ${availabilityMessage} Please review the quote below and make your reservation online.
+            Thank you for choosing <strong>WAYTOGO Trolley & Charter Bus</strong>. ${availabilityMessage} Please review the quote below and make your <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">reservation online.</a>
           </p>
           
           ${
@@ -1808,7 +1808,7 @@ function calculateQuote() {
                   <p class="total"><strong>Total: $${formatNumber(
                     total
                   )}<span class="byob-text"> (Chicago BYOB add'l $150)</span></strong></p>
-                  <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
+                  <p class="quote-expiry">(The quote expires in 14 days. Act Fast. <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>)</p>
                   ${
                   wedding
                     ? ""
@@ -1920,7 +1920,7 @@ function calculateQuote() {
                   <p class="total"><strong>Total: $${formatNumber(
                     total2
                   )}<span class="byob-text"> (Chicago BYOB add'l $150)</span></strong></p>
-                  <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
+                  <p class="quote-expiry">(The quote expires in 14 days. Act Fast. <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>)</p>
               
                   <p><strong>Quote Includes:</strong> ${quoteIncludes}</p>
                   </div>
