@@ -915,9 +915,9 @@ function calculateQuote() {
       baseRate = 1495;
       gasFee = 150;
       vehicleName = "Christmas Trolley";
-      paxNumber = "24-36";
+      paxNumber = "30";
       vehicleDetails =
-        "24-36 Passengers, Rear Balcony, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
+        "30 Passengers, Rear Balcony, Premium Sound System with Bluetooth Connection, Climate Controlled, Comfortable Perimeter Seats, Ice & Water.";
       displayBaseRate = `$${formatNumber(baseRate)}`;
       imageUrl =
         "https://wtglimo.com/img/lightbox/large/vehicle-main/christmasTrolleyMain.png";
@@ -1608,11 +1608,11 @@ function calculateQuote() {
   let wedding = tripType === "wedding";
   if (vehicleAvailable) {
     if (multipleOptionsCheckbox) {
-      availabilityMessage = `We're excited to inform you that the <strong> ${vehicleName}</strong> & the <strong>${vehicleName2}</strong> are available.`;
+      availabilityMessage = `The <strong> ${vehicleName}</strong> & the <strong>${vehicleName2}</strong> are available.`;
     } else if (wedding) {
-      availabilityMessage = `We're excited to inform you that the <strong> ${weddingPackagePrint} Package</strong> is available.`;
+      availabilityMessage = `The <strong> ${weddingPackagePrint} Package</strong> is available.`;
     } else {
-      availabilityMessage = `We're excited to inform you that the <strong> ${vehicleName}</strong> is available.`;
+      availabilityMessage = `The <strong> ${vehicleName}</strong> is available.`;
     }
   } else {
     availabilityMessage =
@@ -1689,6 +1689,17 @@ function calculateQuote() {
     !vehicleAvailable ? "(Recommended Vehicle)" : ""
   }</span></h2>
 
+   ${
+            wedding
+              ? `<p><strong>${
+                  weddingPackage === "large"
+                    ? "Trolley OR Party Bus Details:"
+                    : "Trolley Details:"
+                } </strong> ${trolleyDetails}</p>
+            <p><strong>Shuttle Bus Details: </strong> ${shuttleBusDetails}</p>`
+              : `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
+          }
+
           <div class="image-container">
           ${
             wedding
@@ -1704,21 +1715,8 @@ function calculateQuote() {
           </div>`
           }
           <div class="details">
-          ${
-            wedding
-              ? `<p><strong>${
-                  weddingPackage === "large"
-                    ? "Trolley OR Party Bus Details:"
-                    : "Trolley Details:"
-                } </strong> ${trolleyDetails}</p>
-            <p><strong>Shuttle Bus Details: </strong> ${shuttleBusDetails}</p>`
-              : `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
-          }
-            ${
-              wedding
-                ? ""
-                : `<p><strong>Quote Includes:</strong> ${quoteIncludes}</p>`
-            }
+         
+            
               ${
                 includeMinHoursPolicy && tripType === "hourly"
                   ? `<div id="min-hours-requirement" class="minimum-requirements">
@@ -1809,9 +1807,15 @@ function calculateQuote() {
                   </ul>
                   <p class="total"><strong>Total: $${formatNumber(
                     total
-                  )}<span class="byob-text"> (All Inclusive)</span></strong></p>
+                  )}<span class="byob-text"> (Chicago BYOB add'l $150)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
+                  ${
+                  wedding
+                    ? ""
+                    : `<p><strong>Quote Includes:</strong> ${quoteIncludes}</p>`
+                }
               </div>
+
 
                ${
                  includeAlcoholPolicy
@@ -1827,7 +1831,7 @@ function calculateQuote() {
             </div>`
                   : ""
               }
-               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event.</p>
+               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The remaining balance is due 14 days prior to the event.</p>
           <div class="reserve-btn">
               <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
                 wedding ? weddingPackagePrint : vehicleName
@@ -1841,6 +1845,9 @@ function calculateQuote() {
             <h2 class="vehicle-name">${vehicleName2} <span class="byob-text">(${paxNumber2} Passengers)</span><span class="vehicle-recommeded"> ${
                   !vehicleAvailable ? "(Recommended Vehicle)" : ""
                 }</span></h2>
+
+                 <p><strong>Vehicle Details: </strong>${vehicleDetails2}</p>
+
           <div class="image-container">
               <img src="${imageUrl2}" alt="${vehicleName2}" />
           </div>
@@ -1848,9 +1855,9 @@ function calculateQuote() {
               <p><a href="${vehicleLink2}" target="_blank">(View More Pictures)</a></p>
           </div>
           <div class="details">
-              <p><strong>Vehicle Details: </strong>${vehicleDetails2}</p>
+             
 
-              <p><strong>Quote Includes:</strong> ${quoteIncludes}</p>
+              
 
               
             
@@ -1912,9 +1919,13 @@ function calculateQuote() {
                   </ul>
                   <p class="total"><strong>Total: $${formatNumber(
                     total2
-                  )}<span class="byob-text"> (All Inclusive)</span></strong></p>
+                  )}<span class="byob-text"> (Chicago BYOB add'l $150)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast)</p>
-              </div>
+              
+                  <p><strong>Quote Includes:</strong> ${quoteIncludes}</p>
+                  </div>
+
+
                ${
                  includeAlcoholPolicy
                    ? `<div class="minimum-requirements">
@@ -1931,7 +1942,7 @@ function calculateQuote() {
               }
             
 
-               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The deposit amount will be credited towards the final payment. The remaining balance is due 14 days prior to the event.</p>
+               <p class="paragraph-reserve"><strong>How Do I Reserve?</strong> A 20% deposit is required to make the reservation. The remaining balance is due 14 days prior to the event.</p>
           <div class="reserve-btn">
               <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve ${
                 wedding ? weddingPackagePrint : vehicleName2
