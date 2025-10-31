@@ -1670,7 +1670,7 @@ function calculateQuote() {
   resultDiv.innerHTML = `
         <div id="quote-content">
           <p class="intro-para">
-            Hello <strong>${name}</strong>,<br><br>
+            Hello <strong>${name}</strong>,<br>
             Thank you for choosing <strong>WAYTOGO Trolley & Charter Bus</strong>. ${availabilityMessage} Please review the quote below and make your <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">reservation online.</a>
           </p>
           
