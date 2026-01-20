@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,8 +17,51 @@
   </head>
   <body>
     <div class="container">
-      <sidebar></sidebar>
+      <aside class="sidebar"></aside>
+
       <main class="content">
+        <!-- Quick Paste (compact) -->
+        <div class="quick-paste-card" id="quick-paste-panel">
+          <div class="quick-paste-header">
+            <div>
+              <div class="quick-paste-title">Quick Paste</div>
+              <div class="quick-paste-sub">
+                Paste lead info (Name, Date, Time, etc.)
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="quick-paste-toggle"
+              id="quick-paste-toggle"
+            >
+              Hide
+            </button>
+          </div>
+
+          <div class="quick-paste-body" id="quick-paste-body">
+            <textarea
+              id="quick-paste"
+              rows="6"
+              placeholder="Name: John Doe&#10;Phone Number: ...&#10;Email: ...&#10;Event Date: 01/31/2026&#10;Pick up Time: 5:00 PM&#10;Event Type: Birthday Party&#10;Vehicle Type: 30 Pax Trolley - Classic&#10;Number of Hours: 3"
+            ></textarea>
+
+            <div class="quick-paste-actions">
+              <button type="button" class="btn-apply" id="quick-paste-apply">
+                Apply
+              </button>
+              <button type="button" class="btn-clear" id="quick-paste-clear">
+                Clear
+              </button>
+            </div>
+
+            <div class="quick-paste-help">
+              Accepted keys: Name, Phone Number, Email, Event Date, Pick up
+              Time, Drop off Time, Event Type, Vehicle Type, Number of Hours
+            </div>
+          </div>
+        </div>
+
         <section class="quote-generator">
           <div class="quote-container">
             <h1>Quote Generator</h1>
@@ -29,7 +72,7 @@
                 <input type="date" id="date" placeholder="Date" required />
               </div>
               <div id="time-wrapper">
-                <label for="time">Time:</label>
+                <label for="time">Pick Up Time:</label>
                 <input type="time" id="time" placeholder="Time" required />
               </div>
             </div>
@@ -45,13 +88,20 @@
                 />
               </div>
               <div>
-                <label for="email">Customer Email:</label>
+                <label for="drop-off-time">Drop Off Time:</label>
+                <input
+                  type="time"
+                  id="drop-off-time"
+                  placeholder="Drop Off Time"
+                  required
+                />
+                <!-- <label for="email">Customer Email:</label>
                 <input
                   type="email"
                   id="email"
                   placeholder="Customer Email"
                   required
-                />
+                /> -->
               </div>
             </div>
 
@@ -156,8 +206,26 @@
                   </optgroup>
                 </select>
               </div>
+              <div class="form-group">
+                <label for="event-type">Event Type:</label>
+                <select id="event-type">
+                  <option value="transfer">TRANSFER</option>
+                  <option value="round-trip">ROUND TRIP</option>
+                  <option value="general-charter">GENERAL CHARTER</option>
+                  <option value="wedding">WEDDING</option>
+                  <option value="prom">PROM</option>
+                  <option value="birthday-party">BIRTHDAY PARTY</option>
+                  <option value="concert">CONCERT</option>
+                  <option value="sporting event">SPORTING EVENT</option>
+                  <option value="parade">PARADE</option>
+                  <option value="christmas-holiday-lights-tour">
+                    CHRISTMAS HOLIDAY LIGHTS TOUR
+                  </option>
+                  <option value="trolley-tours">TROLLEY TOURS</option>
+                </select>
+              </div>
 
-              <div class="form-group" id="vehicle-rates">
+              <!-- <div class="form-group" id="vehicle-rates">
                 <p class="rate-display">
                   <strong>Suggested Rates:</strong>
                   <span id="selected-day"></span>
@@ -166,7 +234,7 @@
                   <p>High: <span id="max-rate"></span></p>
                   <p>Low: <span id="min-rate"></span></p>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div class="form-group quote-type">
@@ -199,13 +267,10 @@
             <div id="slider-perset">
               <!-- Slider Input -->
               <input type="range" id="slider" min="0" max="10" value="0" />
-          
-            
+
               <!-- Labels for the slider steps -->
               <div id="slider-steps"></div>
             </div>
-            
-          
 
             <div
               id="preset-quote-alcohol-policy"
@@ -240,23 +305,24 @@
                 </div>
               </div>
               <div class="form-group inline-fields">
-              <div class="form-group">
-                <label for="fixed-gratuity">Gratuity:</label>
-                <input
-                  type="number"
-                  id="fixed-gratuity"
-                  placeholder="Fixed Gratuity"
-                />
+                <div class="form-group">
+                  <label for="fixed-gratuity">Gratuity:</label>
+                  <input
+                    type="number"
+                    id="fixed-gratuity"
+                    placeholder="Fixed Gratuity"
+                  />
+                </div>
+
+                <div>
+                  <label for="custom-gas-fee">Gas Fee:</label>
+                  <input
+                    type="number"
+                    id="custom-gas-fee"
+                    placeholder="Gas Fee"
+                  />
+                </div>
               </div>
-
-              <div>
-              <label for="custom-gas-fee">Gas Fee:</label>
-              <input type="number" id="custom-gas-fee" placeholder="Gas Fee" />
-            </div>
-              </div>
-
-              
-
             </div>
 
             <div id="multiple-vehicle-switch-fields">
@@ -401,26 +467,24 @@
                 </div>
 
                 <div class="form-group inline-fields">
-                <div class="form-group">
-                  <label for="fixed-gratuity">Gratuity:</label>
-                  <input
-                    type="number"
-                    id="fixed-gratuity-option-two"
-                    placeholder="Fixed Gratuity"
-                  />
-                </div>
-                
-                <div class="form-group">
-                  <label for="custom-gas-fee">Gas Fee:</label>
-                  <input
-                    type="number"
-                    id="custom-gas-fee-option-two"
-                    placeholder="Gas Fee"
-                  />
-                </div>
-                </div>
+                  <div class="form-group">
+                    <label for="fixed-gratuity">Gratuity:</label>
+                    <input
+                      type="number"
+                      id="fixed-gratuity-option-two"
+                      placeholder="Fixed Gratuity"
+                    />
+                  </div>
 
-
+                  <div class="form-group">
+                    <label for="custom-gas-fee">Gas Fee:</label>
+                    <input
+                      type="number"
+                      id="custom-gas-fee-option-two"
+                      placeholder="Gas Fee"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -493,33 +557,33 @@
                 </div>
 
                 <!-- Additional Hours Toggle -->
-                 <div id="additional-hours-fields-wrapper">
-                <div class="in-line-switch">
-                  <label
-                    for="include-additional-hours-switch"
-                    class="switch-label"
-                    >Additional Hours</label
-                  >
-                  <label class="switch">
-                    <input type="checkbox" id="include-additional-hours" />
-                    <span class="slider"></span>
-                  </label>
-                </div>
-                <div id="additional-hours-fields" style="display: none">
-                  <div class="inline-fields">
-                    <input
-                      type="number"
-                      id="custom-additional-hours"
-                      placeholder="Hours"
-                    />
-                    <input
-                      type="number"
-                      id="custom-rate-additional"
-                      placeholder="Rate"
-                    />
+                <div id="additional-hours-fields-wrapper">
+                  <div class="in-line-switch">
+                    <label
+                      for="include-additional-hours-switch"
+                      class="switch-label"
+                      >Additional Hours</label
+                    >
+                    <label class="switch">
+                      <input type="checkbox" id="include-additional-hours" />
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                  <div id="additional-hours-fields" style="display: none">
+                    <div class="inline-fields">
+                      <input
+                        type="number"
+                        id="custom-additional-hours"
+                        placeholder="Hours"
+                      />
+                      <input
+                        type="number"
+                        id="custom-rate-additional"
+                        placeholder="Rate"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
               </div>
             </div>
             <div class="form-group byob-switch" id="includeByobAlchol">
@@ -541,16 +605,27 @@
               <button onclick="copyToClipboard()">Copy Quote</button>
             </div>
           </div>
+
           <!-- Place this button in your result section after generating the quote -->
-          <div class="save-btn">
+          <!-- <div class="save-btn">
             <button id="save-quote-btn" onclick="saveQuote()">
               Save Quote
             </button>
+          </div> -->
+        </section>
+        <section class="message-section-wrapper">
+        <div class="message-section">
+          <div class="message" id="message"></div>
+          <div class="copy-btn">
+            <button onclick="copyToClipboardMessage()">Copy Message</button>
           </div>
+        </div>
         </section>
       </main>
     </div>
+
     <script src="script/quote.js"></script>
+    <script src="script/quickPaste.js"></script>
     <script src="script/loadSidebar.js"></script>
   </body>
 </html>

@@ -89,3 +89,34 @@
     background: rgba(100,100,100,.90);
   }
   
+
+  /* Sidebar default collapsed */
+#leftside-navigation ul ul {
+  display: none;
+}
+
+/* Arrow rotation */
+.sub-menu > a .arrow {
+  transition: transform 0.25s ease;
+}
+
+.sub-menu > a.active .arrow {
+  transform: rotate(90deg);
+}
+
+
+
+/* Submenus collapsed by default */
+#leftside-navigation .sub-menu > ul {
+  display: none;
+  padding-left: 18px;
+}
+
+/* Make the whole submenu header clickable */
+#leftside-navigation .sub-menu > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+}

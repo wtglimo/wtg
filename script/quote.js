@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   toggleTripTypeFields();
 
   const formElements = document.querySelectorAll(
-    "#date, #fixed-gratuity, #fixed-gratuity-option-two, #time, #time-option-two, #name, #slider, #vehicle-available, #vehicle, #vehicle-option-two, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #hours-option-two, #custom-base-rate, #custom-base-rate-option-two, #custom-gas-fee, #custom-gas-fee-option-two, #include-multiple-opitons, #multiple-vehile-fields, #additional-hours-fields, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob"
+    "#date, #fixed-gratuity, #fixed-gratuity-option-two, #time, #drop-off-time, #time-option-two, #name, #slider, #vehicle-available, #vehicle, #event-type, #vehicle-option-two, #include-min-hours-policy, #include-alcohol-policy, #include-alcohol-policy-custom, #hours, #hours-option-two, #custom-base-rate, #custom-base-rate-option-two, #custom-gas-fee, #custom-gas-fee-option-two, #include-multiple-opitons, #multiple-vehile-fields, #additional-hours-fields, #custom-additional-hours, #custom-rate-additional, #include-byob, #custom-byob-hours, #custom-rate-byob",
   );
 
   formElements.forEach((element) => {
@@ -56,6 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
       calculateQuote();
     });
 
+ 
+
   document
     .getElementById("include-alcohol-policy")
     .addEventListener("change", calculateQuote);
@@ -65,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("vehicle").addEventListener("change", updateRates);
   document.getElementById("date").addEventListener("change", updateRates);
   document.getElementById("time").addEventListener("change", updateRates);
+  document.getElementById("drop-off-time").addEventListener("change", updateRates);
 
   updateRates(); // Initial call to set rates on page load
 
@@ -88,6 +91,7 @@ function updateRates() {
   const vehicleType = document.getElementById("vehicle").value;
   const dateInput = document.getElementById("date").value;
   const timeInput = document.getElementById("time").value;
+
 
   if (!dateInput || !timeInput) {
     document.getElementById("selected-day").textContent = "";
@@ -387,9 +391,8 @@ function updateRates() {
   ];
   const selectedDay = dayNames[dayOfWeek];
 
-  document.getElementById(
-    "selected-day"
-  ).textContent = `${selectedDay} (${timePeriod})`;
+  document.getElementById("selected-day").textContent =
+    `${selectedDay} (${timePeriod})`;
 
   if (timeOfDay === "night" && specialRates) {
     document.getElementById("min-max-rates").innerHTML = `
@@ -399,10 +402,10 @@ function updateRates() {
   } else {
     document.getElementById("min-max-rates").innerHTML = `
             <p>High: <span id="max-rate">$${selectedRates.max.toFixed(
-              2
+              2,
             )}</span></p>
             <p>Low: <span id="min-rate">$${selectedRates.min.toFixed(
-              2
+              2,
             )}</span></p>
         `;
   }
@@ -420,25 +423,25 @@ function formatNumber(num) {
 function toggleCustomQuoteFields() {
   const customQuoteFields = document.getElementById("custom-quote-fields");
   const customQuoteHoursBYOB = document.getElementById(
-    "custom-quote-hours-byob"
+    "custom-quote-hours-byob",
   );
   const presetQuoteAlcoholPolicy = document.getElementById(
-    "preset-quote-alcohol-policy"
+    "preset-quote-alcohol-policy",
   );
   const byobSwitchContainer = document.querySelector(".form-group.byob-switch");
   const byobSwitch = document.getElementById("includeByobAlchol");
   const tripType = document.querySelector(".trip-type");
   const quoteType = document.querySelector(
-    'input[name="quote-type"]:checked'
+    'input[name="quote-type"]:checked',
   ).value;
   const customMultipleQuote = document.getElementById(
-    "multiple-vehicle-switch-fields"
+    "multiple-vehicle-switch-fields",
   );
 
   const byobfield = document.getElementById("includeByob");
 
   const additionalHours = document.getElementById(
-    "additional-hours-fields-wrapper"
+    "additional-hours-fields-wrapper",
   );
 
   const sliderPreset = document.getElementById("slider-perset");
@@ -469,20 +472,20 @@ function toggleCustomQuoteFields() {
 
 function toggleTripTypeFields() {
   const tripType = document.querySelector(
-    'input[name="trip-type"]:checked'
+    'input[name="trip-type"]:checked',
   ).value;
   const customQuoteFields = document.getElementById("custom-quote-fields");
   const customQuoteHoursBYOB = document.getElementById(
-    "custom-quote-hours-byob"
+    "custom-quote-hours-byob",
   );
   const time = document.getElementById("time-wrapper");
   const customMultipleQuote = document.getElementById(
-    "multiple-vehicle-switch-fields"
+    "multiple-vehicle-switch-fields",
   );
   const fleetSelected = document.querySelector(".fleetAndRates");
   const vehicleAvailability = document.querySelector(".vehicle-availability");
   const includeMinHoursPolicy = document.getElementById(
-    "include-min-hours-policy-div"
+    "include-min-hours-policy-div",
   );
   const baseRateField = document.getElementById("base-rate");
   const hoursField = document.getElementById("hours");
@@ -552,11 +555,11 @@ document
 
 function toggleMultipleTripsFields() {
   const multipleOptionsFields = document.getElementById(
-    "multiple-vehile-fields"
+    "multiple-vehile-fields",
   );
 
   const multipleOptionsCheckbox = document.getElementById(
-    "include-multiple-opitons"
+    "include-multiple-opitons",
   );
 
   if (multipleOptionsCheckbox.checked) {
@@ -568,10 +571,10 @@ function toggleMultipleTripsFields() {
 
 function toggleAdditionalHoursFields() {
   const additionalHoursFields = document.getElementById(
-    "additional-hours-fields"
+    "additional-hours-fields",
   );
   const additionalHoursCheckbox = document.getElementById(
-    "include-additional-hours"
+    "include-additional-hours",
   );
 
   if (additionalHoursCheckbox.checked) {
@@ -625,34 +628,53 @@ function calculateQuote() {
   const name = document.getElementById("name").value || "Customer";
   const vehicleAvailable = document.getElementById("vehicle-available").checked;
   const includeAlcoholPolicy = document.getElementById(
-    "include-alcohol-policy"
+    "include-alcohol-policy",
   ).checked;
   const includeAlcoholPolicyCustom = document.getElementById(
-    "include-alcohol-policy-custom"
+    "include-alcohol-policy-custom",
   ).checked;
   const multipleOptionsCheckbox = document.getElementById(
-    "include-multiple-opitons"
+    "include-multiple-opitons",
   ).checked;
   const includeMinHoursPolicy = document.getElementById(
-    "include-min-hours-policy"
+    "include-min-hours-policy",
   ).checked;
 
   const hours2 =
     parseFloat(document.getElementById("hours-option-two").value) || 0;
   const vehicleType = document.getElementById("vehicle").value;
+
+
+function toTitleCase(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+// get visible text from select
+const eventTypeSelect = document.getElementById("event-type");
+const eventTypeTextRaw =
+  eventTypeSelect.options[eventTypeSelect.selectedIndex].text.trim();
+
+const eventTypeText = toTitleCase(eventTypeTextRaw);
+
+
+
   const vehicleTypeOptionTwo =
     document.getElementById("vehicle-option-two").value;
   let hours = parseFloat(document.getElementById("hours").value) || 0; // Default to 0 if undefined
   const includeAlcohol = document.getElementById("include-alcohol").checked;
   const quoteType = document.querySelector(
-    'input[name="quote-type"]:checked'
+    'input[name="quote-type"]:checked',
   ).value;
   const includeAdditionalHours = document.getElementById(
-    "include-additional-hours"
+    "include-additional-hours",
   ).checked;
   const includeBYOB = document.getElementById("include-byob").checked;
   const tripType = document.querySelector(
-    'input[name="trip-type"]:checked'
+    'input[name="trip-type"]:checked',
   ).value;
 
   const dateInput = document.getElementById("date").value || "Not specified";
@@ -680,6 +702,7 @@ function calculateQuote() {
   }
 
   let time = document.getElementById("time").value || "Not specified";
+  let dropOffTime = document.getElementById("drop-off-time").value || "Not specified";
   let time2 =
     document.getElementById("time-option-two").value || "Not specified";
 
@@ -700,6 +723,19 @@ function calculateQuote() {
     hour2 = hour2 % 12 || 12; // Convert hour2 to 12-hour format
     time2 = `${hour2}:${minute2} ${ampm2}`;
   }
+
+
+// Convert dropOffTime 24-hour to 12-hour format
+if (dropOffTime !== "Not specified") {
+  let [dropOfHour, dropOffMinute] = dropOffTime.split(":");
+  dropOfHour = parseInt(dropOfHour, 10);
+
+  const ampm3 = dropOfHour >= 12 ? "PM" : "AM";
+  dropOfHour = dropOfHour % 12 || 12;
+
+  dropOffTime = `${dropOfHour}:${dropOffMinute} ${ampm3}`;
+}
+
 
   let baseRate = 0;
   let baseRate2 = 0;
@@ -1351,20 +1387,24 @@ function calculateQuote() {
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
       baseRate2 =
         parseFloat(
-          document.getElementById("custom-base-rate-option-two").value
+          document.getElementById("custom-base-rate-option-two").value,
         ) || 0;
-      fixedGratuity = parseFloat(document.getElementById("fixed-gratuity").value) || 0;
-      fixedGratuity2 = parseFloat(document.getElementById("fixed-gratuity-option-two").value) || 0;
+      fixedGratuity =
+        parseFloat(document.getElementById("fixed-gratuity").value) || 0;
+      fixedGratuity2 =
+        parseFloat(
+          document.getElementById("fixed-gratuity-option-two").value,
+        ) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
       gasFee2 =
         parseFloat(
-          document.getElementById("custom-gas-fee-option-two").value
+          document.getElementById("custom-gas-fee-option-two").value,
         ) || 0;
 
       if (includeAdditionalHours) {
         customAdditionalHours =
           parseFloat(
-            document.getElementById("custom-additional-hours").value
+            document.getElementById("custom-additional-hours").value,
           ) || 0;
         customRateAdditional =
           parseFloat(document.getElementById("custom-rate-additional").value) ||
@@ -1391,14 +1431,16 @@ function calculateQuote() {
       baseRate =
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
-      fixedGratuity = parseFloat(document.getElementById("fixed-gratuity").value) || 0;
+      fixedGratuity =
+        parseFloat(document.getElementById("fixed-gratuity").value) || 0;
 
       displayBaseRate = `$${formatNumber(baseRate)}`;
     } else if (tripType === "one-way" || tripType === "two-way") {
       baseRate =
         parseFloat(document.getElementById("custom-base-rate").value) || 0;
       gasFee = parseFloat(document.getElementById("custom-gas-fee").value) || 0;
-      fixedGratuity = parseFloat(document.getElementById("fixed-gratuity").value) || 0;
+      fixedGratuity =
+        parseFloat(document.getElementById("fixed-gratuity").value) || 0;
       twoWaysDisplayRate = baseRate;
       displayBaseRate = `$${formatNumber(baseRate)}`;
       minHours = 0;
@@ -1413,6 +1455,8 @@ function calculateQuote() {
     }
   } else if ("preset") {
     console.log(preserBaseRate);
+
+  
 
     const presetVehicleRates = {
       trolley_midnight_36: {
@@ -1659,12 +1703,23 @@ function calculateQuote() {
     quoteIncludes = "Round trip, gratuity, all fees, fuel and service charges.";
   }
 
+
+
   let vehicleNamePax = "";
   if (wedding) {
     vehicleNamePax = "";
   } else {
-    vehicleNamePax = `<p class="vehicle-name-quote-price">${vehicleName} <span class="byob-text">(${paxNumber} Passengers)</span></p>`;
+    vehicleNamePax = `<p class="vehicle-name-quote-price">${vehicleName} <span class="byob-text">(${paxNumber} PAX)</span></p>`;
   }
+  const messageDiv = document.getElementById("message");
+  messageDiv.innerHTML = `
+  <div id="message-content"> <p class="intro-para">
+            WAYTOGO TROLLEYS. <strong>${name}</strong>, the ${formattedDate} quote for the ${eventTypeText} has been sent to your email.
+Please acknowledge receipt at your convenience. Thank you.
+          </p></div>
+
+          
+  `;
 
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = `
@@ -1684,21 +1739,21 @@ function calculateQuote() {
               ? `${weddingPackagePrint}: <span class="unbold-heading">${headingVehicleNames}</span>`
               : vehicleName
           } ${
-    wedding ? "" : `<span class="byob-text">(${paxNumber} Passengers)</span>`
-  }<span class="vehicle-recommeded"> ${
-    !vehicleAvailable ? "(Recommended Vehicle)" : ""
-  }</span></h2>
+            wedding ? "" : `<span class="byob-text">(${paxNumber} PAX)</span>`
+          }<span class="vehicle-recommeded"> ${
+            !vehicleAvailable ? "(Recommended Vehicle)" : ""
+          }</span></h2>
 
    ${
-            wedding
-              ? `<p><strong>${
-                  weddingPackage === "large"
-                    ? "Trolley OR Party Bus Details:"
-                    : "Trolley Details:"
-                } </strong> ${trolleyDetails}</p>
+     wedding
+       ? `<p><strong>${
+           weddingPackage === "large"
+             ? "Trolley OR Party Bus Details:"
+             : "Trolley Details:"
+         } </strong> ${trolleyDetails}</p>
             <p><strong>Shuttle Bus Details: </strong> ${shuttleBusDetails}</p>`
-              : `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
-          }
+       : `<p><strong>Vehicle Details: </strong>${vehicleDetails}</p>`
+   }
 
           <div class="image-container">
           ${
@@ -1745,6 +1800,12 @@ function calculateQuote() {
                   <div class="quote-datetime">
                       <p><small>${dayOfWeek} ${formattedDate}</small></p>
                       <p><small>&nbsp;/ ${time}</small></p>
+                      <p><small>&nbsp;- ${dropOffTime}</small></p>
+                      <p><small>&nbsp;/ ${eventTypeText}</small></p>
+
+                  
+                      
+                      
                   </div></div>
                   
                   `
@@ -1765,16 +1826,16 @@ function calculateQuote() {
                   }
                       
                       <p>Base Rate: ${displayBaseRate} ${
-    tripType === "hourly"
-      ? `<span class="byob-text">(${hours.toFixed(2)} hrs @ $${formatNumber(
-          perHourRate
-        )} per hour)</span>`
-      : tripType === "two-way"
-      ? `<span class='byob-text'>(${formatNumber(
-          twoWaysDisplayRate
-        )} each way)</span>`
-      : ""
-  }</p>
+                        tripType === "hourly"
+                          ? `<span class="byob-text">(${hours.toFixed(2)} hrs @ $${formatNumber(
+                              perHourRate,
+                            )} per hour)</span>`
+                          : tripType === "two-way"
+                            ? `<span class='byob-text'>(${formatNumber(
+                                twoWaysDisplayRate,
+                              )} each way)</span>`
+                            : ""
+                      }</p>
                         <ul>
                       <li>STC: ${stcPercentage.toFixed(2)}%</li>
                       <li>Gratuity: $${formatNumber(fixedGratuity)}</li>
@@ -1782,38 +1843,38 @@ function calculateQuote() {
                       ${
                         securityGuardFee > 0
                           ? `<li>BYOB Security Guard Fee: $${formatNumber(
-                              securityGuardFee
+                              securityGuardFee,
                             )}</li>`
                           : ""
                       }
                       ${
                         totalBYOBCost > 0
                           ? `<li>BYOB Security Cost: $${formatNumber(
-                              totalBYOBCost
+                              totalBYOBCost,
                             )} <span class="byob-text">(Chicago Trips Only)</span></li>`
                           : ""
                       }
                       ${
                         totalAdditionalCost > 0
                           ? `<li>Additional Hours Cost: $${formatNumber(
-                              totalAdditionalCost
+                              totalAdditionalCost,
                             )} <span class="byob-text">(${customAdditionalHours.toFixed(
-                              2
+                              2,
                             )} hrs @ $${formatNumber(
-                              customRateAdditional
+                              customRateAdditional,
                             )})</span></li>`
                           : ""
                       }
                   </ul>
                   <p class="total"><strong>Total: $${formatNumber(
-                    total
-                  )}<span class="byob-text"> (Chicago BYOB add'l $150)</span></strong></p>
+                    total,
+                  )}<strong><span class="all-inclusive"> (All-inclusive)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast. <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>)</p>
                   ${
-                  wedding
-                    ? ""
-                    : `<p><strong>Quote Includes:</strong> ${quoteIncludes}</p>`
-                }
+                    wedding
+                      ? ""
+                      : `<p><strong>Quote Includes:</strong> ${quoteIncludes}</p>`
+                  }
               </div>
 
 
@@ -1842,9 +1903,9 @@ function calculateQuote() {
           ${
             multipleOptionsCheckbox
               ? `
-            <h2 class="vehicle-name">${vehicleName2} <span class="byob-text">(${paxNumber2} Passengers)</span><span class="vehicle-recommeded"> ${
-                  !vehicleAvailable ? "(Recommended Vehicle)" : ""
-                }</span></h2>
+            <h2 class="vehicle-name">${vehicleName2} <span class="byob-text">(${paxNumber2} PAX)</span><span class="vehicle-recommeded"> ${
+              !vehicleAvailable ? "(Recommended Vehicle)" : ""
+            }</span></h2>
 
                  <p><strong>Vehicle Details: </strong>${vehicleDetails2}</p>
 
@@ -1862,7 +1923,7 @@ function calculateQuote() {
               
             
             <div class="quote-price">
-            <p class="vehicle-name-quote-price">${vehicleName2} <span class="byob-text">(${paxNumber2} Passengers)</span></p>
+            <p class="vehicle-name-quote-price">${vehicleName2} <span class="byob-text">(${paxNumber2} PAX)</span></p>
                   <div class="quote-datetime">
                       <p><small>${dayOfWeek} ${formattedDate}</small></p>
                       <p><small>&nbsp;/ ${time2}</small></p>
@@ -1877,16 +1938,16 @@ function calculateQuote() {
                     </span></strong>
                   </p>
                       <p>Base Rate: ${displayBaseRate2} ${
-                  tripType === "hourly"
-                    ? `<span class="byob-text">(${hours2.toFixed(
-                        2
-                      )} hrs @ $${formatNumber(perHourRate2)} per hour)</span>`
-                    : tripType === "two-way"
-                    ? `<span class='byob-text'>(${formatNumber(
-                        twoWaysDisplayRate
-                      )} each way)</span>`
-                    : ""
-                }</p>
+                        tripType === "hourly"
+                          ? `<span class="byob-text">(${hours2.toFixed(
+                              2,
+                            )} hrs @ $${formatNumber(perHourRate2)} per hour)</span>`
+                          : tripType === "two-way"
+                            ? `<span class='byob-text'>(${formatNumber(
+                                twoWaysDisplayRate,
+                              )} each way)</span>`
+                            : ""
+                      }</p>
                         <ul>
                       <li>STC: ${stcPercentage.toFixed(2)}%</li>
                       <li>Gratuity: ${gratuityPercentage.toFixed(2)}%</li>
@@ -1894,32 +1955,32 @@ function calculateQuote() {
                       ${
                         securityGuardFee > 0
                           ? `<li>BYOB Security Guard Fee: $${formatNumber(
-                              securityGuardFee
+                              securityGuardFee,
                             )}</li>`
                           : ""
                       }
                       ${
                         totalBYOBCost > 0
                           ? `<li>BYOB Security Cost: $${formatNumber(
-                              totalBYOBCost
+                              totalBYOBCost,
                             )} <span class="byob-text">(Chicago Trips Only)</span></li>`
                           : ""
                       }
                       ${
                         totalAdditionalCost > 0
                           ? `<li>Additional Hours Cost: $${formatNumber(
-                              totalAdditionalCost
+                              totalAdditionalCost,
                             )} <span class="byob-text">(${customAdditionalHours.toFixed(
-                              2
+                              2,
                             )} hrs @ $${formatNumber(
-                              customRateAdditional
+                              customRateAdditional,
                             )})</span></li>`
                           : ""
                       }
                   </ul>
                   <p class="total"><strong>Total: $${formatNumber(
-                    total2
-                  )}<span class="byob-text"> (Chicago BYOB add'l $150)</span></strong></p>
+                    total2,
+                  )}<strong><span class="all-inclusive"> (All-inclusive)</span></strong></p>
                   <p class="quote-expiry">(The quote expires in 14 days. Act Fast. <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>)</p>
               
                   <p><strong>Quote Includes:</strong> ${quoteIncludes}</p>
@@ -1958,27 +2019,32 @@ function calculateQuote() {
         </div>
     `;
 }
+function copyById(id) {
+  const el = document.getElementById(id);
+  if (!el) return alert("No content available to copy.");
+
+  const range = document.createRange();
+  range.selectNode(el);
+
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+
+  try {
+    document.execCommand("copy");
+  } catch {
+    alert("Failed to copy. Please try again.");
+  }
+
+  selection.removeAllRanges();
+}
 
 function copyToClipboard() {
-  const quoteContent = document.getElementById("quote-content");
-  if (quoteContent) {
-    const range = document.createRange();
-    range.selectNode(quoteContent);
+  copyById("quote-content");
+}
 
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-
-    try {
-      document.execCommand("copy");
-    } catch (err) {
-      alert("Failed to copy the quote. Please try again.");
-    }
-
-    selection.removeAllRanges();
-  } else {
-    alert("No quote available to copy.");
-  }
+function copyToClipboardMessage() {
+  copyById("message-content");
 }
 
 function saveQuote() {
@@ -1990,20 +2056,20 @@ function saveQuote() {
   const time = document.getElementById("time").value;
   const hours = parseFloat(document.getElementById("hours").value) || 0;
   const includeAlcoholPolicy = document.getElementById(
-    "include-alcohol-policy"
+    "include-alcohol-policy",
   ).checked;
   const includeMinHoursPolicy = document.getElementById(
-    "include-min-hours-policy"
+    "include-min-hours-policy",
   ).checked;
   const includeAdditionalHours = document.getElementById(
-    "include-additional-hours"
+    "include-additional-hours",
   ).checked;
   const includeBYOB = document.getElementById("include-byob").checked;
   const tripType = document.querySelector(
-    'input[name="trip-type"]:checked'
+    'input[name="trip-type"]:checked',
   ).value;
   const quoteType = document.querySelector(
-    'input[name="quote-type"]:checked'
+    'input[name="quote-type"]:checked',
   ).value;
 
   // Ensure a quote has been generated first
@@ -2053,67 +2119,67 @@ function saveQuote() {
 
 const vehicles = {
   trolley_midnight_36: {
-    vehicleName: "Trolley Midnight (36 Passengers)",
+    vehicleName: "Trolley Midnight (36 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyMidnight-main.png",
     vehicleLink: "https://wtglimo.com/Naperville-trolley-bus-rental.php",
   },
   trolley_fusion_30: {
-    vehicleName: "Trolley Fusion (30 Passengers)",
+    vehicleName: "Trolley Fusion (30 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFusion-main.png",
     vehicleLink: "https://wtglimo.com/Chicago-trolley-bus-rental.php",
   },
   trolley_bliss_30: {
-    vehicleName: "Trolley Bliss (30 Passengers)",
+    vehicleName: "Trolley Bliss (30 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyBliss-main.png",
     vehicleLink: "https://wtglimo.com/white-wedding-trolleys-Chicago.php",
   },
   trolley_classic_30: {
-    vehicleName: "Trolley Classic (30 Passengers)",
+    vehicleName: "Trolley Classic (30 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyClassic-main.png",
     vehicleLink: "https://wtglimo.com/Chicago-wedding-trolley-bus-rental.php",
   },
   trolley_festive_24: {
-    vehicleName: "Trolley Festive (24 Passengers)",
+    vehicleName: "Trolley Festive (24 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/trolleyFestive-main.png",
     vehicleLink: "https://wtglimo.com/Chicago-trolley-rental.php",
   },
   partybus_dove_40: {
-    vehicleName: "Party Bus Dove (40 Passengers)",
+    vehicleName: "Party Bus Dove (40 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/partyBus-Dove-main.jpg",
     vehicleLink: "https://wtglimo.com/chicago-party-bus-rental.php",
   },
   partybus_nightrider_30: {
-    vehicleName: "Party Bus Night Rider (30 Passengers)",
+    vehicleName: "Party Bus Night Rider (30 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/nightRider-main.png",
     vehicleLink: "https://wtglimo.com/libertyville-party-bus-rental.php",
   },
   partybus_eagle_25: {
-    vehicleName: "Party Bus Eagle (25 Passengers)",
+    vehicleName: "Party Bus Eagle (25 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/eagle-main.png",
     vehicleLink: "https://wtglimo.com/Palatine-party-bus-rental.php",
   },
   partybus_whitehawk_20: {
-    vehicleName: "Party Bus White Hawk (20 Passengers)",
+    vehicleName: "Party Bus White Hawk (20 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/whiteHawk-main.png",
     vehicleLink: "https://wtglimo.com/Arlington-Heights-Party-Bus-Rental.php",
   },
   pink_hummer_h2: {
-    vehicleName: "Pink Hummer H2 (18 Passengers)",
+    vehicleName: "Pink Hummer H2 (18 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkHummer-main.png",
     vehicleLink: "https://wtglimo.com/hummer_pink_panther.php",
   },
   pink_chrysler_300: {
-    vehicleName: "Pink Chrysler 300 (10 Passengers)",
+    vehicleName: "Pink Chrysler 300 (10 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/pinkChrysler-main.png",
     vehicleLink: "https://wtglimo.com/pink-limo-rental-Chicago.php",
@@ -2125,74 +2191,74 @@ const vehicles = {
     vehicleLink: "https://wtglimo.com/Christmas-trolley-tours-Chicago.php",
   },
   ford_transit_limo: {
-    vehicleName: "Ford Transit Limo (15 Passengers)",
+    vehicleName: "Ford Transit Limo (15 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/tranitBlack-main.png",
     vehicleLink:
       "https://wtglimo.com/15-Passenger-Van-Rental-Chicago-Ford-Transit-Black.php",
   },
   sprinter_shuttle_van: {
-    vehicleName: "Sprinter Shuttle Van (14 Passengers)",
+    vehicleName: "Sprinter Shuttle Van (14 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/sprinter-main.png",
     vehicleLink: "https://wtglimo.com/sprinter_shuttle_van.php",
   },
   hummer_h2_stretch_limo: {
-    vehicleName: "Hummer H2 Stretch Limo (20 Passengers)",
+    vehicleName: "Hummer H2 Stretch Limo (20 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/hummerWhite-main.png",
     vehicleLink: "https://wtglimo.com/suv_stretch_limousine_hummer_galaxy.php",
   },
   chrysler_300_limo: {
-    vehicleName: "Chrysler 300 Limo (10 Passengers)",
+    vehicleName: "Chrysler 300 Limo (10 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/chrysler300-main.png",
     vehicleLink: "https://wtglimo.com/sedan_stretch_limo_chrysler_300_limo.php",
   },
   lincoln_mkt_limo: {
-    vehicleName: "Lincoln MKT Limo (10 Passengers)",
+    vehicleName: "Lincoln MKT Limo (10 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKT-main.png",
     vehicleLink: "https://wtglimo.com/sedan_stretch_limo_lincoln_MKT_limo.php",
   },
   lincoln_navigator: {
-    vehicleName: "Lincoln Navigator (6 Passengers)",
+    vehicleName: "Lincoln Navigator (6 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/navigator-main.png",
     vehicleLink: "https://wtglimo.com/lincoln-navigator-limo.php",
   },
   cadillac_escalade: {
-    vehicleName: "Cadillac Escalade (6 Passengers)",
+    vehicleName: "Cadillac Escalade (6 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/cadillac-main.png",
     vehicleLink: "https://wtglimo.com/cadillac-escalade-limo.php",
   },
   chevrolet_suburban: {
-    vehicleName: "Chevrolet Suburban (6 Passengers)",
+    vehicleName: "Chevrolet Suburban (6 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/suburban-main.png",
     vehicleLink: "https://wtglimo.com/suv-limo-rental.php",
   },
   lincoln_mkz: {
-    vehicleName: "Lincoln MKZ (3 Passengers)",
+    vehicleName: "Lincoln MKZ (3 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/lincolnMKZ-main.png",
     vehicleLink: "https://wtglimo.com/limo-car-service.php",
   },
   coach_bus_super: {
-    vehicleName: "Coach Bus - Super (50 Passengers)",
+    vehicleName: "Coach Bus - Super (50 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/superCoach-main.png",
     vehicleLink: "https://wtglimo.com/chicago-Super-Coach-Bus.php",
   },
   coach_bus_rentals: {
-    vehicleName: "Charter Bus - Everywhere (56 Passengers)",
+    vehicleName: "Charter Bus - Everywhere (56 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/coachBusEverywhere-main.png",
     vehicleLink: "https://wtglimo.com/chicago_coach_bus.php",
   },
   coach_bus_corporate: {
-    vehicleName: "Coach Bus - Corporate (42 Passengers)",
+    vehicleName: "Coach Bus - Corporate (42 Pax)",
     imageUrl:
       "https://wtglimo.com/img/lightbox/large/vehicle-main/exrcutiveBus-main.png",
     vehicleLink: "https://wtglimo.com/executive_shuttle_bus.php",
@@ -2255,14 +2321,14 @@ function displayQuotes(quotes) {
 
     // Format dates and amounts
     const formattedQuoteDate = new Date(quote.quote_date).toLocaleDateString(
-      "en-US"
+      "en-US",
     );
     const formattedAmount = parseFloat(quote.total_amount).toLocaleString(
       "en-US",
       {
         style: "currency",
         currency: "USD",
-      }
+      },
     );
     // Format the created_at date
     const formattedCreatedAt = new Date(quote.created_at).toLocaleDateString(
@@ -2271,7 +2337,7 @@ function displayQuotes(quotes) {
         month: "short",
         day: "numeric",
         year: "numeric",
-      }
+      },
     );
 
     const quoteElement = document.createElement("div");
@@ -2359,7 +2425,7 @@ function displayQuotes(quotes) {
 
     // Add event listener for the new text message button
     const copyTextMessageBtn = quoteElement.querySelector(
-      ".copy-text-message-btn"
+      ".copy-text-message-btn",
     );
     copyTextMessageBtn.addEventListener("click", function () {
       copyTextMessage(quote);
@@ -2393,7 +2459,7 @@ function copyTextMessage(quote) {
       function (err) {
         console.error("Failed to copy text: ", err);
         alert("Failed to copy the text message. Please try again.");
-      }
+      },
     );
   } else {
     // Fallback for older browsers
@@ -2605,7 +2671,7 @@ margin-top: 0;}
     function (err) {
       console.error("Failed to copy text: ", err);
       alert("Failed to copy the follow-up message. Please try again.");
-    }
+    },
   );
 }
 
@@ -2645,3 +2711,7 @@ document.getElementById("filter-button").addEventListener("click", () => {
 
   fetchQuotes(startDate, endDate);
 });
+
+
+
+

@@ -1,41 +1,78 @@
-/* Reset and basic styles */
+/* =============================================================================
+   Reset and layout
+============================================================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body, html {
+html, body {
   height: 100%;
   overflow: hidden;
 }
 
 .container {
   display: flex;
-  height: 100vh; /* Full height of the viewport */
+  height: 100vh;
 }
 
-/* Sidebar styles */
-sidebar {
-  width: 240px;
+/* =============================================================================
+   Sidebar (HOST CONTAINER)
+   Uses: <aside class="sidebar"></aside>
+   Default: COLLAPSED
+============================================================================= */
+aside.sidebar {
+  width: 64px;                 /* collapsed by default */
   background-color: #293949;
-  display: block;
   color: #aeb2b7;
-  overflow-y: auto; /* Allows scrolling if content is too tall */
+  overflow-y: auto;
+  display: block;
+  transition: width 0.2s ease;
 }
 
-.sidebar-content {
-  padding: 15px;
+/* Expanded state */
+aside.sidebar:not(.is-collapsed) {
+  width: 240px;
 }
 
+/* =============================================================================
+   Sidebar Top (toggle button)
+============================================================================= */
+.sidebar-top {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sidebar-toggle {
+  width: 40px;
+  height: 36px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-toggle:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* =============================================================================
+   Navigation list styles
+============================================================================= */
 #leftside-navigation {
   margin: 0;
   padding: 0;
 }
 
 #leftside-navigation ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 #leftside-navigation ul li {
@@ -45,10 +82,13 @@ sidebar {
 #leftside-navigation ul li a {
   color: #aeb2b7;
   text-decoration: none;
-  display: block;
-  padding: 18px 25px;
+  display: flex;                 /* IMPORTANT: enables icon + text layout */
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
   font-size: 14px;
   transition: all 0.2s ease-in;
+  white-space: nowrap;
 }
 
 #leftside-navigation ul li a:hover {
@@ -57,57 +97,102 @@ sidebar {
 }
 
 #leftside-navigation ul li a i {
-  margin-right: 10px;
+  width: 20px;                   /* keeps icons aligned */
+  text-align: center;
 }
 
+/* Arrow */
 #leftside-navigation ul li a .arrow {
-  float: right;
-  margin-top: 5px;
+  margin-left: auto;
+  margin-top: 0;
+  opacity: 0.9;
 }
 
-#leftside-navigation .sub-menu ul {
+/* Submenu container */
+#leftside-navigation .sub-menu > ul {
   display: none;
   background-color: #23313f;
 }
 
-#leftside-navigation .sub-menu ul li {
+#leftside-navigation .sub-menu > ul li {
   border-bottom: none;
 }
 
-#leftside-navigation .sub-menu ul li a {
-  padding: 15px 35px;
+#leftside-navigation .sub-menu > ul li a {
+  padding: 12px 18px 12px 44px;
   font-size: 12px;
 }
 
-/* Active states */
-#leftside-navigation .sub-menu.active > a {
-  color: #1abc9c;
+/* =============================================================================
+   Collapsed behavior (icons only)
+============================================================================= */
+aside.sidebar.is-collapsed #leftside-navigation span {
+  display: none;                 /* hide labels */
 }
 
-#leftside-navigation .sub-menu.active ul {
-  display: block;
+aside.sidebar.is-collapsed #leftside-navigation a {
+  justify-content: center;       /* center icons */
+  gap: 0;
 }
 
-/* Main content styles */
+aside.sidebar.is-collapsed #leftside-navigation a i {
+  margin: 0;
+}
+
+aside.sidebar.is-collapsed #leftside-navigation .arrow {
+  display: none;                 /* hide arrows */
+}
+
+/* Hide all submenus while collapsed */
+aside.sidebar.is-collapsed #leftside-navigation .sub-menu > ul {
+  display: none !important;
+}
+
+/* =============================================================================
+   Main content
+============================================================================= */
 main.content {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
   color: #333;
+  height: 100vh;
 }
 
-/* Responsive adjustments */
+/* =============================================================================
+   Responsive (mobile)
+============================================================================= */
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
+  html, body {
+    overflow: auto;
   }
 
-  sidebar {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  aside.sidebar {
     width: 100%;
     height: auto;
   }
 
+  aside.sidebar.is-collapsed {
+    width: 100%;
+  }
+
   main.content {
     padding: 10px;
+    height: auto;
+  }
+
+  /* On mobile, show labels even if collapsed */
+  aside.sidebar.is-collapsed #leftside-navigation span {
+    display: inline;
+  }
+
+  aside.sidebar.is-collapsed #leftside-navigation a {
+    justify-content: flex-start;
+    gap: 10px;
   }
 }
