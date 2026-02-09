@@ -25,9 +25,14 @@
           <div class="quick-paste-header">
             <div>
               <div class="quick-paste-title">Quick Paste</div>
-              <div class="quick-paste-sub">
-                Paste lead info (Name, Date, Time, etc.)
-              </div>
+            </div>
+            <div class="quick-paste-actions">
+              <button type="button" class="btn-apply" id="quick-paste-apply">
+                Apply
+              </button>
+              <button type="button" class="btn-clear" id="quick-paste-clear">
+                Clear
+              </button>
             </div>
 
             <button
@@ -45,25 +50,12 @@
               rows="6"
               placeholder="Name: John Doe&#10;Phone Number: ...&#10;Email: ...&#10;Event Date: 01/31/2026&#10;Pick up Time: 5:00 PM&#10;Event Type: Birthday Party&#10;Vehicle Type: 30 Pax Trolley - Classic&#10;Number of Hours: 3"
             ></textarea>
-
-            <div class="quick-paste-actions">
-              <button type="button" class="btn-apply" id="quick-paste-apply">
-                Apply
-              </button>
-              <button type="button" class="btn-clear" id="quick-paste-clear">
-                Clear
-              </button>
-            </div>
-
-            <div class="quick-paste-help">
-              Accepted keys: Name, Phone Number, Email, Event Date, Pick up
-              Time, Drop off Time, Event Type, Vehicle Type, Number of Hours
-            </div>
           </div>
         </div>
 
         <section class="quote-generator">
           <div class="quote-container">
+            <div>
             <h1>Quote Generator</h1>
 
             <div class="form-group inline-fields">
@@ -597,6 +589,20 @@
             </div>
 
             <button onclick="calculateQuote()">Get Quote</button>
+
+          </div>
+          <div>
+            <section class="message-section-wrapper">
+              <div class="message-section">
+                <div class="message" id="message"></div>
+                <div class="copy-btn">
+                  <button onclick="copyToClipboardMessage()">
+                    Copy Message
+                  </button>
+                </div>
+              </div>
+            </section>
+            </div>
           </div>
 
           <div class="result-section">
@@ -612,14 +618,6 @@
               Save Quote
             </button>
           </div> -->
-        </section>
-        <section class="message-section-wrapper">
-        <div class="message-section">
-          <div class="message" id="message"></div>
-          <div class="copy-btn">
-            <button onclick="copyToClipboardMessage()">Copy Message</button>
-          </div>
-        </div>
         </section>
       </main>
     </div>
