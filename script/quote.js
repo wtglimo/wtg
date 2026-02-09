@@ -1715,7 +1715,7 @@ if (dropOffTime !== "Not specified") {
   messageDiv.innerHTML = `
   <div id="message-content"> <p class="intro-para">
             WAYTOGO TROLLEYS. <strong>${name}</strong>, the ${formattedDate} quote for the ${eventTypeText} has been sent to your email.
-Please acknowledge receipt at your convenience. Thank you.
+Please review and make your reservation online. Thank you.
           </p></div>
 
           
