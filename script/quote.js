@@ -234,8 +234,8 @@ function buildQuoteOptionMarkup({
           <li>Gratuity: $${formatNumber(fixedGratuity)}</li>
           <li>Gas Fee: $${formatNumber(gasFee)}</li>
         </ul>
-        <p class="total"><strong>Total: $${formatNumber(total)}</strong><span class="all-inclusive"> (All-inclusive)</span></p>
-        <p class="quote-expiry">Vehicle is NOT on hold during the 14-day quote period. Act Fast. <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>)</p>
+        <p class="total"><strong>Total: $${formatNumber(total)}</strong></p>
+        <p class="">Vehicle is NOT on hold during the 14-day quote period. Act Fast. <a href="https://www.wtglimo.com/reservation-limo.php" target="_blank">Reserve Now</a>)</p>
         </div>
         <div class="quote-summary">
           <div class="quote-summary-section">
